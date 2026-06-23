@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع عراقي إيكو - التنوع الإحيائي في العراق</title>
+    <style>
+        :root {
+            --primary-color: #1b4332;
+            --secondary-color: #2d6a4f;
+            --accent-color: #d4a373;
+            --bg-color: #f4f6f4;
+            --card-bg: #ffffff;
+            --text-color: #212529;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 60px;
+        }
+
+        /* الهيدر والواجهة الرئيسية */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            border-bottom: 5px solid var(--accent-color);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        /* أدوات التحكم: البحث والفلاتر */
+        .controls-section {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--secondary-color);
+        }
+
+        /* أزرار اختيار المجموعة/المملكة */
+        .filter-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .filter-btn {
+            background-color: #eaeaea;
+            color: var(--text-color);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background-color: #dddddd;
+        }
+
+        .filter-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .counter {
+            font-size: 0.95rem;
+            color: #555;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        /* شبكة عرض الكروت */
+        .species-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* تصميم كرت الحيوان مع الصورة */
+        .species-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eef2fe;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .species-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+        }
+
+        /* منطقة الصورة الافتراضية للحيوان */
+        .card-image-box {
+            width: 100%;
+            height: 180px;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #718096;
+            font-size: 0.9rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .species-name {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .scientific-name {
+            font-style: italic;
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid #f1f1f1;
+        }
+
+        .group-tag {
+            background-color: #edf2f7;
+            color: #4a5568;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .status-lc { background-color: #2b9348; }
+        .status-en { background-color: #f57c00; }
+        .status-unknown { background-color: #a0aec0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>مشروع عراقي إيكو</h1>
+        <p>التنوع الإحيائي في العراق</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="controls-section">
+            <div class="search-box">
+                <label for="searchInput">البحث الذكي عن الكائنات:</label>
+                <input type="text" id="searchInput" placeholder="اكتب اسم الحيوان أو الاسم العلمي...">
+            </div>
+
+            <div class="filter-label">اختر المجموعة الفرعية:</div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="ثدييات">ثدييات</button>
+                <button class="filter-btn" data-filter="زواحف">زواحف</button>
+                <button class="filter-btn" data-filter="برمائيات">برمائيات</button>
+                <button class="filter-btn" data-filter="طيور">طيور</button>
+                <button class="filter-btn" data-filter="حشرات">حشرات</button>
+            </div>
+
+            <div class="counter" id="matchCounter">عدد الأنواع المعروضة: <span id="countVisible">0</span> سجل</div>
+        </div>
+
+        <div class="species-grid" id="speciesGrid">
+
+            <div class="species-card" data-group="ثدييات" data-search="ابن عرس المنتن آكلات اللحوم Mustela putorius">
+                <div class="card-image-box">
+                    <img src="https://via.placeholder.com/300x180?text=No+Image" alt="ابن عرس المنتن">
+                </div>
+                <div class="card-content">
+                    <div>
+                        <h2 class="species-name">ابن عرس المنتن</h2>
+                        <p class="scientific-name">Mustela putorius</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="group-tag">ثدييات</span>
+                        <span class="status-badge status-unknown">سجل نادر</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="species-card" data-group="ثدييات" data-search="النمر الفارسي Panthera pardus saxicolor">
+                <div class="card-image-box">
+                    <img src="https://via.placeholder.com/300x180?text=No+Image" alt="النمر الفارسي">
+                </div>
+                <div class="card-content">
+                    <div>
+                        <h2 class="species-name">النمر الفارسي</h2>
+                        <p class="scientific-name">Panthera pardus saxicolor</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="group-tag">ثدييات</span>
+                        <span class="status-badge status-en">مهدد (EN)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="species-card" data-group="زواحف" data-search="سحلية الأوراق الأوروبية Ablepharus kitaibeli">
+                <div class="card-image-box">
+                    <img src="https://via.placeholder.com/300x180?text=No+Image" alt="سحلية الأوراق">
+                </div>
+                <div class="card-content">
+                    <div>
+                        <h2 class="species-name">سحلية الأوراق الأوروبية</h2>
+                        <p class="scientific-name">Ablepharus kitaibeli</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="group-tag">زواحف</span>
+                        <span class="status-badge status-lc">غير مهدد</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="species-card" data-group="طيور" data-search="الدراج العراقي Francolinus francolinus">
+                <div class="card-image-box">
+                    <img src="https://via.placeholder.com/300x180?text=No+Image" alt="الدراج العراقي">
+                </div>
+                <div class="card-content">
+                    <div>
+                        <h2 class="species-name">الدراج العراقي</h2>
+                        <p class="scientific-name">Francolinus francolinus</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="group-tag">طيور</span>
+                        <span class="status-badge status-lc">غير مهدد</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.species-card');
+        const countVisible = document.getElementById('countVisible');
+
+        let currentFilter = 'all';
+
+        function filterData() {
+            const searchText = searchInput.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const cardGroup = card.getAttribute('data-group');
+                const searchContent = card.getAttribute('data-search').toLowerCase();
+
+                const matchesFilter = (currentFilter === 'all' || cardGroup === currentFilter);
+                const matchesSearch = searchContent.includes(searchText);
+
+                if (matchesFilter && matchesSearch) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            countVisible.textContent = visibleCount;
+        }
+
+        searchInput.addEventListener('input', filterData);
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.getAttribute('data-filter');
+                filterData();
+            });
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            countVisible.textContent = cards.length;
+        });
+    </script>
+</body>
+</html>

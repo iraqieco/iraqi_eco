@@ -22,6 +22,7 @@
         .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: white; }
         .status-lc { background-color: #2b9348; }
         .status-en { background-color: #f57c00; }
+        .status-unknown { background-color: #6c757d; }
     </style>
 </head>
 <body>
@@ -40,7 +41,6 @@
         <div class="filter-buttons" id="filterBtns">
             <button class="filter-btn active" data-filter="all">الكل</button>
             <button class="filter-btn" data-filter="ثدييات">ثدييات</button>
-            <button class="filter-btn" data-filter="زواحف">زواحف</button>
         </div>
         <div class="counter" style="margin-top:15px;">عدد الأنواع المعروضة: <span id="countVisible">0</span></div>
     </div>
@@ -48,8 +48,7 @@
 </div>
 
 <script>
-    // ضع بياناتك هنا
-    const animalsData = [ const animalsData = [
+    const animalsData = [
     { name: "ابن عرس المنتن", sci: "Mustela putorius", group: "ثدييات", status: "غير مهدد (LC)", class: "status-lc" },
     { name: "النمر الفارسي", sci: "Panthera pardus saxicolor", group: "ثدييات", status: "مهدد (EN)", class: "status-en" },
     { name: "الأسد الآسيوي", sci: "Panthera leo leo", group: "ثدييات", status: "منقرض (EX)", class: "status-unknown" },
@@ -144,8 +143,7 @@
     { name: "خفاش مسقطي", sci: "Rhinopoma muscatellum", group: "ثدييات", status: "غير مهدد (LC)", class: "status-lc" },
     { name: "خفاش ذيل الفأر الصغير", sci: "Rhinopoma hardwickii", group: "ثدييات", status: "غير مهدد (LC)", class: "status-lc" },
     { name: "خفاش ذيل الفأر الكبير", sci: "Rhinopoma microphyllum", group: "ثدييات", status: "غير مهدد (LC)", class: "status-lc" }
-];
-];
+    ];
 
     const grid = document.getElementById('speciesGrid');
     const searchInput = document.getElementById('searchInput');

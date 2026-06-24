@@ -1,9 +1,9 @@
- <html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشروع عراقي إيكو - التنوع الإحيائي في العراق- الإصدار التجريبي</title>
+    <title>مشروع عراقي إيكو - التنوع الإحيائي في العراق</title>
     <style>
         :root { --primary-color: #1b4332; --secondary-color: #2d6a4f; --accent-color: #d4a373; --bg-color: #f4f6f4; --card-bg: #ffffff; --text-color: #212529; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
@@ -13,15 +13,18 @@
         .controls-section { background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 30px; }
         .search-box input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: 10px; margin-top: 10px; }
         .filter-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
-        .filter-btn { background-color: #eaeaea; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .filter-btn { background-color: #eaeaea; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
         .filter-btn.active { background-color: var(--secondary-color); color: white; }
         .species-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
         .species-card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eef2fe; }
-        .species-name { color: var(--primary-color); font-size: 1.3rem; }
+        .species-name { color: var(--primary-color); font-size: 1.3rem; margin-bottom: 5px; }
         .scientific-name { font-style: italic; color: #666; margin-bottom: 10px; }
-        .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: white; }
+        .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: white; display: inline-block; }
         .status-lc { background-color: #2b9348; }
         .status-en { background-color: #f57c00; }
+        .status-nt { background-color: #d9a400; }
+        .status-vu { background-color: #bc6c25; }
+        .status-cr { background-color: #c1121f; }
         .status-unknown { background-color: #6c757d; }
     </style>
 </head>
@@ -44,15 +47,18 @@
             <button class="filter-btn" data-filter="زواحف">زواحف</button>
             <button class="filter-btn" data-filter="برمائيات">برمائيات</button>
             <button class="filter-btn" data-filter="نباتات">نباتات</button>
-            <buttob class="filter-btn" data-filter="طيور">طيور</buttob>
-            <buttob class="filter-btn" data-filter="خنافس">خنافس</buttob>
-            <buttob class="filter-btn" data-filter="عث و فراش">عث و فراش</buttob>
-            <buttob class="filter-btn" data-filter="أسماك">أسماك</buttob>
-            <buttob class="filter-btn" data-filter="حشرات">حشرات</buttob>
+            <button class="filter-btn" data-filter="طيور">طيور</button>
+            <button class="filter-btn" data-filter="خنافس">خنافس</button>
+            <button class="filter-btn" data-filter="عث و فراش">عث و فراش</button>
+            <button class="filter-btn" data-filter="أسماك">أسماك</button>
+            <button class="filter-btn" data-filter="حشرات">حشرات</button>
         </div>
-        <div class="counter" style="margin-top:15px;">عدد الأنواع المعروضة: <span id="countVisible">0</span></div>
+        <div class="counter" style="margin-top:15px;">عدد المخلوقات المعروضة: <span id="countVisible">0</span></div>
     </div>
-    <div  [
+    <div class="species-grid" id="speciesGrid"></div>
+</div>
+<script>
+    const animalsData = [
   { name: "حنكور", sci: "Dromas ardeola", group: "طيور", status: "LC", class: "status-lc" },
   { name: "الكروان العسلي", sci: "Cursorius cursor", group: "طيور", status: "LC", class: "status-lc" },
   { name: "أبو اليسر مطوق", sci: "Glareola pratincola", group: "طيور", status: "LC", class: "status-lc" },
@@ -464,32 +470,39 @@
         { name: "سحلية الجري (جنوبية)", sci: "Acanthodactylus boskianus asper", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" },
         { name: "سحلية شميدت", sci: "Acanthodactylus schmidti", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" }
     ];
-    const grid = document.getElementById('speciesGrid');
+ const grid = document.getElementById('speciesGrid');
     const searchInput = document.getElementById('searchInput');
 
     function render(filter = 'all', search = '') {
-        grid.innerHTML = '';
-        let count = 0;
-        animalsData.forEach(item => {
-            if ((filter === 'all' || item.group === filter) && (item.name.includes(search) || item.sci.includes(search))) {
-                grid.innerHTML += `<div class="species-card">
-                    <h2 class="species-name">${item.name}</h2>
-                    <p class="scientific-name">${item.sci}</p>
-                    <span class="status-badge ${item.class}">${item.status}</span>
-                </div>`;
-                count++;
-            }
+        const filteredData = animalsData.filter(item => {
+            const matchesFilter = (filter === 'all' || item.group === filter);
+            const matchesSearch = (item.name.includes(search) || item.sci.toLowerCase().includes(search.toLowerCase()));
+            return matchesFilter && matchesSearch;
         });
-        document.getElementById('countVisible').textContent = count;
+
+        grid.innerHTML = filteredData.map(item => `
+            <div class="species-card">
+                <h2 class="species-name">${item.name}</h2>
+                <p class="scientific-name">${item.sci}</p>
+                <span class="status-badge ${item.class}">${item.status}</span>
+            </div>
+        `).join('');
+        
+        document.getElementById('countVisible').textContent = filteredData.length;
     }
 
-    document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', (e) => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-        render(e.target.dataset.filter, searchInput.value);
-    }));
+    document.getElementById('filterBtns').addEventListener('click', (e) => {
+        if(e.target.classList.contains('filter-btn')) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            render(e.target.dataset.filter, searchInput.value);
+        }
+    });
 
-    searchInput.addEventListener('input', (e) => render(document.querySelector('.filter-btn.active').dataset.filter, e.target.value));
+    searchInput.addEventListener('input', (e) => {
+        render(document.querySelector('.filter-btn.active').dataset.filter, e.target.value);
+    });
+
     render();
 </script>
 </body>

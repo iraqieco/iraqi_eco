@@ -13,7 +13,7 @@
         .controls-section { background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 30px; }
         .search-box input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: 10px; margin-top: 10px; }
         
-        /* تنسيق الأزرار الجديد - مرتب بنظام الشبكة */
+
         .filter-buttons { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
@@ -54,10 +54,20 @@
             <input type="text" id="searchInput" placeholder="اكتب الاسم...">
         </div>
         <div class="filter-buttons" id="filterBtns">
-            <button class="filter-btn active" data-filter="all">الكل</button>
-            <button class="filter-btn" data-filter="خنافس">خنافس</button>
-            <button class="filter-btn" data-filter="رعاشات">رعاشات</button>
+                       <button class="filter-btn" data-filter="ثدييات">ثدييات</button>
+            <button class="filter-btn" data-filter="زواحف">زواحف</button>
+         <button class="filter-btn" data-filter="قشريات">قشريات</button>
+         <button class="filter-btn" data-filter="فطريات">فطريات</button>
+            <button class="filter-btn" data-filter="برمائيات">برمائيات</button>
+            <button class="filter-btn" data-filter="نباتات">نباتات</button>
+         <button class="filter-btn" data-filter="رعاشات">رعاشات</button>
             <button class="filter-btn" data-filter="طيور">طيور</button>
+            <button class="filter-btn" data-filter="خنافس">خنافس</button>
+         <button class="filter-btn" data-filter="خنافس داكنة">خنافس داكنة</button>
+            <button class="filter-btn" data-filter="عث و فراش">عث و فراش</button>
+            <button class="filter-btn" data-filter="أسماك">أسماك</button>
+            <button class="filter-btn" data-filter="حشرات">حشرات</button>
+         <button class="filter-btn" data-filter="حشرات ثنائية الأجنحة">حشرات ثنائية الأجنحة</button>
             </div>
         <div class="counter" style="margin-top:15px;">عدد المخلوقات المعروضة: <span id="countVisible">0</span></div>
     </div>

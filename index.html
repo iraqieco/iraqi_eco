@@ -491,7 +491,7 @@
 
         grid.innerHTML = filteredData.map(item => `
             <div class="species-card">
-                ${item.img ? `<img src="${item.img}" alt="${item.name}" style="width:100%; height:210px; object-fit:cover; border-radius:8px; margin-bottom:10px;">` : ''}
+                ${item.img ? `<img src="${item.img}" alt="${item.name}" style="width:100%; height:250px; object-fit:cover; border-radius:8px; margin-bottom:10px;">` : ''}
                 <h2 class="species-name">${item.name}</h2>
                 <p class="scientific-name">${item.sci}</p>
                 <span class="status-badge ${item.class}">${statusMap[item.status] || item.status}</span>

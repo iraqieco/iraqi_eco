@@ -469,12 +469,7 @@
         { name: "سحلية الجري (بوسك)", sci: "Acanthodactylus boskianus", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" },
         { name: "سحلية الجري (جنوبية)", sci: "Acanthodactylus boskianus asper", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" },
         { name: "سحلية شميدت", sci: "Acanthodactylus schmidti", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" }
-    ];function render(filter = 'all', search = '') {
-        const filteredData = animalsData.filter(item => {
-            const matchesFilter = (filter === 'all' || item.group === filter);
-            const matchesSearch = (item.name.includes(search) || item.sci.toLowerCase().includes(search.toLowerCase()));
-            return matchesFilter && matchesSearch;
-        }grid.innerHTML = filteredData.map(item => `
+    ];grid.innerHTML = filteredData.map(item => `
             <div class="species-card">
                 <img src="${item.img || 'images/default.jpg'}" alt="${item.name}" style="width:100%; height:180px; object-fit:cover; border-radius:8px; margin-bottom:10px;">
                 
@@ -485,4 +480,32 @@
         `).join('');
         
         document.getElementById('countVisible').textContent = filteredData.length;
-    }                    
+     }
+grid.innerHTML = filteredData.map(item => `
+            <div class="species-card">
+                <img src="${item.img || 'images/default.jpg'}" alt="${item.name}" style="width:100%; height:180px; object-fit:cover; border-radius:8px; margin-bottom:10px;">
+                
+                <h2 class="species-name">${item.name}</h2>
+                <p class="scientific-name">${item.sci}</p>
+                <span class="status-badge ${item.class}">${item.status}</span>
+            </div>
+        `).join('');
+        
+        document.getElementById('countVisible').textContent = filteredData.length;
+     }
+document.getElementById('filterBtns').addEventListener('click', (e) => {
+        if(e.target.classList.contains('filter-btn')) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            render(e.target.dataset.filter, searchInput.value);
+        }
+    });
+
+    searchInput.addEventListener('input', (e) => {
+        render(document.querySelector('.filter-btn.active').dataset.filter, e.target.value);
+    });
+
+    render();
+</script>
+</body>
+</html> 

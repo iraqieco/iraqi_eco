@@ -470,7 +470,7 @@
         { name: "سحلية الجري (جنوبية)", sci: "Acanthodactylus boskianus asper", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" },
         { name: "سحلية شميدت", sci: "Acanthodactylus schmidti", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" }
     ];
-        const grid = document.getElementById('speciesGrid');
+            const grid = document.getElementById('speciesGrid');
     const searchInput = document.getElementById('searchInput');
 
     function render(filter = 'all', search = '') {
@@ -482,7 +482,7 @@
 
         grid.innerHTML = filteredData.map(item => `
             <div class="species-card">
-                ${item.name === "القبرة المتوجة" ? `<img src="1.jpg" alt="${item.name}" style="width:100%; border-radius:8px; margin-bottom:10px;">` : ''}
+                ${item.img ? `<img src="${item.img}" alt="${item.name}" style="width:100%; height:150px; object-fit:cover; border-radius:8px; margin-bottom:10px;">` : ''}
                 <h2 class="species-name">${item.name}</h2>
                 <p class="scientific-name">${item.sci}</p>
                 <span class="status-badge ${item.class}">${item.status}</span>
@@ -491,7 +491,6 @@
         
         document.getElementById('countVisible').textContent = filteredData.length;
     }
-
     document.getElementById('filterBtns').addEventListener('click', (e) => {
         if(e.target.classList.contains('filter-btn')) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));

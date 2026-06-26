@@ -1,4 +1,4 @@
-[
+]
   {name: "أديميا هيرتبيس", sci: "Adimia hirtipes", group: ["خنافس", "خنافس داكنة"], status: "LC", class: "status-lc"},
   {name: "أميروفيا فيستيفا", sci: "Ammodonus festiva", group: ["خنافس", "خنافس داكنة"], status: "LC", class: "status-lc"},
   {name: "بلابس كريبرا", sci: "Blaps cribra", group: ["خنافس", "خنافس داكنة"], status: "LC", class: "status-lc"},
@@ -679,4 +679,4 @@
         { name: "سحلية الجري (بوسك)", sci: "Acanthodactylus boskianus", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" },
         { name: "سحلية الجري (جنوبية)", sci: "Acanthodactylus boskianus asper", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" },
         { name: "سحلية شميدت", sci: "Acanthodactylus schmidti", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" }
-    ]
+    [

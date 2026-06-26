@@ -809,8 +809,7 @@
         { name: "سحلية الجري (جنوبية)", sci: "Acanthodactylus boskianus asper", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" },
         { name: "سحلية شميدت", sci: "Acanthodactylus schmidti", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" }
     ];
-   
-    function render(data) {
+   function render(data) {
         const grid = document.getElementById('dataGrid');
         grid.innerHTML = data.map(item => `
             <div class="card">
@@ -820,7 +819,8 @@
                 <p class="desc">${item.desc}</p>
                 <div class="status ${item.class}">${item.status}</div>
             </div>
-        `).join('');
+        `).join
+    ('');
     }
 
     function filterData() {

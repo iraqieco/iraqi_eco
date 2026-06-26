@@ -2,55 +2,83 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عراقي إيكو - قاعدة البيانات</title>
+    <title>عراقي إيكو - قاعدة البيانات العلمية</title>
     <style>
-        :root {
-            --dark-green: #1a4d2e;
-            --white: #ffffff;
-            --bg-color: #f0f4f0;
+        :root { --dark-green: #1a4d2e; --white: #ffffff; --bg-color: #f0f4f0; --accent: #4f7942; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; padding: 20px; background-color: var(--bg-color); margin: 0; }
+        .header { background: var(--dark-green); color: white; padding: 30px; text-align: center; border-radius: 20px; margin-bottom: 30px; }
+        
+        /* صندوق بحث أصغر وأكثر تركيزاً */
+        .search-wrapper { 
+            display: flex; 
+            max-width: 700px; /* تم تقليل العرض */
+            margin: 0 auto 30px; 
+            background: white; 
+            border-radius: 50px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            border: 2px solid var(--dark-green); 
+            overflow: hidden; 
+            height: 40px; /* تم تقليل الارتفاع */
         }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; padding: 15px; background-color: var(--bg-color); margin: 0; }
-        .header-container { background-color: var(--dark-green); padding: 20px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; margin-bottom: 20px; }
-        h1 { color: var(--white); margin: 0; font-size: 1.5em; }
-        .subtitle { color: #d1e7dd; font-size: 0.85em; margin-top: 5px; }
-        .search-container { display: flex; justify-content: center; align-items: center; max-width: 600px; margin: 0 auto 20px auto; border: 2px solid var(--dark-green); border-radius: 50px; overflow: hidden; background: var(--white); height: 50px; }
-        input { flex: 1; padding: 10px; border: none; outline: none; font-size: 15px; width: 50%; }
-        select { padding: 0 10px; border: none; border-left: 1px solid #ddd; background: #f9f9f9; color: var(--dark-green); font-weight: bold; cursor: pointer; outline: none; width: 90px; font-size: 14px; text-align: center; appearance: none; }
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 1200px; margin: 0 auto; }
-        @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
-        .card { background: var(--white); padding: 15px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; border: 2px solid var(--dark-green); }
-        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
-        .card h3 { margin: 5px 0; color: var(--dark-green); font-size: 1.1em; }
-        .sci { font-style: italic; color: #666; font-size: 0.85em; display: block; margin-bottom: 8px; }
-        .desc { font-size: 0.85em; color: #444; margin-bottom: 10px; line-height: 1.4; text-align: justify; }
-        .status { padding: 4px 8px; border-radius: 5px; font-weight: bold; color: white; display: inline-block; font-size: 0.75em; }
-        .status-lc { background-color: #38a169; }
-        .status-en { background-color: #e53e3e; }
+        select { 
+            border: none; 
+            padding: 8px; 
+            outline: none; 
+            border-left: 8px solid #eee; 
+            font-weight: bold; 
+            color: var(--dark-green); 
+            background: #f9f9f9; 
+            cursor: pointer; 
+            font-size: 14px;
+            min-width: 120px;
+        }
+        input { 
+            flex: 1; 
+            padding: 0 15px; 
+            border: none; 
+            outline: none; 
+            font-size: 14px; 
+        }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
+        
+        .card { 
+            background: white; 
+            padding: 0; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            overflow: hidden; 
+            transition: transform 0.2s; 
+            border: 3px solid var(--dark-green); 
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 15px; text-align: center; } 
+        
+        .status-tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7em; font-weight: bold; margin-bottom: 10px; }
+        .status-LC { background: #d1fae5; color: #065f46; }
+        .status-EN { background: #fee2e2; color: #991b1b; }
     </style>
 </head>
 <body>
 
-    <div class="header-container">
+    <div class="header">
         <h1>عراقي إيكو</h1>
-        <div class="subtitle">قاعدة بيانات الكائنات الحية في العراق</div>
+        <p>قاعدة البيانات التفاعلية للتنوع البيولوجي في العراق</p>
     </div>
-    
-    <div class="search-container">
+
+    <div class="search-wrapper">
         <select id="categorySelect" onchange="filterData()">
-            <option value="الكل">الفئة</option>
-            <option value="حيوان">حيوان</option>
-            <option value="طيور">طيور</option>
+            <option value="الكل">جميع الممالك</option>
         </select>
-        <input type="text" id="search" placeholder="ابحث عن اسم الكائن..." onkeyup="filterData()">
+        <input type="text" id="search" placeholder="بحث..." onkeyup="filterData()">
     </div>
 
     <div class="grid" id="dataGrid"></div>
 
 <script>
-    // تأكد من إضافة حقل desc لكل كائن
     const database = [
+
         
   {name: "أديميا هيرتبيس", sci: "Adimia hirtipes", group: ["خنافس", "خنافس داكنة"], status: "LC", class: "status-lc"},
   {name: "أميروفيا فيستيفا", sci: "Ammodonus festiva", group: ["خنافس", "خنافس داكنة"], status: "LC", class: "status-lc"},
@@ -734,32 +762,43 @@
         { name: "سحلية شميدت", sci: "Acanthodactylus schmidti", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" }
  
 ];
+ 
+        
+
+    function getStatusInfo(status) {
+        const s = status.toUpperCase();
+        if (s === 'EN' || s === 'مهدد بالانقراض') return { label: 'مهدد بالانقراض', class: 'status-EN' };
+        return { label: 'غير مهدد', class: 'status-LC' };
+    }
+
+    function initCategories() {
+        const select = document.getElementById('categorySelect');
+        const kingdoms = [...new Set(database.map(item => item.kingdom))];
+        kingdoms.forEach(k => {
+            select.innerHTML += `<option value="${k}">${k}</option>`;
+        });
+    }
+
     function render(data) {
         const grid = document.getElementById('dataGrid');
-        grid.innerHTML = data.map(item => `
-            <div class="card">
-                <img src="${item.img}" alt="${item.name}">
-                <h3>${item.name}</h3>
-                <span class="sci">${item.sci}</span>
-                <p class="desc">${item.desc ? item.desc : 'لا يوجد وصف حالياً.'}</p>
-                <div class="status ${item.class}">${item.status}</div>
-            </div>
-        `).join('');
+        grid.innerHTML = data.map(item => {
+            const statusInfo = getStatusInfo(item.status);
+            return `
+                <div class="card">
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="card-body">
+                        <div class="status-tag ${statusInfo.class}">${statusInfo.label}</div>
+                        <h3>${item.name}</h3>
+                        <i style="color: #666; font-size: 0.9em; display: block; margin-bottom: 10px;">${item.sci}</i>
+                        ${item.desc ? `<p style="font-size: 0.85em; color: #444; margin: 10px 0;">${item.desc}</p>` : ''}
+                        <small style="color: var(--accent); display: block; margin-top: 10px;">القسم: ${item.group}</small>
+                    </div>
+                </div>
+            `;
+        }).join('');
     }
 
     function filterData() {
         const query = document.getElementById('search').value.toLowerCase();
         const cat = document.getElementById('categorySelect').value;
-        const filtered = database.filter(item => {
-            const matchesSearch = item.name.toLowerCase().includes(query) || item.sci.toLowerCase().includes(query);
-            const matchesCat = (cat === 'الكل' || item.group === cat);
-            return matchesSearch && matchesCat;
-        });
-        render(filtered);
-    }
-
-    render(database);
-</script>
-</body>
-</html>
-
+        const filtered = 0   

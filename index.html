@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+
+    // قاعدة البيانات - أضف هنا كائناتك
+    <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -9,49 +11,17 @@
         .header { background: var(--dark-green); color: white; padding: 30px; text-align: center; border-radius: 20px; margin-bottom: 30px; }
         
         .search-wrapper { 
-            display: flex; 
-            max-width: 600px; 
-            margin: 0 auto 30px; 
-            background: white; 
-            border-radius: 50px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-            border: 2px solid var(--dark-green); 
-            overflow: hidden; 
-            height: 45px;
+            display: flex; max-width: 600px; margin: 0 auto 30px; background: white; 
+            border-radius: 50px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            border: 2px solid var(--dark-green); overflow: hidden; height: 45px;
         }
-        select { 
-            border: none; 
-            padding: 0 15px; 
-            outline: none; 
-            border-left: 1px solid #ddd; 
-            font-weight: bold; 
-            color: var(--dark-green); 
-            background: #f9f9f9; 
-            cursor: pointer; 
-            font-size: 14px;
-            min-width: 120px;
-        }
-        input { 
-            flex: 1; 
-            padding: 0 15px; 
-            border: none; 
-            outline: none; 
-            font-size: 14px; 
-        }
+        select { border: none; padding: 0 15px; outline: none; border-left: 1px solid #ddd; font-weight: bold; color: var(--dark-green); background: #f9f9f9; cursor: pointer; }
+        input { flex: 1; padding: 0 15px; border: none; outline: none; }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
-        
-        .card { 
-            background: white; 
-            padding: 0; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-            overflow: hidden; 
-            transition: transform 0.2s; 
-            border: 3px solid var(--dark-green); 
-        }
+        .card { background: white; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); overflow: hidden; border: 3px solid var(--dark-green); transition: transform 0.2s; }
         .card:hover { transform: translateY(-5px); }
-        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card img { width: 100%; height: 200px; object-fit: cover; background: #ddd; }
         .card-body { padding: 15px; text-align: center; } 
         
         .status-tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7em; font-weight: bold; margin-bottom: 10px; }
@@ -68,7 +38,7 @@
 
     <div class="search-wrapper">
         <select id="categorySelect" onchange="filterData()">
-            <option value="الكل">جميع الممالك</option>
+            <option value="الكل">جميع الأقسام</option>
         </select>
         <input type="text" id="search" placeholder="بحث..." onkeyup="filterData()">
     </div>
@@ -76,7 +46,6 @@
     <div class="grid" id="dataGrid"></div>
 
 <script>
-    // قاعدة البيانات - أضف هنا كائناتك
     
     const database = [     
   {name: "أديميا هيرتبيس", sci: "Adimia hirtipes", group: ["خنافس", "خنافس داكنة"], status: "LC", class: "status-lc"},
@@ -762,17 +731,19 @@
  
 ];
  
-        
-    const s = status.toUpperCase();
-        if (s === 'EN' || s === 'مهدد بالانقراض') return { label: 'مهدد بالانقراض', class: 'status-EN' };
+    
+
+    function getStatusInfo(status) {
+        const s = status.toUpperCase();
+        if (s.includes('EN') || s.includes('مهدد')) return { label: 'مهدد بالانقراض', class: 'status-EN' };
         return { label: 'غير مهدد', class: 'status-LC' };
     }
 
     function initCategories() {
         const select = document.getElementById('categorySelect');
-        const kingdoms = [...new Set(database.map(item => item.kingdom))];
-        kingdoms.forEach(k => {
-            select.innerHTML += `<option value="${k}">${k}</option>`;
+        const groups = [...new Set(database.map(item => item.group))];
+        groups.forEach(g => {
+            select.innerHTML += `<option value="${g}">${g}</option>`;
         });
     }
 
@@ -782,13 +753,13 @@
             const statusInfo = getStatusInfo(item.status);
             return `
                 <div class="card">
-                    <img src="${item.img}" alt="${item.name}">
+                    ${item.img ? `<img src="${item.img}" alt="${item.name}">` : ''}
                     <div class="card-body">
                         <div class="status-tag ${statusInfo.class}">${statusInfo.label}</div>
                         <h3>${item.name}</h3>
-                        <i style="color: #666; font-size: 0.9em; display: block; margin-bottom: 10px;">${item.sci}</i>
+                        <i style="color: #666; font-size: 0.9em; display: block;">${item.sci}</i>
                         ${item.desc ? `<p style="font-size: 0.85em; color: #444; margin: 10px 0;">${item.desc}</p>` : ''}
-                        <small style="color: var(--accent); display: block; margin-top: 10px;">القسم: ${item.group}</small>
+                        <small style="color: var(--accent); font-weight:bold; display:block; margin-top:10px;">القسم: ${item.group}</small>
                     </div>
                 </div>
             `;
@@ -799,8 +770,9 @@
         const query = document.getElementById('search').value.toLowerCase();
         const cat = document.getElementById('categorySelect').value;
         const filtered = database.filter(item => {
-            return (item.name.toLowerCase().includes(query) || item.sci.toLowerCase().includes(query) || item.group.toLowerCase().includes(query)) && 
-                   (cat === 'الكل' || item.kingdom === cat);
+            const matchText = item.name.toLowerCase().includes(query) || item.sci.toLowerCase().includes(query);
+            const matchCat = (cat === 'الكل' || item.group === cat);
+            return matchText && matchCat;
         });
         render(filtered);
     }
@@ -810,4 +782,5 @@
 </script>
 </body>
 </html>
+    
     

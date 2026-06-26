@@ -1,0 +1,21 @@
+[
+  {
+    "name": "صرد أحمر الظهر",
+    "sci": "Lanius collurio",
+    "group": "طيور",
+    "status": "LC",
+    "class": "status-lc",
+    "desc_file": "صرد_احمر_الظهر.txt",
+    "img": "صرد احمر الظهر.jpg"
+  },
+  {
+    "name": "صرد أحمر الذنب",
+    "sci": "Lanius phoenicuroides",
+    "group": "طيور",
+    "status": "LC",
+    "class": "status-lc",
+    "desc_file": "صرد_احمر_الذنب.txt",
+    "img": "صرد احمر الذنب.jpg"
+  }
+]
+

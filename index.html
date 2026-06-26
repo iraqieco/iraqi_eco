@@ -522,7 +522,7 @@
   { name: "شاهين", sci: "Falco peregrinus", group: "طيور", status: "LC", class: "status-lc" },
   { name: "درة مطوقة", sci: "Psittacula krameri", group: "طيور", status: "LC", class: "status-lc" },
   { name: "صفارية اورسية", sci: "Oriolus oriolus", group: "طيور", status: "LC", class: "status-lc" },
-  { name: "صرد أحمر الظهر", sci: "Lanius collurio", group: "طيور", status: "LC", class: "status-lc", img: "صرد احمر الظهر.jpg" },
+  { name: "صرد أحمر الظهر", sci: "Lanius collurio", group: "طيور", status: "LC", class: "status-lc", desc: "طائر مهاجر صغير يتغذى على الحشرات، و يتميز بوجود قناع اسود حول عينيه.", img: "صرد احمر الظهر.jpg" },
   { name: "صرد أحمر الذنب", sci: "Lanius phoenicuroides", group: "طيور", status: "LC", class: "status-lc" },
   { name: "صرد اشهب", sci: "Lanius isabellinus", group: "طيور", status: "LC", class: "status-lc" },
   { name: "صرد طويل الذنب", sci: "Lanius schach", group: "طيور", status: "LC", class: "status-lc" },
@@ -809,6 +809,36 @@
         { name: "سحلية الجري (جنوبية)", sci: "Acanthodactylus boskianus asper", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" },
         { name: "سحلية شميدت", sci: "Acanthodactylus schmidti", group: "زواحف", status: "غير مهدد (LC)", class: "status-lc" }
     ];
+
+    function render(data) {
+        const grid = document.getElementById('dataGrid');
+        grid.innerHTML = data.map(item => `
+            <div class="card">
+                <img src="${item.img}" alt="${item.name}">
+                <h3>${item.name}</h3>
+                <span class="sci">${item.sci}</span>
+                <p class="desc">${item.desc ? item.desc : 'لا يوجد وصف حالياً.'}</p>
+                <div class="status ${item.class}">${item.status}</div>
+            </div>
+        `).join('');
+    }
+
+    function filterData() {
+        const query = document.getElementById('search').value.toLowerCase();
+        const cat = document.getElementById('categorySelect').value;
+        const filtered = database.filter(item => {
+            const matchesSearch = item.name.toLowerCase().includes(query) || item.sci.toLowerCase().includes(query);
+            const matchesCat = (cat === 'الكل' || item.group === cat);
+            return matchesSearch && matchesCat;
+        });
+        render(filtered);
+    }
+
+    render(database);
+</script>
+</body>
+</html>
+
    function render(data) {
         const grid = document.getElementById('dataGrid');
         grid.innerHTML = data.map(item => `

@@ -8,9 +8,10 @@
         body { font-family: 'Segoe UI', Tahoma, sans-serif; padding: 20px; background: #f9f9f9; text-align: center; }
         header { margin-bottom: 30px; }
         h1 { color: #1b5e20; margin: 0; }
-        #searchInput { width: 80%; padding: 12px; margin-bottom: 30px; border: 2px solid #1b5e20; border-radius: 8px; }
         
-        #card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        #searchInput, #groupFilter { width: 80%; padding: 12px; margin-bottom: 15px; border: 2px solid #1b5e20; border-radius: 8px; box-sizing: border-box; }
+        
+        #card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
         .card { border: 2px solid #1b5e20; border-radius: 15px; padding: 15px; background: white; text-align: center; display: flex; flex-direction: column; align-items: center; position: relative; }
         .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; background: #eee; margin-bottom: 10px; }
         
@@ -42,6 +43,10 @@
     </header>
 
     <input type="text" id="searchInput" placeholder="إبحث بالإسم العربي أو اللاتيني..." onkeyup="filterCards()">
+    
+    <select id="groupFilter" onchange="filterCards()">
+        <option value="الكل">أختر الفئة (الكل)</option>
+    </select>
 
     <div id="card-container"></div>
 
@@ -51,41 +56,72 @@
             "EN": "مهدد بالانقراض", "CR": "مهدد بشدة بالانقراض", "EX": "منقرض"
         };
 
+        let creaturesData = [];
+
         fetch('data1.json')
             .then(response => response.json())
             .then(data => {
-                const container = document.getElementById('card-container');
-                data.forEach((item, index) => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.id = 'card-' + index;
-                    // تم إضافة style="display:block" للصور لضمان معالجتها برمجياً
-                    card.innerHTML = `
-                        <img src="${item.img}" onerror="this.style.display='none'">
-                        <h3>${item.name}</h3>
-                        <div class="sci">${item.sci}</div>
-                        <div class="status ${item.class}">${statusMap[item.status] || item.status}</div>
-                        <div class="desc">${item.desc}</div>
-                        <button class="btn-download" onclick="downloadCard('card-${index}')">تنزيل البطاقة</button>
-                        <div class="card-footer-logo">عراقي إيكو</div>
-                    `;
-                    container.appendChild(card);
+                creaturesData = data;
+                renderCards(data);
+                updateGroupDropdown(data);
+            });
+
+        function renderCards(data) {
+            const container = document.getElementById('card-container');
+            container.innerHTML = '';
+            data.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.id = 'card-' + index;
+                card.innerHTML = `
+                    <img src="${item.img}" onerror="this.style.display='none'">
+                    <h3>${item.name}</h3>
+                    <div class="sci">${item.sci}</div>
+                    <div class="status ${item.class}">${statusMap[item.status] || item.status}</div>
+                    <div class="desc">${item.desc}</div>
+                    <button class="btn-download" onclick="downloadCard('card-${index}')">تنزيل البطاقة</button>
+                    <div class="card-footer-logo">عراقي إيكو</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function updateGroupDropdown(data) {
+            const select = document.getElementById('groupFilter');
+            const groups = {};
+
+            data.forEach(item => {
+                item.group.forEach(g => {
+                    groups[g] = (groups[g] || 0) + 1;
                 });
             });
 
+            for (const [group, count] of Object.entries(groups)) {
+                const option = document.createElement('option');
+                option.value = group;
+                option.textContent = `${group} (${count})`;
+                select.appendChild(option);
+            }
+        }
+
         function filterCards() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            document.querySelectorAll('.card').forEach(card => {
-                const name = card.querySelector('h3').textContent.toLowerCase();
-                const sci = card.querySelector('.sci').textContent.toLowerCase();
-                card.style.display = (name.includes(query) || sci.includes(query)) ? "" : "none";
+            const groupQuery = document.getElementById('groupFilter').value;
+
+            document.querySelectorAll('.card').forEach((card, index) => {
+                const item = creaturesData[index];
+                const name = item.name.toLowerCase();
+                const sci = item.sci.toLowerCase();
+                
+                const matchText = (name.includes(query) || sci.includes(query));
+                const matchGroup = (groupQuery === "الكل" || item.group.includes(groupQuery));
+
+                card.style.display = (matchText && matchGroup) ? "" : "none";
             });
         }
 
         async function downloadCard(id) {
             const cardElement = document.getElementById(id);
-            
-            // التأكد من أن الصور المحملة لا تعيق العملية
             html2canvas(cardElement, {
                 useCORS: true,
                 allowTaint: true,
@@ -105,3 +141,4 @@
     </script>
 </body>
 </html>
+

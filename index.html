@@ -11,8 +11,8 @@
         #searchInput { width: 80%; padding: 12px; margin-bottom: 30px; border: 2px solid #1b5e20; border-radius: 8px; }
         
         #card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .card { border: 2px solid #1b5e20; border-radius: 15px; padding: 15px; background: white; text-align: center; display: flex; flex-direction: column; align-items: center; }
-        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; background: #eee; }
+        .card { border: 2px solid #1b5e20; border-radius: 15px; padding: 15px; background: white; text-align: center; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; background: #eee; margin-bottom: 10px; }
         
         .card h3 { margin: 10px 0 2px; }
         .card .sci { font-size: 70%; color: #666; font-style: italic; margin-bottom: 8px; }
@@ -59,8 +59,9 @@
                     const card = document.createElement('div');
                     card.className = 'card';
                     card.id = 'card-' + index;
+                    // تم إضافة style="display:block" للصور لضمان معالجتها برمجياً
                     card.innerHTML = `
-                        <img src="${item.img}" onerror="this.src='placeholder.jpg'">
+                        <img src="${item.img}" onerror="this.style.display='none'">
                         <h3>${item.name}</h3>
                         <div class="sci">${item.sci}</div>
                         <div class="status ${item.class}">${statusMap[item.status] || item.status}</div>
@@ -76,27 +77,29 @@
             const query = document.getElementById('searchInput').value.toLowerCase();
             document.querySelectorAll('.card').forEach(card => {
                 const name = card.querySelector('h3').textContent.toLowerCase();
-                card.style.display = name.includes(query) ? "" : "none";
+                const sci = card.querySelector('.sci').textContent.toLowerCase();
+                card.style.display = (name.includes(query) || sci.includes(query)) ? "" : "none";
             });
         }
 
-        // تحسين دالة التنزيل
-        function downloadCard(id) {
+        async function downloadCard(id) {
             const cardElement = document.getElementById(id);
             
+            // التأكد من أن الصور المحملة لا تعيق العملية
             html2canvas(cardElement, {
                 useCORS: true,
                 allowTaint: true,
+                logging: false,
                 backgroundColor: "#ffffff",
-                scale: 2 // لضمان جودة عالية في الصورة
+                scale: 2
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'بطاقة_عراقي_إيكو.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             }).catch(err => {
-                console.error("خطأ في التنزيل:", err);
-                alert("حدث خطأ أثناء تنزيل البطاقة، تأكد من أن المتصفح يسمح بالعمليات المحلية.");
+                console.error("خطأ:", err);
+                alert("تعذر التنزيل تلقائياً، يرجى التأكد من أنك تستخدم المتصفح عبر خادم (Local Server).");
             });
         }
     </script>

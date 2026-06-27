@@ -2,63 +2,72 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>قاعدة بيانات الحياة البرية في العراق</title>
+    <title>عراقي إيكو | قاعدة بيانات المخلوقات الحية</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        body { font-family: sans-serif; padding: 20px; background: #f4f4f9; }
-        input { width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; }
-        table { width: 100%; border-collapse: collapse; background: white; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: right; }
-        th { background: #333; color: white; }
-        .status-lc { color: green; }
-        .status-vu { color: orange; }
-        .status-en { color: red; }
-        .status-cr { color: darkred; }
-        .status-ex { color: gray; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; padding: 20px; background: #f9f9f9; text-align: center; }
+        header { margin-bottom: 30px; }
+        h1 { color: #1b5e20; margin: 0; }
+        p { color: #555; }
+        #searchInput { width: 80%; padding: 12px; margin-bottom: 30px; border: 2px solid #1b5e20; border-radius: 8px; }
+        
+        #card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        
+        .card { border: 2px solid #1b5e20; border-radius: 15px; padding: 15px; background: white; text-align: center; }
+        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; background: #eee; }
+        .card h3 { margin: 10px 0 5px; }
+        .card .sci { font-size: 0.85em; color: #666; font-style: italic; }
+        .card .status { font-weight: bold; margin: 10px 0; }
+        .card .desc { font-size: 0.9em; height: 50px; overflow: hidden; margin-bottom: 10px; }
+        .btn-download { background: #1b5e20; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <h2>قاعدة بيانات التنوع البيولوجي - العراق</h2>
-    <input type="text" id="searchInput" placeholder="ابحث عن اسم الحيوان..." onkeyup="filterTable()">
+    <header>
+        <h1>عراقي إيكو</h1>
+        <p>قاعدة بيانات المخلوقات الحية في العراق</p>
+    </header>
 
-    <table id="data-table">
-        <thead>
-            <tr>
-                <th>الاسم</th>
-                <th>الاسم العلمي</th>
-                <th>المجموعة</th>
-                <th>الحالة</th>
-                <th>الوصف</th>
-            </tr>
-        </thead>
-        <tbody id="table-body"></tbody>
-    </table>
+    <input type="text" id="searchInput" placeholder="ابحث عن كائن حي..." onkeyup="filterCards()">
+
+    <div id="card-container"></div>
 
     <script>
-        // قراءة الملف
         fetch('data1.json')
             .then(response => response.json())
             .then(data => {
-                const tbody = document.getElementById('table-body');
-                data.forEach(item => {
-                    const row = `<tr>
-                        <td>${item.name}</td>
-                        <td><i>${item.sci}</i></td>
-                        <td>${item.group.join(', ')}</td>
-                        <td class="${item.class}">${item.status}</td>
-                        <td>${item.desc}</td>
-                    </tr>`;
-                    tbody.innerHTML += row;
+                const container = document.getElementById('card-container');
+                data.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.id = 'card-' + index;
+                    card.innerHTML = `
+                        <img src="${item.img}" onerror="this.src='placeholder.jpg'">
+                        <h3>${item.name}</h3>
+                        <div class="sci">${item.sci}</div>
+                        <div class="status ${item.class}">الحالة: ${item.status}</div>
+                        <div class="desc">${item.desc}</div>
+                        <button class="btn-download" onclick="downloadCard('card-${index}')">تنزيل البطاقة</button>
+                    `;
+                    container.appendChild(card);
                 });
             });
 
-        // وظيفة البحث
-        function filterTable() {
+        function filterCards() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const rows = document.querySelectorAll('#table-body tr');
-            rows.forEach(row => {
-                const name = row.cells[0].textContent.toLowerCase();
-                row.style.display = name.includes(query) ? "" : "none";
+            document.querySelectorAll('.card').forEach(card => {
+                const name = card.querySelector('h3').textContent.toLowerCase();
+                card.style.display = name.includes(query) ? "" : "none";
+            });
+        }
+
+        function downloadCard(id) {
+            html2canvas(document.getElementById(id)).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'species-card.png';
+                link.href = canvas.toDataURL();
+                link.click();
             });
         }
     </script>

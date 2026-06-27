@@ -17,7 +17,6 @@
         .card h3 { margin: 10px 0 2px; }
         .card .sci { font-size: 70%; color: #666; font-style: italic; margin-bottom: 8px; }
         
-        /* تصميم صندوق الحالة */
         .card .status { 
             font-weight: bold; 
             padding: 8px; 
@@ -29,7 +28,6 @@
             background-color: #f0f0f0;
         }
         
-        /* ألوان الحالات */
         .status-lc { color: #2e7d32; } 
         .status-nt { color: #827717; } 
         .status-vu { color: #ef6c00; } 
@@ -38,7 +36,10 @@
         .status-ex { color: #424242; } 
 
         .card .desc { font-size: 0.9em; height: 50px; overflow: hidden; margin-bottom: 15px; color: #333; }
-        .btn-download { background: #1b5e20; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; width: 50%; }
+        .btn-download { background: #1b5e20; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; width: 50%; margin-bottom: 10px; }
+        
+        /* تنسيق شعار البطاقة الصغير */
+        .card-footer-logo { font-size: 0.7em; color: #1b5e20; font-weight: bold; margin-top: 5px; border-top: 1px solid #ddd; padding-top: 5px; width: 100%; }
     </style>
 </head>
 <body>
@@ -48,7 +49,7 @@
         <p>قاعدة بيانات المخلوقات الحية في العراق</p>
     </header>
 
-    <input type="text" id="searchInput" placeholder="ابحث عن كائن حي..." onkeyup="filterCards()">
+    <input type="text" id="searchInput" placeholder="إبحث بالإسم العربي أو اللاتيني..." onkeyup="filterCards()">
 
     <div id="card-container"></div>
 
@@ -73,6 +74,7 @@
                         <div class="status ${item.class}">${statusMap[item.status] || item.status}</div>
                         <div class="desc">${item.desc}</div>
                         <button class="btn-download" onclick="downloadCard('card-${index}')">تنزيل البطاقة</button>
+                        <div class="card-footer-logo">عراقي إيكو</div>
                     `;
                     container.appendChild(card);
                 });

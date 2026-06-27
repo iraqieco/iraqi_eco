@@ -1,4 +1,950 @@
 [
+  
+  {
+    "name": "سلحفاة الفرات (الرفش)",
+    "sci": "Rafetus euphraticus",
+    "group": ["زواحف"],
+    "status": "EN",
+    "class": "status-en",
+    "desc": "أهوار الجنوب وضفاف دجلة والفرات.",
+    "img": "سلحفاة الفرات (الرفش).jpg"
+  },
+  {
+    "name": "السلحفاة القزوينية",
+    "sci": "Mauremys caspica",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "البرك والأنهار في عموم البلاد.",
+    "img": "السلحفاة القزوينية.jpg"
+  },
+  {
+    "name": "السلحفاة اليونانية",
+    "sci": "Testudo graeca",
+    "group": ["زواحف"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "التلال والسهول (الشمال والوسط).",
+    "img": "السلحفاة اليونانية.jpg"
+  },
+  {
+    "name": "السلحفاة المهموزة (شمالية)",
+    "sci": "Testudo graeca Ibera",
+    "group": ["زواحف"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "المرتفعات الجبلية في كردستان.",
+    "img": "السلحفاة المهموزة (شمالية).jpg"
+  },
+  {
+    "name": "السلحفاة المهموزة (جنوبية)",
+    "sci": "Testudo graeca terrestris",
+    "group": ["زواحف"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "المناطق شبه الصحراوية والسهول الوسطى.",
+    "img": "السلحفاة المهموزة (جنوبية).jpg"
+  },
+  {
+    "name": "الضب المصري",
+    "sci": "Uromastyx aegyptia",
+    "group": ["زواحف"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "الصحاري المفتوحة والبادية الجنوبية.",
+    "img": "الضب المصري.jpg"
+  },
+  {
+    "name": "الضب المصري (ميكروليبس)",
+    "sci": "Uromastyx aegyptia microlepis",
+    "group": ["زواحف"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "الصحراء الغربية وبادية النجف والمثنى.",
+    "img": "الضب المصري (ميكروليبس).jpg"
+  },
+  {
+    "name": "الضب العراقي (المسقوفي)",
+    "sci": "Saara loricata",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول الغرينية والمنطقة المتموجة.",
+    "img": "الضب العراقي (المسقوفي).jpg"
+  },
+  {
+    "name": "الحرذون النجمي",
+    "sci": "Stellagama stellio",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصخرية والجدران القديمة.",
+    "img": "الحرذون النجمي.jpg"
+  },
+  {
+    "name": "الحرذون الصخري (نوتا)",
+    "sci": "Laudakia nupta",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المنحدرات الجبلية الوعرة والكهوف.",
+    "img": "الحرذون الصخري (نوتا).jpg"
+  },
+  {
+    "name": "الحرذون القوقازي",
+    "sci": "Paralaudakia caucasia",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المرتفعات الجبلية العالية شمالاً.",
+    "img": "الحرذون القوقازي.jpg"
+  },
+  {
+    "name": "حرذون الصحراء العراقي",
+    "sci": "Trapelus agnetae",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق السهلية الجافة.",
+    "img": "حرذون الصحراء العراقي.jpg"
+  },
+  {
+    "name": "حرذون الحقول المخطط",
+    "sci": "Trapelus ruderatus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الحقول الجافة والمنطقة المتموجة.",
+    "img": "حرذون الحقول المخطط.jpg"
+  },
+  {
+    "name": "حرذون الأرض الفارسي",
+    "sci": "Trapelus persicus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول الرملية والبوادي الجنوبية.",
+    "img": "حرذون الأرض الفارسي.jpg"
+  },
+  {
+    "name": "برص جبل سفين",
+    "sci": "Asaccus saffinae",
+    "group": ["زواحف"],
+    "status": "DD",
+    "class": "status-dd",
+    "desc": "حصرياً في جبل سفين (شمالاً).",
+    "img": "برص جبل سفين.jpg"
+  },
+  {
+    "name": "برص كوردستان",
+    "sci": "Asaccus kurdistanensis",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الجبلية في إقليم كردستان.",
+    "img": "برص كوردستان.jpg"
+  },
+  {
+    "name": "برص غريغوري",
+    "sci": "Asaccus griseonotus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المنحدرات الصخرية والحدود الشرقية.",
+    "img": "برص غريغوري.jpg"
+  },
+  {
+    "name": "برص بلانفورد الصخري",
+    "sci": "Bunopus tuberculatus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الصحاري والسبخات والسهول الحصوية.",
+    "img": "برص بلانفورد الصخري.jpg"
+  },
+  {
+    "name": "برص الحائط الرقطي",
+    "sci": "Cyrtopodion scabrum",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المنازل والمباني في عموم العراق.",
+    "img": "برص الحائط الرقطي.jpg"
+  },
+  {
+    "name": "برص المنازل الأصفر",
+    "sci": "Hemidactylus flaviviridis",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق السكنية (وسط وجنوب العراق).",
+    "img": "برص المنازل الأصفر.jpg"
+  },
+  {
+    "name": "برص البحر المتوسط",
+    "sci": "Hemidactylus turcicus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المباني والحدائق في معظم المحافظات.",
+    "img": "برص البحر المتوسط.jpg"
+  },
+  {
+    "name": "برص برينت",
+    "sci": "Hemidactylus persicus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المنحدرات والبساتين (الشرق والجنوب).",
+    "img": "برص برينت.jpg"
+  },
+  {
+    "name": "برص مروحي الأصابع",
+    "sci": "Ptyodactylus hasselquistii",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الجدران الصخرية والكهوف القديمة.",
+    "img": "برص مروحي الأصابع.jpg"
+  },
+  {
+    "name": "البرص العراقي (ميدو)",
+    "sci": "Mediodactylus heteropholis",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الجبلية في شمال العراق.",
+    "img": "البرص العراقي (ميدو).jpg"
+  },
+  {
+    "name": "برص الحصى القزم",
+    "sci": "Tropiocolotes wolfgangsteini",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصحراوية والسهول الغربية.",
+    "img": "برص الحصى القزم.jpg"
+  },
+  {
+    "name": "برص النيل القزم",
+    "sci": "Tropiocolotes nattereri",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الصحاري والبوادي أقصى الجنوب.",
+    "img": "برص النيل القزم.jpg"
+  },
+  {
+    "name": "الحرباء الشائعة",
+    "sci": "Chamaeleo chamaeleon",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "البساتين والمناطق المشجرة والوديان.",
+    "img": "الحرباء الشائعة.jpg"
+  },
+  {
+    "name": "سحلية الجري (بوسك)",
+    "sci": "Acanthodactylus boskianus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول المفتوحة والمناطق الزراعية.",
+    "img": "سحلية الجري (بوسك).jpg"
+  },
+  {
+    "name": "سحلية الجري (جنوبية)",
+    "sci": "Acanthodactylus boskianus asper",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصحراوية والسهول جنوباً.",
+    "img": "سحلية الجري (جنوبية).jpg"
+  },
+  {
+    "name": "سحلية شميدت",
+    "sci": "Acanthodactylus schmidti",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الكثبان الرملية والبوادي.",
+    "img": "سحلية شميدت.jpg"
+  },
+  {
+    "name": "سحلية الرمال الذهبية",
+    "sci": "Acanthodactylus gongrorhynchatus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الصحاري الرملية أقصى الجنوب.",
+    "img": "سحلية الرمال الذهبية.jpg"
+  },
+  {
+    "name": "سحلية الشبكة",
+    "sci": "Acanthodactylus arabicus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول الحصوية الجنوبية.",
+    "img": "سحلية الشبكة.jpg"
+  },
+  {
+    "name": "سحلية بلانفورد",
+    "sci": "Acanthodactylus opheodurus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول الحصوية والبوادي الجافة.",
+    "img": "سحلية بلانفورد.jpg"
+  },
+  {
+    "name": "سحلية روبيل",
+    "sci": "Ablepharus rueppellii",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الغطاء النباتي الكثيف شمال العراق.",
+    "img": "سحلية روبيل.jpg"
+  },
+  {
+    "name": "سحلية العين الثعبانية",
+    "sci": "Ablepharus kitaibelii",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المروج الجبلية والمناطق الرطبة.",
+    "img": "سحلية العين الثعبانية.jpg"
+  },
+  {
+    "name": "سحلية الصحراء",
+    "sci": "Mesalina brevirostris",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول شبه الصحراوية والبوادي.",
+    "img": "سحلية الصحراء.jpg"
+  },
+  {
+    "name": "سحلية غوتش",
+    "sci": "Lacerta media",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المرتفعات الجبلية والغابات شمالاً.",
+    "img": "سحلية غوتش.jpg"
+  },
+  {
+    "name": "السحلية رشيقة الرأس",
+    "sci": "Lacerta agilis",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول العشبية المرتفعة شمالاً.",
+    "img": "السحلية رشيقة الرأس.jpg"
+  },
+  {
+    "name": "سحلية كردستان الصخرية",
+    "sci": "Darevskia raddei",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المنحدرات الصخرية في جبال الشمال.",
+    "img": "سحلية كردستان الصخرية.jpg"
+  },
+  {
+    "name": "السقنقر المخطط",
+    "sci": "Trachylepis aurata",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الجبلية والسهول المعشبة.",
+    "img": "السقنقر المخطط.jpg"
+  },
+  {
+    "name": "السقنقر المخطط (جنوبية)",
+    "sci": "Trachylepis aurata septemtaeniata",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "البساتين والمزارع (وسط وجنوب).",
+    "img": "السقنقر المخطط (جنوبية).jpg"
+  },
+  {
+    "name": "سمكة الرمال (الدمام)",
+    "sci": "Scincus scincus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الكثبان الرملية والبوادي الغربية.",
+    "img": "سمكة الرمال (الدمام).jpg"
+  },
+  {
+    "name": "سمكة الرمال الشرقية",
+    "sci": "Scincus conirostris",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الرملية أقصى جنوب العراق.",
+    "img": "سمكة الرمال الشرقية.jpg"
+  },
+  {
+    "name": "السقنقر الذهبي",
+    "sci": "Eumeces schneideri",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الجبلية والسهول المتموجة.",
+    "img": "السقنقر الذهبي.jpg"
+  },
+  {
+    "name": "السقنقر الذهبي (برينسيبس)",
+    "sci": "Eumeces schneideri princeps",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول والوديان شمال وشرق العراق.",
+    "img": "السقنقر الذهبي (برينسيبس).jpg"
+  },
+  {
+    "name": "سحلية الثعبان المخططة",
+    "sci": "Chalcides ocellatus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "البساتين والمناطق الزراعية والحدائق.",
+    "img": "سحلية الثعبان المخططة.jpg"
+  },
+  {
+    "name": "سحلية الثعبان الشامية",
+    "sci": "Heremites vittatus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق العشبية والسهول المفتوحة.",
+    "img": "سحلية الثعبان الشامية.jpg"
+  },
+  {
+    "name": "الورل الصحراوي",
+    "sci": "Varanus griseus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "البوادي والصحاري في عموم العراق.",
+    "img": "الورل الصحراوي.jpg"
+  },
+  {
+    "name": "الورل النيستروفي",
+    "sci": "Varanus nesterovi",
+    "group": ["زواحف"],
+    "status": "DD",
+    "class": "status-dd",
+    "desc": "المناطق الجبلية والوديان الصخرية.",
+    "img": "الورل النيستروفي.jpg"
+  },
+  {
+    "name": "السحلية الدودية",
+    "sci": "Diplometopon zarudnyi",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "تحت الرمال في الصحاري الجنوبية.",
+    "img": "السحلية الدودية.jpg"
+  },
+  {
+    "name": "الثعبان الأعمى",
+    "sci": "Indotyphlops braminus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "تحت التربة في الحدائق والمزارع.",
+    "img": "الثعبان الأعمى.jpg"
+  },
+  {
+    "name": "ثعبان التربة الدودي",
+    "sci": "Typhlops vermicularis",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "تحت الصخور في المناطق المتموجة.",
+    "img": "ثعبان التربة الدودي.jpg"
+  },
+  {
+    "name": "ثعبان الرمال (دفان)",
+    "sci": "Eryx jaculus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول الرملية والحقول الجافة.",
+    "img": "ثعبان الرمال (دفان).jpg"
+  },
+  {
+    "name": "ثعبان الرمال (فاملياريس)",
+    "sci": "Eryx jaculus familiaris",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق المتموجة شمال العراق.",
+    "img": "ثعبان الرمال (فاملياريس).jpg"
+  },
+  {
+    "name": "ثعبان الرمال العربي",
+    "sci": "Eryx jayakari",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الكثبان الرملية في بادية الجنوب.",
+    "img": "ثعبان الرمال العربي.jpg"
+  },
+  {
+    "name": "ثعبان الرمال المرقط",
+    "sci": "Eryx miliaris",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصحراوية الرملية والحصوية.",
+    "img": "ثعبان الرمال المرقط.jpg"
+  },
+  {
+    "name": "العربيد الأسود",
+    "sci": "Dolichophis jugularis",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول الزراعية والبساتين شمالاً.",
+    "img": "العربيد الأسود.jpg"
+  },
+  {
+    "name": "العربيد الأسود (شرق)",
+    "sci": "Dolichophis schmidti",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المنحدرات الجبلية والوديان شمالاً.",
+    "img": "العربيد الأسود (شرق).jpg"
+  },
+  {
+    "name": "ثعبان السوط (عربيد)",
+    "sci": "Dolichophis caspius",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول العشبية والمناطق المتموجة.",
+    "img": "ثعبان السوط (عربيد).jpg"
+  },
+  {
+    "name": "الثعبان الرشيق",
+    "sci": "Platyceps najadum",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصخرية والمشجرة شمالاً.",
+    "img": "الثعبان الرشيق.jpg"
+  },
+  {
+    "name": "الثعبان الرشيق (داهلي)",
+    "sci": "Platyceps najadum dahlii",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الوديان والجبال ذات الغطاء النباتي.",
+    "img": "الثعبان الرشيق (داهلي).jpg"
+  },
+  {
+    "name": "الثعبان الأنيق",
+    "sci": "Platyceps elegantissimus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الصحاري أقصى غرب وجنوب غرب العراق.",
+    "img": "الثعبان الأنيق.jpg"
+  },
+  {
+    "name": "ثعبان فينتري",
+    "sci": "Platyceps ventromaculatus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق شبه الصحراوية والحدائق.",
+    "img": "ثعبان فينتري.jpg"
+  },
+  {
+    "name": "ثعبان روجرز",
+    "sci": "Platyceps rogersi",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصحراوية والوديان الجافة.",
+    "img": "ثعبان روجرز.jpg"
+  },
+  {
+    "name": "ثعبان رودوس",
+    "sci": "Platyceps rhodorachis",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصخرية والوديان (شائع).",
+    "img": "ثعبان رودوس.jpg"
+  },
+  {
+    "name": "ثعبان كولبير الصخري",
+    "sci": "Platyceps karelini",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "التلال الصخرية والسهول الشرقية.",
+    "img": "ثعبان كولبير الصخري.jpg"
+  },
+  {
+    "name": "الأرقم العراقي",
+    "sci": "Spalerosophis diadema",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول المفتوحة والبوادي والمزارع.",
+    "img": "الأرقم العراقي.jpg"
+  },
+  {
+    "name": "الأرقم (سلالة كليفي)",
+    "sci": "Spalerosophis diadema cliffordi",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الصحاري الغربية والجنوبية.",
+    "img": "الأرقم (سلالة كليفي).jpg"
+  },
+  {
+    "name": "الثعبان القزم المتوج",
+    "sci": "Eirenis coronella",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق المتموجة والتلال.",
+    "img": "الثعبان القزم المتوج.jpg"
+  },
+  {
+    "name": "الثعبان القزم (فراسنيري)",
+    "sci": "Eirenis coronelloides",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول المفتوحة والحقول شمالاً.",
+    "img": "الثعبان القزم (فراسنيري).jpg"
+  },
+  {
+    "name": "الثعبان القزم الفارسي",
+    "sci": "Eirenis persicus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصخرية والوديان (الشرق).",
+    "img": "الثعبان القزم الفارسي.jpg"
+  },
+  {
+    "name": "الثعبان القزم ذو الطوق",
+    "sci": "Eirenis collaris",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول الجافة والمنطقة المتموجة.",
+    "img": "الثعبان القزم ذو الطوق.jpg"
+  },
+  {
+    "name": "ثعبان الجرذان الشامي",
+    "sci": "Zamenis hohenackeri",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الغابات الجبلية العالية والرطبة.",
+    "img": "ثعبان الجرذان الشامي.jpg"
+  },
+  {
+    "name": "ثعبان الجرذان المرقط",
+    "sci": "Hemorrhois ravergieri",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المنحدرات الصخرية والجبال شمالاً.",
+    "img": "ثعبان الجرذان المرقط.jpg"
+  },
+  {
+    "name": "الثعبان العملاتي",
+    "sci": "Hemorrhois nummifer",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الزراعية والجبلية والبساتين.",
+    "img": "الثعبان العملاتي.jpg"
+  },
+  {
+    "name": "ثعبان الماء",
+    "sci": "Natrix tessellata",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "قرب الأنهار والأهوار والمياه.",
+    "img": "ثعبان الماء.jpg"
+  },
+  {
+    "name": "الحفاث (مويلة)",
+    "sci": "Malpolon moilensis",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصحراوية والبوادي.",
+    "img": "الحفاث (مويلة).jpg"
+  },
+  {
+    "name": "الثعبان المنسوج",
+    "sci": "Malpolon Insignitus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الحقول الزراعية والسهول والتلال.",
+    "img": "الثعبان المنسوج.jpg"
+  },
+  {
+    "name": "ثعبان الرمال المخطط",
+    "sci": "Psammophis schokari",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الصحاري والسهول المفتوحة.",
+    "img": "ثعبان الرمال المخطط.jpg"
+  },
+  {
+    "name": "ثعبان الرمال (الرمال)",
+    "sci": "Psammophis sibilans",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الزراعية القريبة من المياه.",
+    "img": "ثعبان الرمال (الرمال).jpg"
+  },
+  {
+    "name": "الثعبان القطي",
+    "sci": "Telescopus fallax",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصخرية والمنحدرات شمالاً.",
+    "img": "الثعبان القطي.jpg"
+  },
+  {
+    "name": "الثعبان القطي السوري",
+    "sci": "Telescopus nigriceps",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصحراوية الغربية.",
+    "img": "الثعبان القطي السوري.jpg"
+  },
+  {
+    "name": "الثعبان القطي (تيسيلاتي)",
+    "sci": "Telescopus hoogstraali",
+    "group": ["زواحف"],
+    "status": "EN",
+    "class": "status-en",
+    "desc": "المناطق شبه الصحراوية والوديان غرباً.",
+    "img": "الثعبان القطي (تيسيلاتي).jpg"
+  },
+  {
+    "name": "الصل الأسود (كوبرا)",
+    "sci": "Walterinnesia aegyptia",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصحراوية والبوادي.",
+    "img": "الصل الأسود (كوبرا).jpg"
+  },
+  {
+    "name": "الكوبرا البحرية",
+    "sci": "Hydrophis cyanocinctus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مياه الخليج العربي وخور الزبير.",
+    "img": "الكوبرا البحرية.jpg"
+  },
+  {
+    "name": "أفعى البحر (رأس صغير)",
+    "sci": "Hydrophis gracilis",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المياه الإقليمية العراقية العميقة.",
+    "img": "أفعى البحر (رأس صغير).jpg"
+  },
+  {
+    "name": "الأفعى المقرنة (أم جنيب)",
+    "sci": "Cerastes cerastes",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الصحاري الرملية الغربية والجنوبية.",
+    "img": "الأفعى المقرنة (أم جنيب).jpg"
+  },
+  {
+    "name": "الأفعى المقرنة (غاسبريتي)",
+    "sci": "Cerastes gasperettii",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "بادية النجف والسماوة والزبير.",
+    "img": "الأفعى المقرنة (غاسبريتي).jpg"
+  },
+  {
+    "name": "أفعى الحراشف المنشارية",
+    "sci": "Echis carinatus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصخرية والسهول (وسط وجنوب).",
+    "img": "أفعى الحراشف المنشارية.jpg"
+  },
+  {
+    "name": "أفعى الحراشف (سوتشويكي)",
+    "sci": "Echis carinatus sochureki",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "التلال الشرقية ومناطق السهل الرسوبي.",
+    "img": "أفعى الحراشف (سوتشويكي).jpg"
+  },
+  {
+    "name": "أفعى سيد دخيل (الكاذبة)",
+    "sci": "Pseudocerastes fieldi",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الصحراء الغربية والمناطق الصخرية جنوباً.",
+    "img": "أفعى سيد دخيل (الكاذبة).jpg"
+  },
+  {
+    "name": "أفعى القرناء الفارسية",
+    "sci": "Pseudocerastes persicus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الجبال والوديان في شرق وشمال شرق العراق.",
+    "img": "أفعى القرناء الفارسية.jpg"
+  },
+  {
+    "name": "أفعى المشرق (الرقطاء)",
+    "sci": "Macrovipera lebetina",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الجبلية والمنطقة المتموجة.",
+    "img": "أفعى المشرق (الرقطاء).jpg"
+  },
+  {
+    "name": "أفعى المشرق (أوفوريتي)",
+    "sci": "Macrovipera lebetina euphratica",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "سهول دجلة والفرات والمناطق الزراعية.",
+    "img": "أفعى المشرق (أوفوريتي).jpg"
+  },
+  {
+    "name": "أفعى كردستان (رادي)",
+    "sci": "Vipera raddei",
+    "group": ["زواحف"],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "المرتفعات الجبلية العالية شمالاً.",
+    "img": "أفعى كردستان (رادي).jpg"
+  },
+  {
+    "name": "أفعى جبل صقر",
+    "sci": "Montivipera albicornuta",
+    "group": ["زواحف"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "قمم الجبال الوعرة الحدودية شمالاً.",
+    "img": "أفعى جبل صقر.jpg"
+  },
+  {
+    "name": "أفعى السجادة",
+    "sci": "Vipera darevskii",
+    "group": ["زواحف"],
+    "status": "CR",
+    "class": "status-cr",
+    "desc": "مناطق محدودة جداً في الجبال الشمالية.",
+    "img": "أفعى السجادة.jpg"
+  },
+  {
+    "name": "برص سيستان الصخري",
+    "sci": "Cyrtopodion sistanense",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصخرية والوديان شرق العراق.",
+    "img": "برص سيستان الصخري.jpg"
+  },
+  {
+    "name": "سحلية كولمان المتنوعة",
+    "sci": "Acanthodactylus mutabilis",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول الحصوية والبوادي الغربية.",
+    "img": "سحلية كولمان المتنوعة.jpg"
+  },
+  {
+    "name": "ثعبان الجبال القزم",
+    "sci": "Eirenis decemlineatus",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المنحدرات الجبلية والوديان شمالاً.",
+    "img": "ثعبان الجبال القزم.jpg"
+  },
+  {
+    "name": "سحلية الجدران القوقازية",
+    "sci": "Darevskia caucasica",
+    "group": ["زواحف"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "قمم الجبال العالية والغابات الشمالية.",
+    "img": "سحلية الجدران القوقازية.jpg"
+  },
+  {
+    "name": "ضفدع البحيرة",
+    "sci": "Pelophylax ridibundus",
+    "group": ["برمائيات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الجداول والأنهار والأهوار في كل العراق.",
+    "img": "ضفدع البحيرة.jpg"
+  },
+  {
+    "name": "العلجوم الأخضر",
+    "sci": "Bufotes variabilis",
+    "group": ["برمائيات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المزارع والبراري والمناطق السكنية.",
+    "img": "العلجوم الأخضر.jpg"
+  },
+  {
+    "name": "ضفدع الشجر الأوراسي",
+    "sci": "Hyla savignyi",
+    "group": ["برمائيات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "البساتين والمناطق الكثيفة بالزرع.",
+    "img": "ضفدع الشجر الأوراسي.jpg"
+  },
+  {
+    "name": "سمندل كوردستان",
+    "sci": "Neurergus derjugini",
+    "group": ["برمائيات"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "العيون والينابيع الجبلية في الشمال.",
+    "img": "سمندل كوردستان.jpg"
+  },
   {
     "name": "الأيل الأسمر الفارسي",
     "sci": "Dama mesopotamica",

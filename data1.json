@@ -1,49 +1,85 @@
 [
   
   {
-    "name": "سلحفاة الفرات (الرفش)",
-    "sci": "Rafetus euphraticus",
-    "group": ["زواحف"],
+    "name": "السلحفاة ضخمة الرأس",
+    "sci": "Caretta caretta",
+    "group": ["زواحف", "بحرية"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "تتواجد في المياه البحرية والخليج العربي.",
+    "img": "السلحفاة ضخمة الرأس.jpg"
+  },
+  {
+    "name": "السلحفاة الخضراء",
+    "sci": "Chelonia mydas",
+    "group": ["زواحف", "بحرية"],
     "status": "EN",
     "class": "status-en",
-    "desc": "أهوار الجنوب وضفاف دجلة والفرات.",
-    "img": "سلحفاة الفرات (الرفش).jpg"
+    "desc": "تتواجد في المياه الإقليمية العراقية بالخليج العربي.",
+    "img": "السلحفاة الخضراء.jpg"
   },
   {
-    "name": "السلحفاة القزوينية",
-    "sci": "Mauremys caspica",
-    "group": ["زواحف"],
+    "name": "سلحفاة صقرية المنقار",
+    "sci": "Eretmochelys imbricata bissa",
+    "group": ["زواحف", "بحرية"],
+    "status": "CR",
+    "class": "status-cr",
+    "desc": "تتواجد في المياه البحرية الساحلية.",
+    "img": "سلحفاة صقرية المنقار.jpg"
+  },
+  {
+    "name": "سلحفاة لجأة ردلي الزيتونية",
+    "sci": "Lepidochelys olivacea",
+    "group": ["زواحف", "بحرية"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "تتواجد نادراً في المياه البحرية العراقية.",
+    "img": "سلحفاة لجأة ردلي الزيتونية.jpg"
+  },
+  {
+    "name": "السلحفاة جلدية الظهر",
+    "sci": "Dermochelys coriacea schlegelii",
+    "group": ["زواحف", "بحرية"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "تتواجد في المياه البحرية المفتوحة.",
+    "img": "السلحفاة جلدية الظهر.jpg"
+  },
+  {
+    "name": "السلحفاة القزوينية (تحت نوع caspica)",
+    "sci": "Mauremys caspica caspica",
+    "group": ["زواحف", "مائية عذبة"],
     "status": "LC",
     "class": "status-lc",
-    "desc": "البرك والأنهار في عموم البلاد.",
-    "img": "السلحفاة القزوينية.jpg"
+    "desc": "تنتشر في البرك والأنهار والمستنقعات.",
+    "img": "السلحفاة القزوينية caspica.jpg"
   },
   {
-    "name": "السلحفاة اليونانية",
-    "sci": "Testudo graeca",
-    "group": ["زواحف"],
-    "status": "VU",
-    "class": "status-vu",
-    "desc": "التلال والسهول (الشمال والوسط).",
-    "img": "السلحفاة اليونانية.jpg"
+    "name": "السلحفاة القزوينية (تحت نوع siebenrocki)",
+    "sci": "Mauremys caspica siebenrocki",
+    "group": ["زواحف", "مائية عذبة"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "تنتشر في المسطحات المائية في جنوب ووسط العراق.",
+    "img": "السلحفاة القزوينية siebenrocki.jpg"
   },
   {
-    "name": "السلحفاة المهموزة (شمالية)",
-    "sci": "Testudo graeca Ibera",
-    "group": ["زواحف"],
+    "name": "سلحفاة مهمزة الورك",
+    "sci": "Testudo graeca ibera",
+    "group": ["زواحف", "برية"],
     "status": "VU",
     "class": "status-vu",
-    "desc": "المرتفعات الجبلية في كردستان.",
-    "img": "السلحفاة المهموزة (شمالية).jpg"
+    "desc": "تنتشر في المناطق البرية والمراعي.",
+    "img": "سلحفاة مهمزة الورك.jpg"
   },
   {
-    "name": "السلحفاة المهموزة (جنوبية)",
-    "sci": "Testudo graeca terrestris",
-    "group": ["زواحف"],
-    "status": "VU",
-    "class": "status-vu",
-    "desc": "المناطق شبه الصحراوية والسهول الوسطى.",
-    "img": "السلحفاة المهموزة (جنوبية).jpg"
+    "name": "سلحفاة الفرات ذات القوقعة اللينة",
+    "sci": "Rafetus euphraticus",
+    "group": ["زواحف", "مائية عذبة"],
+    "status": "EN",
+    "class": "status-en",
+    "desc": "مستوطنة في نهري دجلة والفرات والأهوار.",
+    "img": "سلحفاة الفرات ذات القوقعة اللينة.jpg"
   },
   {
     "name": "الضب المصري",

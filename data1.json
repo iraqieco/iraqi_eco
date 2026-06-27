@@ -1,0 +1,922 @@
+[
+  {
+    "name": "الأيل الأسمر الفارسي",
+    "sci": "Dama mesopotamica",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "EN",
+    "class": "status-en",
+    "desc": "محميات ديالى، ميسان، والنجف.",
+    "img": "الأيل الأسمر الفارسي.jpg"
+  },
+  {
+    "name": "غزال الريم",
+    "sci": "Gazella subgutturosa",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "بادية السماوة، الرطبة، ومحمية مندلي.",
+    "img": "غزال الريم.jpg"
+  },
+  {
+    "name": "غزال الجبل",
+    "sci": "Gazella gazella",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "EN",
+    "class": "status-en",
+    "desc": "المناطق الحدودية الشرقية (نادر جداً).",
+    "img": "غزال الجبل.jpg"
+  },
+  {
+    "name": "الغزال العفري",
+    "sci": "Gazella dorcas",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "الصحاري الجنوبية والغربية.",
+    "img": "الغزال العفري.jpg"
+  },
+  {
+    "name": "المها العربي",
+    "sci": "Oryx leucoryx",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "محميات خاصة (أعيد توطينه).",
+    "img": "المها العربي.jpg"
+  },
+  {
+    "name": "الكبش الآسيوي",
+    "sci": "Ovis gmelini",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "جبال كردستان الوعرة.",
+    "img": "الكبش الآسيوي.jpg"
+  },
+  {
+    "name": "الماعز البري",
+    "sci": "Capra aegagrus",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "قمم جبال قنديل وحصاروست وكارا.",
+    "img": "الماعز البري.jpg"
+  },
+  {
+    "name": "الخنزير البري",
+    "sci": "Sus scrofa",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الأهوار، ضفاف الأنهار، وغابات الشمال.",
+    "img": "الخنزير البري.jpg"
+  },
+  {
+    "name": "النمر الفارسي",
+    "sci": "Panthera pardus saxicolor",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "EN",
+    "class": "status-en",
+    "desc": "جبال كردستان (بارزان، بيمو، قره داغ).",
+    "img": "النمر الفارسي.jpg"
+  },
+  {
+    "name": "الأسد الآسيوي",
+    "sci": "Panthera leo leo",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "EX",
+    "class": "status-ex",
+    "desc": "منقرض محلياً (تاريخياً في الأهوار).",
+    "img": "الأسد الآسيوي.jpg"
+  },
+  {
+    "name": "النمر الببري",
+    "sci": "Panthera tigris virgata",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "EX",
+    "class": "status-ex",
+    "desc": "منقرض تماماً (تاريخياً في أحراش الشمال).",
+    "img": "النمر الببري.jpg"
+  },
+  {
+    "name": "الفهد الصياد",
+    "sci": "Acinonyx jubatus",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "منقرض محلياً (تاريخياً في البادية).",
+    "img": "الفهد الصياد.jpg"
+  },
+  {
+    "name": "الوشق الأوراسي",
+    "sci": "Lynx lynx",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "غابات البلوط الكثيفة في الشمال.",
+    "img": "الوشق الأوراسي.jpg"
+  },
+  {
+    "name": "الكراكال",
+    "sci": "Caracal caracal",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "التلال والسهول شبه الصحراوية والبادية.",
+    "img": "الكراكال.jpg"
+  },
+  {
+    "name": "قط الأدغال",
+    "sci": "Felis chaus",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "أهوار الجنوب وضفاف الأنهار.",
+    "img": "قط الأدغال.jpg"
+  },
+  {
+    "name": "القط البري",
+    "sci": "Felis lybica",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول الزراعية والأحراش والجبال.",
+    "img": "القط البري.jpg"
+  },
+  {
+    "name": "قط الرمال",
+    "sci": "Felis margarita",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الصحراء الغربية والجنوبية (النجف والمثنى).",
+    "img": "قط الرمال.jpg"
+  },
+  {
+    "name": "الضبع المخطط",
+    "sci": "Hyaena hyaena",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "تلال حمرين، البادية، والوديان الجبلية.",
+    "img": "الضبع المخطط.jpg"
+  },
+  {
+    "name": "الذئب الرمادي",
+    "sci": "Canis lupus",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "عموم العراق (الجبال والصحاري).",
+    "img": "الذئب الرمادي.jpg"
+  },
+  {
+    "name": "ابن آوى الذهبي",
+    "sci": "Canis aureus",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شائع جداً قرب القرى والمزارع والأهوار.",
+    "img": "ابن آوى الذهبي.jpg"
+  },
+  {
+    "name": "الثعلب الأحمر",
+    "sci": "Vulpes vulpes",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "منتشر في كل محافظات العراق.",
+    "img": "الثعلب الأحمر.jpg"
+  },
+  {
+    "name": "ثعلب روبر (الرملي)",
+    "sci": "Vulpes rueppellii",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصحراوية والبوادي.",
+    "img": "ثعلب روبر (الرملي).jpg"
+  },
+  {
+    "name": "الثعلب الأفغاني",
+    "sci": "Vulpes cana",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الجبلية الصخرية في الشمال والشرق.",
+    "img": "الثعلب الأفغاني.jpg"
+  },
+  {
+    "name": "الدب البني السوري",
+    "sci": "Ursus arctos syriacus",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المرتفعات الجبلية العالية في كردستان.",
+    "img": "الدب البني السوري.jpg"
+  },
+  {
+    "name": "قضاعة الأهوار",
+    "sci": "Lutrogale perspicillata",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "حصرياً في أهوار جنوب العراق.",
+    "img": "قضاعة الأهوار.jpg"
+  },
+  {
+    "name": "القضاعة الأوراسية",
+    "sci": "Lutra lutra",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "الأنهار والجداول في الشمال والوسط.",
+    "img": "القضاعة الأوراسية.jpg"
+  },
+  {
+    "name": "غرير العسل",
+    "sci": "Mellivora capensis",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول والبوادي وضفاف الأنهار الجنوبية.",
+    "img": "غرير العسل.jpg"
+  },
+  {
+    "name": "غرير الأوراسي",
+    "sci": "Meles meles",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الغابات الجبلية والبساتين في الشمال.",
+    "img": "غرير الأوراسي.jpg"
+  },
+  {
+    "name": "النمس الهندي الصغير",
+    "sci": "Urva auropunctata",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "البساتين والمزارع والمدن (شائع).",
+    "img": "النمس الهندي الصغير.jpg"
+  },
+  {
+    "name": "النمس الرمادي الهندي",
+    "sci": "Urva edwardsii",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "البصرة والمناطق الجنوبية.",
+    "img": "النمس الرمادي الهندي.jpg"
+  },
+  {
+    "name": "السنجاب الفارسي",
+    "sci": "Sciurus anomalus",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "غابات البلوط (السليمانية، دهوك، أربيل).",
+    "img": "السنجاب الفارسي.jpg"
+  },
+  {
+    "name": "النيص (الدعلج)",
+    "sci": "Hystrix Indica",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "التلال والوديان والمناطق الجبلية.",
+    "img": "النيص (الدعلج).jpg"
+  },
+  {
+    "name": "القندس",
+    "sci": "Castor fiber",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "EX",
+    "class": "status-ex",
+    "desc": "منقرض محلياً (تاريخياً في الروافد).",
+    "img": "القندس.jpg"
+  },
+  {
+    "name": "الأرنب البري",
+    "sci": "Lepus europaeus",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المزارع والسهول والبوادي في كل العراق.",
+    "img": "الأرنب البري.jpg"
+  },
+  {
+    "name": "اليربوع الفراتي",
+    "sci": "Allactaga euphratica",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "السهول الجافة والبوادي.",
+    "img": "اليربوع الفراتي.jpg"
+  },
+  {
+    "name": "اليربوع المصري الصغير",
+    "sci": "Jaculus jaculus",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الصحاري الرملية في الغرب والجنوب.",
+    "img": "اليربوع المصري الصغير.jpg"
+  },
+  {
+    "name": "القنفذ الأوراسي",
+    "sci": "Erinaceus europaeus",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الجبلية والسهول الشمالية.",
+    "img": "القنفذ الأوراسي.jpg"
+  },
+  {
+    "name": "قنفذ الحشرات (الجنوبي)",
+    "sci": "Erinaceus concolor",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مزارع وحدائق الوسط والشمال.",
+    "img": "قنفذ الحشرات (الجنوبي).jpg"
+  },
+  {
+    "name": "القنفذ طويل الأذن",
+    "sci": "Hemiechinus auritus",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول والوديان شبه الصحراوية.",
+    "img": "القنفذ طويل الأذن.jpg"
+  },
+  {
+    "name": "قنفذ إثيوبي",
+    "sci": "Paraechinus aethiopicus",
+    "group": [
+      "ثدييات"
+    ],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الصحراء الغربية والمناطق القاحلة.",
+    "img": "قنفذ إثيوبي.jpg"
+  },
+ 
+  {
+    "name": "الزبابة الصغرى",
+    "sci": "Crocidura suaveolens",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الرطبة في الشمال.",
+    "img": "الزبابة الصغرى.jpg"
+  },
+  {
+    "name": "زبابة لوسيتانيا",
+    "sci": "Microtus lusitanicus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "جبال الشمال (تسجيلات محدودة).",
+    "img": "زبابة لوسيتانيا.jpg"
+  },
+  {
+    "name": "الزبابة المنزلية",
+    "sci": "Suncus murinus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الحضرية الجنوبية (دخيل).",
+    "img": "الزبابة المنزلية.jpg"
+  },
+  {
+    "name": "الجرذ الهندي",
+    "sci": "Tatera Indica",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مزارع وضفاف أنهار الوسط والجنوب.",
+    "img": "الجرذ الهندي.jpg"
+  },
+  {
+    "name": "جرذ ليبيا",
+    "sci": "Meriones libycus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصحراوية والسهول الجافة.",
+    "img": "جرذ ليبيا.jpg"
+  },
+  {
+    "name": "جرذ تريسترام",
+    "sci": "Meriones tristrami",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول الشمالية والمناطق الزراعية.",
+    "img": "جرذ تريسترام.jpg"
+  },
+  {
+    "name": "جرذ ظفار (الهندي)",
+    "sci": "Gerbillus cheesmani",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الصحاري الرملية الغربية.",
+    "img": "جرذ ظفار (الهندي).jpg"
+  },
+  {
+    "name": "جرذ بلوشستان",
+    "sci": "Gerbillus nanus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "البوادي الجنوبية والغربية.",
+    "img": "جرذ بلوشستان.jpg"
+  },
+  {
+    "name": "جرذ الحقل",
+    "sci": "Apodemus mystacinus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الجبلية الصخرية (الشمال).",
+    "img": "جرذ الحقل.jpg"
+  },
+  {
+    "name": "الجرذ البني",
+    "sci": "Rattus norvegicus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المدن والموانئ والمناطق الحضرية.",
+    "img": "الجرذ البني.jpg"
+  },
+  {
+    "name": "الجرذ الأسود",
+    "sci": "Rattus rattus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "عموم البلاد قرب مساكن الإنسان.",
+    "img": "الجرذ الأسود.jpg"
+  },
+  {
+    "name": "فأر المنازل",
+    "sci": "Mus musculus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "في كل أنحاء العراق.",
+    "img": "فأر المنازل.jpg"
+  },
+  {
+    "name": "فأر الحصاد",
+    "sci": "Micromys minutus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مزارع الحبوب والأهوار.",
+    "img": "فأر الحصاد.jpg"
+  },
+  {
+    "name": "الهامستر الذهبي",
+    "sci": "Cricetus cricetus",
+    "group": ["ثدييات"],
+    "status": "CR",
+    "class": "status-cr",
+    "desc": "السهول الزراعية الشمالية (نادر).",
+    "img": "الهامستر الذهبي.jpg"
+  },
+  {
+    "name": "جرذ الماء",
+    "sci": "Arvicola amphibius",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "ضفاف الجداول في الشمال.",
+    "img": "جرذ الماء.jpg"
+  },
+  {
+    "name": "خلد فراتي",
+    "sci": "Spalax ehrenbergi",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "تحت الأرض في السهول الشمالية والوسطى.",
+    "img": "خلد فراتي.jpg"
+  },
+  {
+    "name": "خفاش الفاكهة المصري",
+    "sci": "Rousettus aegyptiacus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "بساتين النخيل والكهوف.",
+    "img": "خفاش الفاكهة المصري.jpg"
+  },
+  {
+    "name": "خفاش القبور العاري",
+    "sci": "Taphozous nudiventris",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الأبنية والكهوف قرب المياه.",
+    "img": "خفاش القبور العاري.jpg"
+  },
+  {
+    "name": "خفاش حدوة الحصان كبير",
+    "sci": "Rhinolophus ferrumequinum",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الكهوف الجبلية والوديان.",
+    "img": "خفاش حدوة الحصان كبير.jpg"
+  },
+  {
+    "name": "خفاش حدوة الحصان صغير",
+    "sci": "Rhinolophus hipposideros",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "كهوف وأنفاق الشمال.",
+    "img": "خفاش حدوة الحصان صغير.jpg"
+  },
+  {
+    "name": "خفاش ميهلي",
+    "sci": "Rhinolophus mehelyi",
+    "group": ["ثدييات"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "كهوف الحجر الجيري (الغرب والشمال).",
+    "img": "خفاش ميهلي.jpg"
+  },
+  {
+    "name": "خفاش المتوسط",
+    "sci": "Rhinolophus euryale",
+    "group": ["ثدييات"],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "كهوف المناطق الشمالية والشرقية.",
+    "img": "خفاش المتوسط.jpg"
+  },
+  {
+    "name": "خفاش بلاديوس",
+    "sci": "Rhinolophus blasii",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الجبلية الوعرة.",
+    "img": "خفاش بلاديوس.jpg"
+  },
+  {
+    "name": "خفاش ناترر",
+    "sci": "Myotis nattereri",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق المشجرة والجبلية.",
+    "img": "خفاش ناترر.jpg"
+  },
+  {
+    "name": "خفاش جيفروي",
+    "sci": "Myotis emarginatus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الكهوف والمباني في الشمال.",
+    "img": "خفاش جيفروي.jpg"
+  },
+  {
+    "name": "خفاش ذو أذنين كبيرة",
+    "sci": "Myotis myotis",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "كهوف كردستان العراق.",
+    "img": "خفاش ذو أذنين كبيرة.jpg"
+  },
+  {
+    "name": "خفاش المساء",
+    "sci": "Eptesicus serotinus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "القرى والمدن الشمالية والوسطى.",
+    "img": "خفاش المساء.jpg"
+  },
+  {
+    "name": "خفاش بوتّا",
+    "sci": "Eptesicus bottae",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصحراوية والوديان.",
+    "img": "خفاش بوتّا.jpg"
+  },
+  {
+    "name": "خفاش السهوب",
+    "sci": "Rhyneptesicus nasutus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "السهول الجافة والبوادي الجنوبية.",
+    "img": "خفاش السهوب.jpg"
+  },
+  {
+    "name": "خفاش كول",
+    "sci": "Pipistrellus kuhlii",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "أكثر الخفافيش شيوعاً في مدن العراق.",
+    "img": "خفاش كول.jpg"
+  },
+  {
+    "name": "خفاش سافي",
+    "sci": "Hypsugo savii",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الجبلية والوديان.",
+    "img": "خفاش سافي.jpg"
+  },
+  {
+    "name": "خفاش ببيستريل المألوف",
+    "sci": "Pipistrellus pipistrellus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الشمال والوسط.",
+    "img": "خفاش ببيستريل المألوف.jpg"
+  },
+  {
+    "name": "خفاش ببيستريل صوفيا",
+    "sci": "Pipistrellus pygmaeus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "قرب المسطحات المائية في الشمال.",
+    "img": "خفاش ببيستريل صوفيا.jpg"
+  },
+  {
+    "name": "خفاش نكتول مألوف",
+    "sci": "Nyctalus noctula",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الغابات والمناطق المشجرة الشمالية.",
+    "img": "خفاش نكتول مألوف.jpg"
+  },
+  {
+    "name": "خفاش ليسلر",
+    "sci": "Nyctalus leisleri",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مناطق الشمال الجبلية.",
+    "img": "خفاش ليسلر.jpg"
+  },
+  {
+    "name": "خفاش طويل الأذن أوراسي",
+    "sci": "Plecotus auritus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "غابات الشمال.",
+    "img": "خفاش طويل الأذن أوراسي.jpg"
+  },
+  {
+    "name": "خفاش طويل الأذن رمادي",
+    "sci": "Plecotus austriacus",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الكهوف والأبنية في وسط البلاد.",
+    "img": "خفاش طويل الأذن رمادي.jpg"
+  },
+  {
+    "name": "خفاش بارباستيل",
+    "sci": "Barbastella barbastellus",
+    "group": ["ثدييات"],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "نادر في الغابات الجبلية الشمالية.",
+    "img": "خفاش بارباستيل.jpg"
+  },
+  {
+    "name": "خفاش شمراير",
+    "sci": "Miniopterus schreibersii",
+    "group": ["ثدييات"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "الكهوف الكبيرة (كردستان).",
+    "img": "خفاش شمراير.jpg"
+  },
+  {
+    "name": "خفاش ذو ذنب حر",
+    "sci": "Tadarida teniotis",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المنحدرات الجبلية العالية.",
+    "img": "خفاش ذو ذنب حر.jpg"
+  },
+  {
+    "name": "خفاش مسقطي",
+    "sci": "Rhinopoma muscatellum",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الصخرية في الجنوب.",
+    "img": "خفاش مسقطي.jpg"
+  },
+  {
+    "name": "خفاش ذيل الفأر الصغير",
+    "sci": "Rhinopoma hardwickii",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "الأبنية القديمة والكهوف (الوسط والجنوب).",
+    "img": "خفاش ذيل الفأر الصغير.jpg"
+  },
+  {
+    "name": "خفاش ذيل الفأر الكبير",
+    "sci": "Rhinopoma microphyllum",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "المناطق الجافة والكهوف الدافئة.",
+    "img": "خفاش ذيل الفأر الكبير.jpg"
+  },
+  {
+    "name": "دلفين قاروري",
+    "sci": "Tursiops truncatus",
+    "group": ["ثدييات بحرية"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مياه الخليج العربي العميقة.",
+    "img": "دلفين قاروري.jpg"
+  },
+  {
+    "name": "دلفين المحيط الهندي",
+    "sci": "Sousa chinensis",
+    "group": ["ثدييات بحرية"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "مياه البصرة (الفاو وخور الزبير).",
+    "img": "دلفين المحيط الهندي.jpg"
+  },
+  {
+    "name": "خنزير البحر",
+    "sci": "Neophocaena phocaenoides",
+    "group": ["ثدييات بحرية"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "شط العرب ومياه الخليج الساحلية.",
+    "img": "خنزير البحر.jpg"
+  },
+  {
+    "name": "الدلفين الشائع",
+    "sci": "Delphinus delphis",
+    "group": ["ثدييات بحرية"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مياه الخليج العربي (بعيداً عن الساحل).",
+    "img": "الدلفين الشائع.jpg"
+  },
+  {
+    "name": "حوت بريد",
+    "sci": "Balaenoptera edeni",
+    "group": ["ثدييات بحرية"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "تسجيلات نادرة في مياه الخليج العربي.",
+    "img": "حوت بريد.jpg"
+  },
+  {
+    "name": "الحوت الأزرق",
+    "sci": "Balaenoptera musculus",
+    "group": ["ثدييات بحرية"],
+    "status": "EN",
+    "class": "status-en",
+    "desc": "جنوح نادر تاريخي في الخليج.",
+    "img": "الحوت الأزرق.jpg"
+  },
+  {
+    "name": "حوت العنبر",
+    "sci": "Physeter macrocephalus",
+    "group": ["ثدييات بحرية"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "عرضي في مياه الخليج العربي.",
+    "img": "حوت العنبر.jpg"
+  },
+  {
+    "name": "فقمة الراهب",
+    "sci": "Monachus monachus",
+    "group": ["ثدييات بحرية"],
+    "status": "CR",
+    "class": "status-cr",
+    "desc": "منقرضة محلياً (تاريخياً في الخليج).",
+    "img": "فقمة الراهب.jpg"
+  },
+  {
+    "name": "الأطوم",
+    "sci": "Dugong dugon",
+    "group": ["ثدييات بحرية"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "نادر جداً في المياه الإقليمية.",
+    "img": "الأطوم.jpg"
+  },
+  {
+    "name": "خلد القوقاز",
+    "sci": "Talpa caucasica",
+    "group": ["ثدييات"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "تحت الأرض في جبال الشمال.",
+    "img": "خلد القوقاز.jpg"
+  }
+]
+
+    

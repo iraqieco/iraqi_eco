@@ -8,17 +8,25 @@
         body { font-family: 'Segoe UI', Tahoma, sans-serif; padding: 20px; background: #f9f9f9; text-align: center; }
         header { margin-bottom: 30px; }
         h1 { color: #1b5e20; margin: 0; }
-        p { color: #555; }
         #searchInput { width: 80%; padding: 12px; margin-bottom: 30px; border: 2px solid #1b5e20; border-radius: 8px; }
         
         #card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        
         .card { border: 2px solid #1b5e20; border-radius: 15px; padding: 15px; background: white; text-align: center; }
         .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; background: #eee; }
-        .card h3 { margin: 10px 0 5px; }
-        .card .sci { font-size: 0.85em; color: #666; font-style: italic; }
-        .card .status { font-weight: bold; margin: 10px 0; }
-        .card .desc { font-size: 0.9em; height: 50px; overflow: hidden; margin-bottom: 10px; }
+        
+        .card h3 { margin: 10px 0 2px; }
+        .card .sci { font-size: 70%; color: #666; font-style: italic; margin-bottom: 8px; }
+        
+        .card .status { font-weight: bold; padding: 4px; border-radius: 4px; margin: 10px 0; }
+        /* ألوان الحالات القياسية */
+        .status-lc { color: #2e7d32; } /* غير مهدد */
+        .status-nt { color: #827717; } /* قريب من التهديد */
+        .status-vu { color: #ef6c00; } /* عرضة للانقراض */
+        .status-en { color: #d84315; } /* مهدد بالانقراض */
+        .status-cr { color: #c62828; } /* مهدد بشدة */
+        .status-ex { color: #424242; } /* منقرض */
+
+        .card .desc { font-size: 0.9em; height: 50px; overflow: hidden; margin-bottom: 15px; color: #333; }
         .btn-download { background: #1b5e20; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
@@ -29,11 +37,17 @@
         <p>قاعدة بيانات المخلوقات الحية في العراق</p>
     </header>
 
-    <input type="text" id="searchInput" placeholder="ابحث عن كائن حي..." onkeyup="filterCards()">
+    <input type="text" id="searchInput" placeholder="أبحث بالإسم العربي أو اللاتيني..." onkeyup="filterCards()">
 
     <div id="card-container"></div>
 
     <script>
+        // قاموس ترجمة الحالات
+        const statusMap = {
+            "LC": "غير مهدد", "NT": "قريب من التهديد", "VU": "عرضة للانقراض",
+            "EN": "مهدد بالانقراض", "CR": "مهدد بشدة بالانقراض", "EX": "منقرض"
+        };
+
         fetch('data1.json')
             .then(response => response.json())
             .then(data => {
@@ -46,7 +60,7 @@
                         <img src="${item.img}" onerror="this.src='placeholder.jpg'">
                         <h3>${item.name}</h3>
                         <div class="sci">${item.sci}</div>
-                        <div class="status ${item.class}">الحالة: ${item.status}</div>
+                        <div class="status ${item.class}">الحالة: ${statusMap[item.status] || item.status}</div>
                         <div class="desc">${item.desc}</div>
                         <button class="btn-download" onclick="downloadCard('card-${index}')">تنزيل البطاقة</button>
                     `;
@@ -65,7 +79,7 @@
         function downloadCard(id) {
             html2canvas(document.getElementById(id)).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'species-card.png';
+                link.download = 'بطاقة_كائن.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });

@@ -450,6 +450,457 @@
     "img": "صرد رمادي صغير.jpg"
   },
   {
+    "name": "صرد مقنع",
+    "sci": "lanius nubicus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي ومهاجر يفضل الغابات والبساتين.",
+    "img": "صرد مقنع.jpg"
+  },
+  {
+    "name": "صرد أحمر القنة",
+    "sci": "Lanius senator",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في التلال والمناطق المشجرة.",
+    "img": "صرد أحمر القنة.jpg"
+  },
+  {
+    "name": "أبو زُريق الأوراسي",
+    "sci": "Garrulus glandarius",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في غابات بلوط شمال العراق.",
+    "img": "أبو زُريق الأوراسي.jpg"
+  },
+  {
+    "name": "العقعق الأوراسي",
+    "sci": "Pica pica",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع في الشمال والوسط وقرب الأنهار.",
+    "img": "العقعق الأوراسي.jpg"
+  },
+  {
+    "name": "زاغ أحمر المنقار",
+    "sci": "Pyrrhocorax pyrrhocorax",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في المرتفعات الجبلية العالية.",
+    "img": "زاغ أحمر المنقار.jpg"
+  },
+  {
+    "name": "زاغ أصفر المنقار",
+    "sci": "Pyrrhocorax graculus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في قمم الجبال العالية جداً.",
+    "img": "زاغ أصفر المنقار.jpg"
+  },
+  {
+    "name": "زاغ زرعي",
+    "sci": "Coloeus monedula",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي شائع في المدن والجبال.",
+    "img": "زاغ زرعي.jpg"
+  },
+  {
+    "name": "غراب القيظ",
+    "sci": "Corvus frugilegus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في السهول والمناطق الزراعية بأسراب.",
+    "img": "غراب القيظ.jpg"
+  },
+  {
+    "name": "غراب ابقع",
+    "sci": "Corvus cornix",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع جداً في المدن، المزارع، والأهوار.",
+    "img": "غراب ابقع.jpg"
+  },
+  {
+    "name": "غراب ادرع",
+    "sci": "Corvus ruficollis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في المناطق الصحراوية والبوادي.",
+    "img": "غراب ادرع.jpg"
+  },
+  {
+    "name": "غراب شمالي",
+    "sci": "Corvus corax",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الجبال والوديان والمنحدرات.",
+    "img": "غراب شمالي.jpg"
+  },
+  {
+    "name": "قرقف حزين",
+    "sci": "Poecile lugubris",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في غابات ومنحدرات شمال العراق.",
+    "img": "قرقف حزين.jpg"
+  },
+  {
+    "name": "قرقف أزرق",
+    "sci": "Cyanistes caeruleus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في البساتين والغابات الجبلية.",
+    "img": "قرقف أزرق.jpg"
+  },
+  {
+    "name": "قرقف كبير",
+    "sci": "Parus major",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع في الحدائق، البساتين، والغابات.",
+    "img": "قرقف كبير.jpg"
+  },
+  {
+    "name": "قرقف البندول",
+    "sci": "Remiz pendulinus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي في القصب قرب الأنهار.",
+    "img": "قرقف البندول.jpg"
+  },
+  {
+    "name": "قبرة هدهدية",
+    "sci": "Alaemon alaudipes",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الصحاري الرملية والبوادي.",
+    "img": "قبرة هدهدية.jpg"
+  },
+  {
+    "name": "قبرة مغربية",
+    "sci": "Ramphocoris clotbey",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "نادر/عرضي في الصحراء الغربية.",
+    "img": "قبرة مغربية.jpg"
+  },
+  {
+    "name": "قبرة الصحراء موشمة الذنب",
+    "sci": "Ammomanes cinctura",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في المناطق الصحراوية المنبسطة.",
+    "img": "قبرة الصحراء موشمة الذنب.jpg"
+  },
+  {
+    "name": "قنبرة الصحراء",
+    "sci": "Ammomanes deserti",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في التلال الصخرية والمنحدرات.",
+    "img": "قنبرة الصحراء.jpg"
+  },
+  {
+    "name": "قبرة سوداء متوجة",
+    "sci": "Eremopterix nigriceps",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستأصل (شوهدت تاريخياً في البادية).",
+    "img": "قبرة سوداء متوجة.jpg"
+  },
+  {
+    "name": "قبرة الغاب",
+    "sci": "Lullula arborea",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الغابات والمنحدرات الجبلية.",
+    "img": "قبرة الغاب.jpg"
+  },
+  {
+    "name": "قبرة السماء",
+    "sci": "Alauda arvensis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي شائع في السهول والمناطق المفتوحة.",
+    "img": "قبرة السماء.jpg"
+  },
+  {
+    "name": "القبرة المتوجة",
+    "sci": "Galerida cristata",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع جداً في كل أنحاء العراق.",
+    "img": "القبرة المتوجة.jpg"
+  },
+  {
+    "name": "قبرة مقرنة",
+    "sci": "Eremophila alpestris",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في قمم الجبال العالية.",
+    "img": "قبرة مقرنة.jpg"
+  },
+  {
+    "name": "قبرة تمنك القرناء",
+    "sci": "Eremophila bilopha",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في المناطق الصحراوية الجافة والسبخات.",
+    "img": "قبرة تمنك القرناء.jpg"
+  },
+  {
+    "name": "قبرة قصيرة الاصابع",
+    "sci": "Calandrella brachydactyla",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر وصيفي يفضل السهول شبه الصحراوية.",
+    "img": "قبرة قصيرة الاصابع.jpg"
+  },
+  {
+    "name": "قبرة شرقية صغيرة",
+    "sci": "Melanocorypha bimaculata",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي في السهول والمزارع.",
+    "img": "قبرة شرقية صغيرة.jpg"
+  },
+  {
+    "name": "قبرة شرقية كبيرة",
+    "sci": "Melanocorypha calandra",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع في السهول الزراعية بشمال العراق.",
+    "img": "قبرة شرقية كبيرة.jpg"
+  },
+  {
+    "name": "قُبَّرَةٌ متوسطية",
+    "sci": "Alaudala rufescens",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في السهول شبه الصحراوية والبوادي.",
+    "img": "قُبَّرَةٌ متوسطية.jpg"
+  },
+  {
+    "name": "قُبَّرَةٌ تُرْكِستَانِيةٌ",
+    "sci": "Alaudala heinei",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي يتواجد في السهول والمناطق القاحلة.",
+    "img": "قُبَّرَةٌ تُرْكِستَانِيةٌ.jpg"
+  },
+  {
+    "name": "نِمْنِمَةٌ رَقيقَةٌ",
+    "sci": "Prinia lepida",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في القصب والبرك وضفاف الأنهار.",
+    "img": "نِمْنِمَةٌ رَقيقَةٌ.jpg"
+  },
+  {
+    "name": "هازجة مروحية الذنب",
+    "sci": "Cisticola juncidis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الحقول الرطبة والأهوار.",
+    "img": "هازجة مروحية الذنب.jpg"
+  },
+  {
+    "name": "هازجة زيتونية شرقية",
+    "sci": "Iduna pallida",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي شائع يتكاثر في البساتين والحدائق.",
+    "img": "هازجة زيتونية شرقية.jpg"
+  },
+  {
+    "name": "هازجة الشجر",
+    "sci": "Hippolais languida",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في المنحدرات الجبلية المشجرة.",
+    "img": "هازجة الشجر.jpg"
+  },
+  {
+    "name": "هازجة الزيتون",
+    "sci": "Hippolais olivetorum",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "نادر/عرضي يمر خلال الهجرة.",
+    "img": "هازجة الزيتون.jpg"
+  },
+  {
+    "name": "هازجة ليمونية",
+    "sci": "Hippolais Icterina",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "نادر/عرضي يمر عبر البساتين.",
+    "img": "هازجة ليمونية.jpg"
+  },
+  {
+    "name": "هازجة أم شارب",
+    "sci": "Acrocephalus melanopogon",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في قصب الأهوار الجنوبية.",
+    "img": "هازجة أم شارب.jpg"
+  },
+  {
+    "name": "هازجة السعد",
+    "sci": "Acrocephalus schoenobaenus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر يمر عبر المستنقعات والأهوار.",
+    "img": "هازجة السعد.jpg"
+  },
+  {
+    "name": "هازجة المستنقعات",
+    "sci": "Acrocephalus palustris",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر يمر عبر المناطق ذات الغطاء النباتي.",
+    "img": "هازجة المستنقعات.jpg"
+  },
+  {
+    "name": "دخلة القصب",
+    "sci": "Acrocephalus scirpaceus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في القصب قرب المياه.",
+    "img": "دخلة القصب.jpg"
+  },
+  {
+    "name": "هازجة قصب البصرة",
+    "sci": "Acrocephalus griseldis",
+    "group": ["طيور"],
+    "status": "EN",
+    "class": "status-en",
+    "desc": "مهدد (يتكاثر حصرياً في أهوار جنوب العراق).",
+    "img": "هازجة قصب البصرة.jpg"
+  },
+  {
+    "name": "هازجة القصب الكبيرة",
+    "sci": "Acrocephalus arundinaceus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في القصب الكثيف بالأهوار.",
+    "img": "هازجة القصب الكبيرة.jpg"
+  },
+  {
+    "name": "هازجة القصب الصياحة",
+    "sci": "Acrocephalus stentoreus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع في القصب بوسط وجنوب العراق.",
+    "img": "هازجة القصب الصياحة.jpg"
+  },
+  {
+    "name": "هازجة نهرية",
+    "sci": "Locustella fluviatilis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "نادر/عرضي يمر خلال فصل الهجرة.",
+    "img": "هازجة نهرية.jpg"
+  },
+  {
+    "name": "هازجة سافية",
+    "sci": "Locustella luscinioides",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر يمر عبر الأهوار والمناطق الرطبة.",
+    "img": "هازجة سافية.jpg"
+  },
+  {
+    "name": "هازجة جندبية شائعة",
+    "sci": "Locustella naevia",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "نادر/عرضي في المناطق العشبية الرطبة.",
+    "img": "هازجة جندبية شائعة.jpg"
+  },
+  {
+    "name": "خطاف الرمل",
+    "sci": "Riparia riparia",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في حفر ضفاف الأنهار.",
+    "img": "خطاف الرمل.jpg"
+  },
+  {
+    "name": "خطاف الجرف الأوراسي",
+    "sci": "Ptyonoprogne rupestris",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الجبال العالية والمنحدرات.",
+    "img": "خطاف الجرف الأوراسي.jpg"
+  },
+  {
+    "name": "خطاف الصخور",
+    "sci": "Ptyonoprogne obsoleta",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الجبال والوديان والمدن الجبلية.",
+    "img": "خطاف الصخور.jpg"
+  },
+  {
+    "name": "سنونو شائع",
+    "sci": "Hirundo rustica",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي ومهاجر شائع جداً في كل البلاد.",
+    "img": "سنونو شائع.jpg"
+  },
+  
+  {
     "name": "شنقب شائع",
     "sci": "Gallinago gallinago",
     "group": ["طيور"],

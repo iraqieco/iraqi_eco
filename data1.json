@@ -1,5 +1,671 @@
 [
   {
+    "name": "هزار شائع",
+    "sci": "Luscinia megarhynchos",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في بساتين الوسط والشمال.",
+    "img": "هزار شائع.jpg"
+  },
+  {
+    "name": "هزار أزرق الزور",
+    "sci": "Luscinia svecica",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي شائع في القصب والمناطق الرطبة.",
+    "img": "هزار أزرق الزور.jpg"
+  },
+  {
+    "name": "خاطف الذباب أحمر الصدر",
+    "sci": "Ficedula parva",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر يمر عبر الحدائق والمزارع.",
+    "img": "خاطف الذباب أحمر الصدر.jpg"
+  },
+  {
+    "name": "خاطف الذباب شبه المطوق",
+    "sci": "Ficedula semitorquata",
+    "group": ["طيور"],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "مهاجر يمر عبر المناطق المشجرة.",
+    "img": "خاطف الذباب شبه المطوق.jpg"
+  },
+  {
+    "name": "حميراء صهباء الظهر",
+    "sci": "Phoenicurus erythronotus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "نادر/عرضي يظهر شتاءً.",
+    "img": "حميراء صهباء الظهر.jpg"
+  },
+  {
+    "name": "حميراء",
+    "sci": "Phoenicurus phoenicurus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي ومهاجر في الحدائق والبساتين.",
+    "img": "حميراء.jpg"
+  },
+  {
+    "name": "حميراء سوداء",
+    "sci": "Phoenicurus ochruros",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي شائع جداً في القرى والمدن والجبال.",
+    "img": "حميراء سوداء.jpg"
+  },
+  {
+    "name": "سمنة الصخور",
+    "sci": "Monticola saxatilis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في المرتفعات الجبلية الصخرية.",
+    "img": "سمنة الصخور.jpg"
+  },
+  {
+    "name": "سمنة الصخور الزرقاء",
+    "sci": "Monticola solitarius",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الوديان الجبلية والمنحدرات.",
+    "img": "سمنة الصخور الزرقاء.jpg"
+  },
+  {
+    "name": "قليعي أحمر",
+    "sci": "Saxicola rubetra",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر يمر عبر الحقول العشبية والمزارع.",
+    "img": "قليعي أحمر.jpg"
+  },
+  {
+    "name": "قليعي مطوق أوروبي",
+    "sci": "Saxicola rubicola",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي شائع في السهول والمناطق الزراعية.",
+    "img": "قليعي مطوق أوروبي.jpg"
+  },
+  {
+    "name": "بِرْقَشٌ سَيْبِيرِيٌّ",
+    "sci": "Saxicola maurus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في المناطق المفتوحة والسهول.",
+    "img": "بِرْقَشٌ سَيْبِيرِيٌّ.jpg"
+  },
+  {
+    "name": "قليعي أبقع",
+    "sci": "Saxicola caprata",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في بساتين جنوب العراق.",
+    "img": "قليعي أبقع.jpg"
+  },
+  {
+    "name": "أبو بليق (أبلق)",
+    "sci": "Oenanthe oenanthe",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي ومهاجر يفضل السهول والجبال.",
+    "img": "أبو بليق (أبلق).jpg"
+  },
+  {
+    "name": "أبلق أشهب",
+    "sci": "Oenanthe Isabellina",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي في السهول والبوادي.",
+    "img": "أبلق أشهب.jpg"
+  },
+  {
+    "name": "أبلق مقلنس",
+    "sci": "Oenanthe monacha",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "نادر/عرضي في الصحراء الغربية.",
+    "img": "أبلق مقلنس.jpg"
+  },
+  {
+    "name": "أبلق صحراوي",
+    "sci": "Oenanthe deserti",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في المناطق الصحراوية والسبخات.",
+    "img": "أبلق صحراوي.jpg"
+  },
+  {
+    "name": "أبلق أسود الأذن",
+    "sci": "Oenanthe melanoleuca",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في التلال والمنحدرات.",
+    "img": "أبلق أسود الأذن.jpg"
+  },
+  {
+    "name": "أبلق أبقع",
+    "sci": "Oenanthe pleschanka",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي ومهاجر يفضل المناطق الصخرية.",
+    "img": "أبلق أبقع.jpg"
+  },
+  {
+    "name": "أبلق أحمر العجز",
+    "sci": "Oenanthe moesta",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الصحراء الغربية والبادية.",
+    "img": "أبلق أحمر العجز.jpg"
+  },
+  {
+    "name": "أبلق هيوم",
+    "sci": "Oenanthe albonigra",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في المناطق الصخرية أقصى الجنوب.",
+    "img": "أبلق هيوم.jpg"
+  },
+  {
+    "name": "أبلق أبيض القنة",
+    "sci": "Oenanthe leucopyga",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الصحراء والمنحدرات الصخرية.",
+    "img": "أبلق أبيض القنة.jpg"
+  },
+  {
+    "name": "أبلق فنشي",
+    "sci": "Oenanthe finschii",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في التلال والسهول الحصوية.",
+    "img": "أبلق فنشي.jpg"
+  },
+  {
+    "name": "أبلق حزين",
+    "sci": "Oenanthe lugens",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الوديان الصخرية والبادية.",
+    "img": "أبلق حزين.jpg"
+  },
+  {
+    "name": "أبلق كردي",
+    "sci": "Oenanthe xanthoprymna",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في المرتفعات الجبلية العالية.",
+    "img": "أبلق كردي.jpg"
+  },
+  {
+    "name": "أبلق أحمر الذيل",
+    "sci": "Oenanthe chrysopygia",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي في التلال والجبال.",
+    "img": "أبلق أحمر الذيل.jpg"
+  },
+  {
+    "name": "خناق رمادي",
+    "sci": "Hypocolius ampelinus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في بساتين النخيل والوسط.",
+    "img": "خناق رمادي.jpg"
+  },
+  {
+    "name": "عصفور الشوك الألبي",
+    "sci": "Prunella collaris",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في قمم الجبال العالية.",
+    "img": "عصفور الشوك الألبي.jpg"
+  },
+  {
+    "name": "عصفور الشوك رادي",
+    "sci": "Prunella ocularis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في المنحدرات الجبلية العالية.",
+    "img": "عصفور الشوك رادي.jpg"
+  },
+  {
+    "name": "عصفور الشوك",
+    "sci": "Prunella modularis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في الحدائق والغطاء النباتي الكثيف.",
+    "img": "عصفور الشوك.jpg"
+  },
+  {
+    "name": "دوري منزلي",
+    "sci": "Passer domesticus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شائع جداً في كل مكان بالقرب من الإنسان.",
+    "img": "دوري منزلي.jpg"
+  },
+  {
+    "name": "دوري أسباني",
+    "sci": "Passer hispaniolensis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي بأسراب ضخمة في المزارع.",
+    "img": "دوري أسباني.jpg"
+  },
+  {
+    "name": "دوري البحر الميت",
+    "sci": "Passer moabiticus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في شجيرات الطرفاء قرب الأنهار.",
+    "img": "دوري البحر الميت.jpg"
+  },
+  {
+    "name": "دوري الشجر",
+    "sci": "Passer montanus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في البساتين والقرى بشمال العراق.",
+    "img": "دوري الشجر.jpg"
+  },
+  {
+    "name": "دوري اصفر الحنجرة",
+    "sci": "Gymnoris xanthocollis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في بساتين الوسط والجنوب.",
+    "img": "دوري اصفر الحنجرة.jpg"
+  },
+  {
+    "name": "دوري الصخر",
+    "sci": "Petronia petronia",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الوديان والمنحدرات الجبلية.",
+    "img": "دوري الصخر.jpg"
+  },
+  {
+    "name": "دوري الصخر الشاحب",
+    "sci": "Carpospiza brachydactyla",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في التلال والسهول الجافة.",
+    "img": "دوري الصخر الشاحب.jpg"
+  },
+  {
+    "name": "عصفور الثلج",
+    "sci": "Montifringilla nivalis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في القمم الجبلية المغطاة بالثلوج.",
+    "img": "عصفور الثلج.jpg"
+  },
+  {
+    "name": "أبو فصادة رمادي",
+    "sci": "Motacilla cinerea",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي قرب الجداول المائية والعيون.",
+    "img": "أبو فصادة رمادي.jpg"
+  },
+  {
+    "name": "أبو فصادة أصفر",
+    "sci": "Motacilla flava",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي ومهاجر شائع في الأراضي الرطبة.",
+    "img": "أبو فصادة أصفر.jpg"
+  },
+  {
+    "name": "أبو فصادة ليموني",
+    "sci": "Motacilla citreola",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي ومهاجر في الأهوار وضفاف الأنهار.",
+    "img": "أبو فصادة ليموني.jpg"
+  },
+  {
+    "name": "أبو فصادة أبيض",
+    "sci": "Motacilla alba",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي شائع جداً في كل البلاد.",
+    "img": "أبو فصادة أبيض.jpg"
+  },
+  {
+    "name": "جشنة طويلة المنقار",
+    "sci": "Anthus similis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في التلال الصخرية والمنحدرات.",
+    "img": "جشنة طويلة المنقار.jpg"
+  },
+  {
+    "name": "جشنة الصحراء",
+    "sci": "Anthus campestris",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر وشتوي في السهول والبوادي.",
+    "img": "جشنة الصحراء.jpg"
+  },
+  {
+    "name": "جشنة الحقول",
+    "sci": "Anthus pratensis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي شائع في السهول والمناطق العشبية.",
+    "img": "جشنة الحقول.jpg"
+  },
+  {
+    "name": "جشنة الشجر",
+    "sci": "Anthus trivialis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر يمر عبر البساتين والمناطق المشجرة.",
+    "img": "جشنة الشجر.jpg"
+  },
+  {
+    "name": "جشنة حمراء الحنجرة",
+    "sci": "Anthus cervinus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر وشتوي في الأراضي الرطبة والمزارع.",
+    "img": "جشنة حمراء الحنجرة.jpg"
+  },
+  {
+    "name": "جشنة الماء",
+    "sci": "Anthus spinoletta",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي شائع جداً قرب المياه والأهوار.",
+    "img": "جشنة الماء.jpg"
+  },
+  {
+    "name": "شرشور (صلنج)",
+    "sci": "Fringilla coelebs",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي شائع جداً في البساتين والحدائق.",
+    "img": "شرشور (صلنج).jpg"
+  },
+  {
+    "name": "شرشور جبلي",
+    "sci": "Fringilla montifringilla",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي يظهر في غابات الشمال والبساتين.",
+    "img": "شرشور جبلي.jpg"
+  },
+  {
+    "name": "شرشور الكرز",
+    "sci": "Coccothraustes coccothraustes",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في غابات الشمال وبساتين الفاكهة.",
+    "img": "شرشور الكرز.jpg"
+  },
+  {
+    "name": "حسون وردي شائع",
+    "sci": "Carpodacus erythrinus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر نادر يمر عبر المناطق المشجرة.",
+    "img": "حسون وردي شائع.jpg"
+  },
+  {
+    "name": "حسون قرمزي الجناح",
+    "sci": "Rhodopechys sanguineus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الجبال العالية الصخرية.",
+    "img": "حسون قرمزي الجناح.jpg"
+  },
+  {
+    "name": "زمير وردي",
+    "sci": "Bucanetes githagineus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في المناطق الصحراوية والتلال الجافة.",
+    "img": "زمير وردي.jpg"
+  },
+  {
+    "name": "حسون صحراوي",
+    "sci": "Rhodospiza obsoleta",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في البساتين والحدائق والمزارع.",
+    "img": "حسون صحراوي.jpg"
+  },
+  {
+    "name": "حسون خضيري",
+    "sci": "Chloris chloris",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي في البساتين والحدائق.",
+    "img": "حسون خضيري.jpg"
+  },
+  {
+    "name": "زقزاق جبلي",
+    "sci": "Linaria flavirostris",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في المرتفعات الجبلية العالية.",
+    "img": "زقزاق جبلي.jpg"
+  },
+  {
+    "name": "حسون تفاحي",
+    "sci": "Linaria cannabina",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي في التلال والمنحدرات.",
+    "img": "حسون تفاحي.jpg"
+  },
+  {
+    "name": "حسون أحمر",
+    "sci": "Acanthis flammea",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "نادر/عرضي يظهر شتاءً في الشمال.",
+    "img": "حسون أحمر.jpg"
+  },
+  {
+    "name": "حسون أوروبي",
+    "sci": "Carduelis carduelis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع جداً في البساتين والمزارع.",
+    "img": "حسون أوروبي.jpg"
+  },
+  {
+    "name": "نعار أوروبي",
+    "sci": "Serinus serinus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في البساتين والمناطق المشجرة.",
+    "img": "نعار أوروبي.jpg"
+  },
+  {
+    "name": "نعار أحمر الجبهة",
+    "sci": "Serinus pusillus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الجبال العالية والغابات الشمالية.",
+    "img": "نعار أحمر الجبهة.jpg"
+  },
+  {
+    "name": "نعار سوري",
+    "sci": "Serinus syriacus",
+    "group": ["طيور"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "مهدد (يتواجد في جبال شمال العراق).",
+    "img": "نعار سوري.jpg"
+  },
+  {
+    "name": "حسون الشوك",
+    "sci": "Spinus spinus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في البساتين والغابات الصنوبرية.",
+    "img": "حسون الشوك.jpg"
+  },
+  {
+    "name": "درسة سوداء الرأس",
+    "sci": "Emberiza melanocephala",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في التلال والسهول الزراعية.",
+    "img": "درسة سوداء الرأس.jpg"
+  },
+  {
+    "name": "درسة قمحية",
+    "sci": "Emberiza calandra",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي شائع في السهول والمزارع.",
+    "img": "درسة قمحية.jpg"
+  },
+  {
+    "name": "درسة الصخر",
+    "sci": "Emberiza cia",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الوديان والمنحدرات الجبلية.",
+    "img": "درسة الصخر.jpg"
+  },
+  {
+    "name": "درسة ذهبية",
+    "sci": "Emberiza citrinella",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي نادر في المناطق الشمالية.",
+    "img": "درسة ذهبية.jpg"
+  },
+  {
+    "name": "درسة صنوبرية",
+    "sci": "Emberiza leucocephalos",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي يظهر في غابات الصنوبر والبلوط.",
+    "img": "درسة صنوبرية.jpg"
+  },
+  {
+    "name": "بلبل الشعير",
+    "sci": "Emberiza buchanani",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في التلال الجبلية الجافة.",
+    "img": "بلبل الشعير.jpg"
+  },
+  {
+    "name": "درسة شامية",
+    "sci": "Emberiza cineracea",
+    "group": ["طيور"],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "شبه مهددة (تمر مهاجرة وتتكاثر في الشمال).",
+    "img": "درسة شامية.jpg"
+  },
+  {
+    "name": "درسة الشعير",
+    "sci": "Emberiza hortulana",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي وم مهاجر في المنحدرات والمزارع.",
+    "img": "درسة الشعير.jpg"
+  },
+  {
+    "name": "درسة القصب",
+    "sci": "Emberiza schoeniclus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في الأهوار والمستنقعات وضفاف الأنهار.",
+    "img": "درسة القصب.jpg"
+  },
+  {
+    "name": "درسة صدئية",
+    "sci": "Emberiza rustica",
+    "group": ["طيور"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "نادر/عرضي يظهر أحياناً في الشتاء.",
+    "img": "درسة صدئية.jpg"
+  },
+  {
     "name": "سنونو أبيض البطن",
     "sci": "Delichon urbicum",
     "group": ["طيور"],

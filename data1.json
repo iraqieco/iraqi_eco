@@ -1,4 +1,724 @@
 [
+  {
+    "name": "إوزة مصرية",
+    "sci": "Alopochen aegyptiaca",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "نادر/عرضي (بدأت بالانتشار في الجنوب مؤخراً).",
+    "img": "إوزة مصرية.jpg"
+  },
+  {
+    "name": "بط أبو فروة",
+    "sci": "Tadorna ferruginea",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي في السدود والبحيرات.",
+    "img": "بط أبو فروة.jpg"
+  },
+  {
+    "name": "بط سماري",
+    "sci": "Mareca strepera",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي شائع في الأهوار والبرك المائية.",
+    "img": "بط سماري.jpg"
+  },
+  {
+    "name": "صواي أوراسي",
+    "sci": "Mareca penelope",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي بأعداد كبيرة في الأراضي الرطبة.",
+    "img": "صواي أوراسي.jpg"
+  },
+  {
+    "name": "خضيري (بركة)",
+    "sci": "Anas platyrhynchos",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي شائع في عموم العراق.",
+    "img": "خضيري (بركة).jpg"
+  },
+  {
+    "name": "بط سميسم (الكيش)",
+    "sci": "Spatula clypeata",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي شائع جداً في المياه الضحلة.",
+    "img": "بط سميسم (الكيش).jpg"
+  },
+  {
+    "name": "بلبول (بط مدبب الذيل)",
+    "sci": "Anas acuta",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي شائع جداً في الأهوار والبحيرات.",
+    "img": "بلبول (بط مدبب الذيل).jpg"
+  },
+  {
+    "name": "حذاف شتوي",
+    "sci": "Anas crecca",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي واسع الانتشار في كل البرك المائية.",
+    "img": "حذاف شتوي.jpg"
+  },
+  {
+    "name": "حذاف صيفي",
+    "sci": "Spatula querquedula",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر شائع يمر بالأهوار والبرك.",
+    "img": "حذاف صيفي.jpg"
+  },
+  {
+    "name": "بط رخامي",
+    "sci": "Marmaronetta angustirostris",
+    "group": ["طيور"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "مستوطن مهم جداً في أهوار جنوب العراق.",
+    "img": "بط رخامي.jpg"
+  },
+  {
+    "name": "حمرواي",
+    "sci": "Aythya ferina",
+    "group": ["طيور"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "شتوي شائع في البحيرات العميقة والأهوار.",
+    "img": "حمرواي.jpg"
+  },
+  {
+    "name": "بطة كستنائية",
+    "sci": "Aythya nyroca",
+    "group": ["طيور"],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "مستوطن وشتاوي في الأهوار ذات القصب.",
+    "img": "بطة كستنائية.jpg"
+  },
+  {
+    "name": "بطة زرقاء الرأس",
+    "sci": "Aythya fuligula",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في المسطحات المائية العميقة والسدود.",
+    "img": "بطة زرقاء الرأس.jpg"
+  },
+  {
+    "name": "بطة برية كبرى",
+    "sci": "Aythya marila",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي نادر جداً وعرضي.",
+    "img": "بطة برية كبرى.jpg"
+  },
+  {
+    "name": "بطة غواصة (بلقشة)",
+    "sci": "Mergus merganser",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي نادر في الأنهار الشمالية والسدود.",
+    "img": "بطة غواصة (بلقشة).jpg"
+  },
+  {
+    "name": "بلقشة حمراء الصدر",
+    "sci": "Mergus serrator",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي نادر في السواحل والبحيرات الكبيرة.",
+    "img": "بلقشة حمراء الصدر.jpg"
+  },
+  {
+    "name": "بلقشة بيضاء",
+    "sci": "Mergellus albellus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي نادر في المسطحات المائية الشمالية.",
+    "img": "بلقشة بيضاء.jpg"
+  },
+  {
+    "name": "بلقشة متوجة",
+    "sci": "Mergus merganser",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي نادر في بحيرات السدود (دوكان ودربندخان).",
+    "img": "بلقشة متوجة.jpg"
+  },
+  {
+    "name": "بط أبيض الرأس",
+    "sci": "Oxyura leucocephala",
+    "group": ["طيور"],
+    "status": "EN",
+    "class": "status-en",
+    "desc": "شتوي نادر ومهم في بحيرة الثرثار والأهوار.",
+    "img": "بط أبيض الرأس.jpg"
+  },
+  {
+    "name": "حجل شرقي",
+    "sci": "Ammoperdix griseogularis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في التلال والوديان الصخرية.",
+    "img": "حجل شرقي.jpg"
+  },
+  {
+    "name": "دراج مألوف",
+    "sci": "Francolinus francolinus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع في الوسط والجنوب والأهوار.",
+    "img": "دراج مألوف.jpg"
+  },
+  {
+    "name": "حجل تشوكار",
+    "sci": "Alectoris chukar",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع جداً في جبال كردستان.",
+    "img": "حجل تشوكار.jpg"
+  },
+  {
+    "name": "سمان مألوف",
+    "sci": "Coturnix coturnix",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي ومهاجر في المزارع والسهول.",
+    "img": "سمان مألوف.jpg"
+  },
+  {
+    "name": "طيهوج (ديك الغابة)",
+    "sci": "Lyrurus mlokosiewiczi",
+    "group": ["طيور"],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "نادر جداً في المرتفعات الجبلية الشمالية.",
+    "img": "طيهوج (ديك الغابة).jpg"
+  },
+  {
+    "name": "سمامة مألوفة",
+    "sci": "Apus apus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر وصيفي يرى في سماء المدن.",
+    "img": "سمامة مألوفة.jpg"
+  },
+  {
+    "name": "سمامة شاحبة",
+    "sci": "Apus pallidus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في المنحدرات والأبنية القديمة.",
+    "img": "سمامة شاحبة.jpg"
+  },
+  {
+    "name": "سمامة صغرى",
+    "sci": "Apus affinis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يرى قرب الجسور والأبنية في الجنوب.",
+    "img": "سمامة صغرى.jpg"
+  },
+  {
+    "name": "سمامة بيضاء العجز",
+    "sci": "Apus caffer",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "نادر/عرضي يظهر في فصل الصيف.",
+    "img": "سمامة بيضاء العجز.jpg"
+  },
+  {
+    "name": "سمامة جبلية",
+    "sci": "Tachymarptis melba",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي يتكاثر في الكهوف والقمم الجبلية.",
+    "img": "سمامة جبلية.jpg"
+  },
+  {
+    "name": "حبارى عربية",
+    "sci": "Ardeotis arabs",
+    "group": ["طيور"],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "منقرضة محلياً (تاريخياً في البادية).",
+    "img": "حبارى عربية.jpg"
+  },
+  {
+    "name": "حبارى أفريقية (آسيوية)",
+    "sci": "Chlamydotis macqueenii",
+    "group": ["طيور"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "مستوطنة وشتاوية في صحاري النجف والمثنى.",
+    "img": "حبارى أفريقية (آسيوية).jpg"
+  },
+  {
+    "name": "حبارى كبرى",
+    "sci": "Otis tarda",
+    "group": ["طيور"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "شتوي نادر جداً في سهول شمال العراق.",
+    "img": "حبارى كبرى.jpg"
+  },
+  {
+    "name": "حبارى صغرى",
+    "sci": "Tetrax tetrax",
+    "group": ["طيور"],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "شتوي نادر يظهر في السهول العشبية.",
+    "img": "حبارى صغرى.jpg"
+  },
+  {
+    "name": "واق أوراسي",
+    "sci": "Cuculus canorus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي ومهاجر يرى في البساتين والغابات.",
+    "img": "واق أوراسي.jpg"
+  },
+  {
+    "name": "قطا نغاق",
+    "sci": "Pterocles alchata",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي بأسراب ضخمة في البادية.",
+    "img": "قطا نغاق.jpg"
+  },
+  {
+    "name": "قطا مرقط",
+    "sci": "Pterocles senegallus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الصحاري الجنوبية والوسطى.",
+    "img": "قطا مرقط.jpg"
+  },
+  {
+    "name": "قطا عراقي (مخطط)",
+    "sci": "Pterocles lichtensteinii",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في التلال الصخرية والوديان.",
+    "img": "قطا عراقي (مخطط).jpg"
+  },
+  {
+    "name": "قطا أسود البطن",
+    "sci": "Pterocles orientalis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي في السهول شبه الصحراوية.",
+    "img": "قطا أسود البطن.jpg"
+  },
+  {
+    "name": "قطا متوج",
+    "sci": "Pterocles coronatus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الصحراء الغربية والبادية.",
+    "img": "قطا متوج.jpg"
+  },
+  {
+    "name": "حمام جبلي",
+    "sci": "Columba livia",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن (أصل الحمام المنزلي) في الجبال.",
+    "img": "حمام جبلي.jpg"
+  },
+  {
+    "name": "حمام بري (وكري)",
+    "sci": "Columba oenas",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في البساتين والمناطق المشجرة.",
+    "img": "حمام بري (وكري).jpg"
+  },
+  {
+    "name": "حمام الغابة",
+    "sci": "Columba palumbus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع في الحدائق والبساتين والمدن.",
+    "img": "حمام الغابة.jpg"
+  },
+  {
+    "name": "قمرية (ترغل)",
+    "sci": "Streptopelia turtur",
+    "group": ["طيور"],
+    "status": "VU",
+    "class": "status-vu",
+    "desc": "صيفي ومهاجر يتكاثر في البساتين.",
+    "img": "قمرية (ترغل).jpg"
+  },
+  {
+    "name": "فاختة النخيل",
+    "sci": "Spilopelia senegalensis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع جداً في كل المدن والقرى.",
+    "img": "فاختة النخيل.jpg"
+  },
+  {
+    "name": "يمام مطوق",
+    "sci": "Streptopelia decaocto",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن واسع الانتشار في كل مكان.",
+    "img": "يمام مطوق.jpg"
+  },
+  {
+    "name": "فاختة عراقية",
+    "sci": "Oena capensis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "صيفي (بدأ بالاستيطان في الجنوب والوسط).",
+    "img": "فاختة عراقية.jpg"
+  },
+  {
+    "name": "مرعة الماء",
+    "sci": "Rallus aquaticus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي في قصب الأهوار.",
+    "img": "مرعة الماء.jpg"
+  },
+  {
+    "name": "مرعة البر",
+    "sci": "Crex crex",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر يمر عبر الحقول والمزارع.",
+    "img": "مرعة البر.jpg"
+  },
+  {
+    "name": "مرعة منقطة",
+    "sci": "Porzana porzana",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر وشتوي نادر في المستنقعات.",
+    "img": "مرعة منقطة.jpg"
+  },
+  {
+    "name": "دجاجة الماء صغرى",
+    "sci": "Zapornia parva",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي في كثبان القصب.",
+    "img": "دجاجة الماء صغرى.jpg"
+  },
+  {
+    "name": "مرعة بايلون",
+    "sci": "Zapornia pusilla",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "نادر/عرضي يمر خلال الهجرة.",
+    "img": "مرعة بايلون.jpg"
+  },
+  {
+    "name": "دجاجة الماء",
+    "sci": "Gallinula chloropus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع جداً في كل المسطحات المائية.",
+    "img": "دجاجة الماء.jpg"
+  },
+  {
+    "name": "غرّة (كوت)",
+    "sci": "Fulica atra",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي بأعداد مليونية في الأهوار والبحيرات.",
+    "img": "غرّة (كوت).jpg"
+  },
+  {
+    "name": "دجاجة السلطان",
+    "sci": "Porphyrio poliocephalus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن (أيقونة الأهوار العراقية).",
+    "img": "دجاجة السلطان.jpg"
+  },
+  {
+    "name": "رهو (كركي صغير)",
+    "sci": "Grus virgo",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر يمر بأسراب في سماء العراق.",
+    "img": "رهو (كركي صغير).jpg"
+  },
+  {
+    "name": "كركي مألوف",
+    "sci": "Grus grus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في السهول الزراعية والبوادي.",
+    "img": "كركي مألوف.jpg"
+  },
+  {
+    "name": "كركي سيبيري",
+    "sci": "Leucogeranus leucogeranus",
+    "group": ["طيور"],
+    "status": "CR",
+    "class": "status-cr",
+    "desc": "زائر تاريخي (انقرض تقريباً من المنطقة).",
+    "img": "كركي سيبيري.jpg"
+  },
+  {
+    "name": "غطاس متوج كبير",
+    "sci": "Podiceps cristatus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي في البحيرات العميقة.",
+    "img": "غطاس متوج كبير.jpg"
+  },
+  {
+    "name": "نحام أصغر",
+    "sci": "Phoeniconaias minor",
+    "group": ["طيور"],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "نادر جداً/عرضي الظهور في ميسان والبصرة.",
+    "img": "نحام أصغر.jpg"
+  },
+  {
+    "name": "كروان جبلي",
+    "sci": "Burhinus oedicnemus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في السهول الحصوية والبادية.",
+    "img": "كروان جبلي.jpg"
+  },
+  {
+    "name": "كروان سنغالي",
+    "sci": "Burhinus senegalensis",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستأصل (شوهد تاريخياً في الجنوب).",
+    "img": "كروان سنغالي.jpg"
+  },
+  {
+    "name": "صائد المحار",
+    "sci": "Haematopus ostralegus",
+    "group": ["طيور"],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "شتوي في سواحل البصرة وخور الزبير.",
+    "img": "صائد المحار.jpg"
+  },
+  {
+    "name": "نكات (أبو المغازل)",
+    "sci": "Recurvirostra avosetta",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي شائع في الأهوار والسبخات.",
+    "img": "نكات (أبو المغازل).jpg"
+  },
+  {
+    "name": "أبو المغازل",
+    "sci": "Himantopus himantopus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع جداً في المسطحات المائية.",
+    "img": "أبو المغازل.jpg"
+  },
+  {
+    "name": "قطقاط رمادي",
+    "sci": "Pluvialis squatarola",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في السواحل الطينية الجنوبية.",
+    "img": "قطقاط رمادي.jpg"
+  },
+  {
+    "name": "قطقاط ذهبي أوروبي",
+    "sci": "Pluvialis apricaria",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي يظهر في الحقول الزراعية والسهول.",
+    "img": "قطقاط ذهبي أوروبي.jpg"
+  },
+  {
+    "name": "قطقاط ذهبي باسيفيكي",
+    "sci": "Pluvialis fulva",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "نادر/عرضي يظهر في الشتاء.",
+    "img": "قطقاط ذهبي باسيفيكي.jpg"
+  },
+  {
+    "name": "قطقاط اجتماعي",
+    "sci": "Vanellus gregarius",
+    "group": ["طيور"],
+    "status": "CR",
+    "class": "status-cr",
+    "desc": "شتوي مهدد جداً (يتواجد في بادية المثنى).",
+    "img": "قطقاط اجتماعي.jpg"
+  },
+  {
+    "name": "قطقاط شامي",
+    "sci": "Vanellus leucurus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن في الأهوار والمسطحات المائية.",
+    "img": "قطقاط شامي.jpg"
+  },
+  {
+    "name": "قطقاط فتياني (أبقع)",
+    "sci": "Vanellus spinosus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن (بدأ بالانتشار في وسط العراق).",
+    "img": "قطقاط فتياني (أبقع).jpg"
+  },
+  {
+    "name": "زقزاق أحمر اللغد",
+    "sci": "Vanellus Indicus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن شائع جداً قرب الأنهار والبساتين.",
+    "img": "زقزاق أحمر اللغد.jpg"
+  },
+  {
+    "name": "قطقاط شمالي (زقزاق)",
+    "sci": "Vanellus vanellus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي شائع جداً في السهول والمزارع.",
+    "img": "قطقاط شمالي (زقزاق).jpg"
+  },
+  {
+    "name": "قطقاط مطوق كبير",
+    "sci": "Charadrius hiaticula",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي ومهاجر في السواحل والأهوار.",
+    "img": "قطقاط مطوق كبير.jpg"
+  },
+  {
+    "name": "قطقاط مطوق صغير",
+    "sci": "Charadrius dubius",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وصيفي قرب الأنهار والجداول.",
+    "img": "قطقاط مطوق صغير.jpg"
+  },
+  {
+    "name": "زقزاق كينتي (إسكندراني)",
+    "sci": "Charadrius alexandrinus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مستوطن وشتاوي شائع في السبخات والأهوار.",
+    "img": "زقزاق كينتي (إسكندراني).jpg"
+  },
+  {
+    "name": "زقزاق رملي كبير",
+    "sci": "Charadrius leschenaultii",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي في السواحل الجنوبية والسبخات.",
+    "img": "زقزاق رملي كبير.jpg"
+  },
+  {
+    "name": "زقزاق رملي صغير",
+    "sci": "Charadrius mongolus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "شتوي ومهاجر في سواحل البصرة.",
+    "img": "زقزاق رملي صغير.jpg"
+  },
+  {
+    "name": "زقزاق قزويني",
+    "sci": "Charadrius asioticus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر يمر عبر السهول الجافة والبادية.",
+    "img": "زقزاق قزويني.jpg"
+  },
+  {
+    "name": "كروان مائي كبير",
+    "sci": "Numenius arquata",
+    "group": ["طيور"],
+    "status": "NT",
+    "class": "status-nt",
+    "desc": "شتوي شائع في الأهوار والسواحل الجنوبية.",
+    "img": "كروان مائي كبير.jpg"
+  },
+  {
+    "name": "كروان مائي صغير",
+    "sci": "Numenius phaeopus",
+    "group": ["طيور"],
+    "status": "LC",
+    "class": "status-lc",
+    "desc": "مهاجر يمر عبر السواحل والأراضي الرطبة.",
+    "img": "كروان مائي صغير.jpg"
+  },
   
   {
     "name": "السلحفاة ضخمة الرأس",

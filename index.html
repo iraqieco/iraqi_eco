@@ -2,22 +2,55 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>عراقي إيكو - النشر</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عراقي إيكو | دليل التنوع الحيوي</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; margin: 0; padding: 20px; }
+        .header { text-align: center; color: #2e7d32; margin-bottom: 30px; }
+        
+        /* لوحة التحكم */
+        #adminPanel { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: none; position: relative; margin-bottom: 20px; }
+        .close-btn { position: absolute; top: 10px; left: 10px; cursor: pointer; font-size: 20px; color: #ff5252; font-weight: bold; }
+        
+        input, select, button { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { background: #2e7d32; color: white; border: none; cursor: pointer; font-weight: bold; }
+        
+        /* زر فتح لوحة التحكم */
+        #openBtn { background: #555; width: auto; padding: 10px 20px; margin-bottom: 20px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    </style>
 </head>
 <body>
-    <div style="padding:20px;">
-        <h3>إضافة كائن جديد:</h3>
-        <input type="text" id="arName" placeholder="الاسم العربي"><br>
-        <input type="text" id="laName" placeholder="الاسم اللاتيني"><br>
-        <input type="text" id="imgUrl" placeholder="رابط الصورة"><br>
+
+    <h1 class="header">☘️ عراقي إيكو</h1>
+    
+    <button id="openBtn" onclick="togglePanel()">إضافة كائن جديد (+)</button>
+
+    <div id="adminPanel">
+        <span class="close-btn" onclick="togglePanel()">✖</span>
+        <h3>إضافة كائن جديد إلى القاعدة:</h3>
+        <input type="text" id="arName" placeholder="الاسم العربي">
+        <input type="text" id="laName" placeholder="الاسم اللاتيني">
+        <input type="text" id="imgUrl" placeholder="رابط الصورة">
         <select id="cat">
             <option value="ثدييات">ثدييات</option>
             <option value="طيور">طيور</option>
-        </select><br>
+        </select>
         <button id="btn">نشر البيانات</button>
     </div>
 
+    <div id="displayArea" class="grid"></div>
+
     <script>
+        // دالة إظهار وإخفاء اللوحة
+        function togglePanel() {
+            const panel = document.getElementById('adminPanel');
+            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // الكود البرمجي للاتصال (تأكد من وضع مفتاحك الطويل هنا)
         const URL = 'https://rmqtopxawrrgntcqqnpa.supabase.co/rest/v1/species';
         const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA';
 
@@ -39,11 +72,7 @@
                 },
                 body: JSON.stringify(dataToSend)
             })
-            .then(res => res.json())
-            .then(data => {
-                alert("تمت الإضافة بنجاح!");
-                location.reload();
-            })
+            .then(() => { alert("تم الإضافة!"); location.reload(); })
             .catch(err => alert("خطأ: " + err));
         });
     </script>

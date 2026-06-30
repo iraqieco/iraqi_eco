@@ -2,20 +2,70 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>قاعدة بيانات كائنات العراق</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        /* التنسيق (CSS) هنا */
+        body { font-family: sans-serif; background: #f4f4f9; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; }
+        .admin-section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 10px; display: none; }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>التنوع الحيواني في العراق</h1>
-        <a href="admin.html" class="admin-btn">إضافة كائن جديد</a>
-    </header>
 
-    <main id="species-container" class="grid">
-        </main>
+    <h1>كائنات العراق الحية</h1>
+    <button onclick="document.getElementById('admin-section').style.display='block'">نشر كائن جديد</button>
 
-    <script src="script.js"></script>
+    <div id="admin-section" class="admin-section">
+        <h3>إضافة كائن</h3>
+        <input type="text" id="arName" placeholder="الاسم العربي"><br>
+        <input type="text" id="latName" placeholder="الاسم اللاتيني"><br>
+        <input type="text" id="imgUrl" placeholder="رابط الصورة"><br>
+        <textarea id="desc" placeholder="الوصف"></textarea><br>
+        <button onclick="saveToDatabase()">حفظ</button>
+    </div>
+
+    <div id="species-container" class="grid"></div>
+
+    <script>
+        // المنطق (JavaScript) هنا
+        const supabase = supabase.createClient('YOUR_SUPABASE_URL', 'YOUR_SUPABASE_ANON_KEY');
+
+        async function loadSpecies() {
+            const { data } = await supabase.from('species').select('*');
+            const container = document.getElementById('species-container');
+            container.innerHTML = data.map(item => `
+                <div class="card">
+                    <img src="${item.image_url}" alt="${item.arabic_name}">
+                    <h3>${item.arabic_name}</h3>
+                    <p><i>${item.latin_name}</i></p>
+                    <p>${item.description}</p>
+                </div>
+            `).join('');
+        }
+
+        async function saveToDatabase() {
+            const code = prompt("أدخل رمز النشر:");
+            if (code !== "150") return alert("رمز خطأ");
+
+            const { error } = await supabase.from('species').insert([{
+                arabic_name: document.getElementById('arName').value,
+                latin_name: document.getElementById('latName').value,
+                image_url: document.getElementById('imgUrl').value,
+                description: document.getElementById('desc').value
+            }]);
+            
+            if (!error) {
+                alert("تم الحفظ!");
+                loadSpecies();
+            }
+        }
+
+        loadSpecies();
+    </script>
 </body>
 </html>
+

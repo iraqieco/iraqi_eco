@@ -15,7 +15,7 @@
 <body>
 
     <h1>كائنات العراق الحية</h1>
-    <button onclick="document.getElementById('admin-section').style.display='block'">نشر كائن جديد</button>
+    <button onclick="showAdmin()">نشر كائن جديد</button>
 
     <div id="admin-section" class="admin-section">
         <h3>إضافة كائن</h3>
@@ -33,10 +33,13 @@
         const SUPABASE_KEY = 'sb_publishable_YBIUORkoL9OPbirhy5Bbbg_GUorO4_a';
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ربط الزر بطريقة أكثر ثقة
-        document.getElementById('saveBtn').addEventListener('click', async () => {
-            console.log("تم الضغط على زر الحفظ");
-            
+        // دالة إظهار القسم وربط الزر
+        function showAdmin() {
+            document.getElementById('admin-section').style.display='block';
+        }
+
+        // ربط الزر مباشرة داخل الكود، تم استبدال addEventListener بـ onclick لضمان العمل
+        document.getElementById('saveBtn').onclick = async function() {
             const code = prompt("أدخل رمز النشر:");
             if (code !== "150") return alert("رمز خطأ!");
 
@@ -47,22 +50,19 @@
                 description: document.getElementById('desc').value
             };
 
-            console.log("جاري الإرسال:", payload);
-
-            const { data, error } = await supabase.from('species').insert([payload]);
+            const { error } = await supabase.from('species').insert([payload]);
             
             if (error) {
-                console.error("خطأ Supabase:", error);
-                alert("فشل الحفظ: " + error.message);
+                alert("خطأ: " + error.message);
+                console.error(error);
             } else {
                 alert("تم الحفظ بنجاح!");
                 location.reload();
             }
-        });
+        };
 
         async function loadSpecies() {
-            const { data, error } = await supabase.from('species').select('*');
-            if (error) console.error("خطأ تحميل:", error);
+            const { data } = await supabase.from('species').select('*');
             const container = document.getElementById('species-container');
             if (data) {
                 container.innerHTML = data.map(item => `

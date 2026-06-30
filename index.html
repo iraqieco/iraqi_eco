@@ -29,13 +29,14 @@
     <div id="species-container" class="grid"></div>
 
     <script>
-        // إعداد الاتصال باستخدام المفتاح العام فقط
         const SUPABASE_URL = 'https://mpepdiweqeturegfzhxb.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_YBIUORkoL9OPbirhy5Bbbg_GUorO4_a';
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         async function loadSpecies() {
-            const { data } = await supabase.from('species').select('*');
+            const { data, error } = await supabase.from('species').select('*');
+            if (error) console.error("خطأ في التحميل:", error);
+            
             const container = document.getElementById('species-container');
             if (data) {
                 container.innerHTML = data.map(item => `
@@ -53,15 +54,20 @@
             const code = prompt("أدخل رمز النشر:");
             if (code !== "150") return alert("رمز خطأ!");
 
-            const { error } = await supabase.from('species').insert([{
+            // التأكد من أن القيم ليست فارغة
+            const payload = {
                 arabic_name: document.getElementById('arName').value,
                 latin_name: document.getElementById('latName').value,
                 image_url: document.getElementById('imgUrl').value,
                 description: document.getElementById('desc').value
-            }]);
+            };
+
+            const { data, error } = await supabase.from('species').insert([payload]);
             
-            if (error) alert("خطأ: " + error.message);
-            else {
+            if (error) {
+                console.error("تفاصيل الخطأ:", error);
+                alert("خطأ أثناء الحفظ: " + error.message);
+            } else {
                 alert("تم الحفظ بنجاح!");
                 location.reload();
             }

@@ -23,7 +23,7 @@
         <input type="text" id="latName" placeholder="الاسم اللاتيني"><br>
         <input type="text" id="imgUrl" placeholder="رابط الصورة"><br>
         <textarea id="desc" placeholder="الوصف"></textarea><br>
-        <button onclick="saveToDatabase()">حفظ البيانات</button>
+        <button id="saveBtn">حفظ البيانات</button>
     </div>
 
     <div id="species-container" class="grid"></div>
@@ -33,10 +33,36 @@
         const SUPABASE_KEY = 'sb_publishable_YBIUORkoL9OPbirhy5Bbbg_GUorO4_a';
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        // ربط الزر بطريقة أكثر ثقة
+        document.getElementById('saveBtn').addEventListener('click', async () => {
+            console.log("تم الضغط على زر الحفظ");
+            
+            const code = prompt("أدخل رمز النشر:");
+            if (code !== "150") return alert("رمز خطأ!");
+
+            const payload = {
+                arabic_name: document.getElementById('arName').value,
+                latin_name: document.getElementById('latName').value,
+                image_url: document.getElementById('imgUrl').value,
+                description: document.getElementById('desc').value
+            };
+
+            console.log("جاري الإرسال:", payload);
+
+            const { data, error } = await supabase.from('species').insert([payload]);
+            
+            if (error) {
+                console.error("خطأ Supabase:", error);
+                alert("فشل الحفظ: " + error.message);
+            } else {
+                alert("تم الحفظ بنجاح!");
+                location.reload();
+            }
+        });
+
         async function loadSpecies() {
             const { data, error } = await supabase.from('species').select('*');
-            if (error) console.error("خطأ في التحميل:", error);
-            
+            if (error) console.error("خطأ تحميل:", error);
             const container = document.getElementById('species-container');
             if (data) {
                 container.innerHTML = data.map(item => `
@@ -47,29 +73,6 @@
                         <p>${item.description}</p>
                     </div>
                 `).join('');
-            }
-        }
-
-        async function saveToDatabase() {
-            const code = prompt("أدخل رمز النشر:");
-            if (code !== "150") return alert("رمز خطأ!");
-
-            // التأكد من أن القيم ليست فارغة
-            const payload = {
-                arabic_name: document.getElementById('arName').value,
-                latin_name: document.getElementById('latName').value,
-                image_url: document.getElementById('imgUrl').value,
-                description: document.getElementById('desc').value
-            };
-
-            const { data, error } = await supabase.from('species').insert([payload]);
-            
-            if (error) {
-                console.error("تفاصيل الخطأ:", error);
-                alert("خطأ أثناء الحفظ: " + error.message);
-            } else {
-                alert("تم الحفظ بنجاح!");
-                location.reload();
             }
         }
 

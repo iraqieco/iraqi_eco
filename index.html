@@ -8,41 +8,69 @@
         body { font-family: sans-serif; background: #f4f7f6; padding: 20px; }
         .header { text-align: center; color: #2e7d32; }
         
-        /* تصميم البطاقة */
+        /* تصميم لوحة الإضافة */
+        #adminPanel { background: white; padding: 20px; border-radius: 15px; display: none; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input, select, button { width: 100%; padding: 10px; margin: 5px 0; border-radius: 8px; border: 1px solid #ddd; }
+        .btn-add { background: #2e7d32; color: white; border: none; cursor: pointer; }
+        
+        /* تصميم البطاقات */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
-        .card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
-        .card img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
-        .card h3 { margin: 10px 0 5px; }
-        .card p { color: #666; font-size: 14px; }
+        .card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; }
+        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; }
     </style>
 </head>
 <body>
 
     <h1 class="header">☘️ عراقي إيكو</h1>
     
+    <button onclick="document.getElementById('adminPanel').style.display='block'">إضافة كائن جديد (+)</button>
+
+    <div id="adminPanel">
+        <span style="cursor:pointer; float:left;" onclick="this.parentElement.style.display='none'">✖</span>
+        <h3>إضافة كائن:</h3>
+        <input type="text" id="arName" placeholder="الاسم العربي">
+        <input type="text" id="laName" placeholder="الاسم اللاتيني">
+        <input type="text" id="imgUrl" placeholder="رابط الصورة">
+        <select id="cat">
+            <option value="ثدييات">ثدييات</option>
+            <option value="طيور">طيور</option>
+        </select>
+        <button class="btn-add" id="submitBtn">نشر البيانات</button>
+    </div>
+
     <div id="displayArea" class="grid"></div>
 
     <script>
-        const URL = 'https://rmqtopxawrrgntcqqnpa.supabase.co/rest/v1/species?select=*';
-        const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA';
+        const URL = 'https://rmqtopxawrrgntcqqnpa.supabase.co/rest/v1/species';
+        const KEY = 'ضع_مفتاح_anon_public_الطويل_eyJ_هنا'; // تأكد من وضع مفتاحك الطويل هنا
 
-        async function loadSpecies() {
-            const response = await fetch(URL, {
-                headers: { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY }
+        // كود الإضافة
+        document.getElementById('submitBtn').addEventListener('click', async () => {
+            await fetch(URL, {
+                method: 'POST',
+                headers: { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
+                body: JSON.stringify({
+                    arabic_name: document.getElementById('arName').value,
+                    latin_name: document.getElementById('laName').value,
+                    image_url: document.getElementById('imgUrl').value,
+                    category: document.getElementById('cat').value
+                })
             });
-            const data = await response.json();
-            
-            const area = document.getElementById('displayArea');
-            area.innerHTML = data.map(item => `
+            location.reload();
+        });
+
+        // كود العرض
+        async function loadSpecies() {
+            const res = await fetch(URL + '?select=*', { headers: { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY }});
+            const data = await res.json();
+            document.getElementById('displayArea').innerHTML = data.map(item => `
                 <div class="card">
-                    <img src="${item.image_url || 'https://via.placeholder.com/150'}" onerror="this.src='https://via.placeholder.com/150'">
-                    <h3>${item.arabic_name || 'كائن غير مسمى'}</h3>
-                    <p><em>${item.latin_name || 'لا يوجد اسم لاتيني'}</em></p>
-                    <p style="color:#2e7d32; font-weight:bold;">${item.category || 'غير مصنف'}</p>
+                    <img src="${item.image_url || 'https://via.placeholder.com/150'}">
+                    <h3>${item.arabic_name || 'بدون اسم'}</h3>
+                    <p>${item.latin_name || '-'}</p>
                 </div>
             `).join('');
         }
-
         loadSpecies();
     </script>
 </body>

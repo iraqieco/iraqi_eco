@@ -6,87 +6,67 @@
     <title>عراقي إيكو</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: sans-serif; background: #fff; padding: 20px; }
-        .logo { text-align: center; color: #27ae60; font-size: 32px; font-weight: bold; margin-bottom: 20px; }
-        .admin-box { background: #f9f9f9; padding: 20px; border-radius: 10px; border: 1px solid #eee; margin-bottom: 30px; }
-        input, select, button { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        button { background: #27ae60; color: white; border: none; cursor: pointer; font-size: 16px; font-weight: bold; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; }
-        .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 5px; }
+        body { font-family: sans-serif; padding: 20px; }
+        .admin-box { background: #f0f0f0; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        input, select, button { width: 100%; padding: 10px; margin: 5px 0; }
+        button { background: blue; color: white; border: none; cursor: pointer; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .card { border: 1px solid #ccc; padding: 10px; }
+        .card img { width: 100%; height: 100px; object-fit: cover; }
     </style>
 </head>
 <body>
 
-    <div class="logo">☘️ عراقي إيكو</div>
-    
     <div class="admin-box">
-        <h3>إضافة كائن جديد:</h3>
         <input type="text" id="aName" placeholder="الاسم العربي">
         <input type="text" id="lName" placeholder="الاسم اللاتيني">
         <input type="text" id="iUrl" placeholder="رابط الصورة">
         <select id="cat">
             <option value="ثدييات">ثدييات</option>
             <option value="طيور">طيور</option>
-            <option value="زواحف">زواحف</option>
         </select>
-        <button onclick="publishData()">نشر الكائن</button>
+        <button id="pubBtn">نشر الكائن</button>
     </div>
 
     <div id="container" class="grid"></div>
 
     <script>
-        // إعدادات الاتصال
-        const SUPABASE_URL = 'https://rmqtopxawrrgntcqqnpa.supabase.co';
-        const SUPABASE_KEY = 'Sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX';
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabase = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'Sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX');
 
-        // دالة النشر مع رسائل توضيحية
-        async function publishData() {
+        // ربط الزر عن طريق ID وليس onclick
+        document.getElementById('pubBtn').addEventListener('click', async () => {
             const arName = document.getElementById('aName').value;
             const lName = document.getElementById('lName').value;
             const iUrl = document.getElementById('iUrl').value;
             const cat = document.getElementById('cat').value;
 
-            if(!arName || !iUrl) {
-                alert("يرجى التأكد من ملء حقل الاسم العربي ورابط الصورة!");
-                return;
-            }
+            const { error } = await supabase.from('species').insert([{
+                arabic_name: arName,
+                latin_name: lName,
+                image_url: iUrl,
+                category: cat
+            }]);
 
-            const { error } = await supabase.from('species').insert([
-                { 
-                    arabic_name: arName, 
-                    latin_name: lName, 
-                    image_url: iUrl, 
-                    category: cat 
-                }
-            ]);
-            
             if (error) {
-                alert("حدث خطأ أثناء النشر: " + error.message);
+                alert("خطأ: " + error.message);
             } else {
-                alert("تم نشر الكائن بنجاح!");
+                alert("تم النشر!");
                 location.reload();
             }
-        }
+        });
 
-        // دالة عرض البيانات
-        async function loadData() {
-            const { data, error } = await supabase.from('species').select('*');
-            if (error) {
-                console.error("خطأ في جلب البيانات:", error);
-            } else if (data) {
+        async function load() {
+            const { data } = await supabase.from('species').select('*');
+            if (data) {
                 document.getElementById('container').innerHTML = data.map(item => `
                     <div class="card">
-                        <img src="${item.image_url}" onerror="this.src='https://via.placeholder.com/150'">
+                        <img src="${item.image_url}">
                         <h3>${item.arabic_name}</h3>
-                        <p>${item.latin_name}</p>
                     </div>
                 `).join('');
             }
         }
-        
-        loadData();
+        load();
     </script>
 </body>
 </html>

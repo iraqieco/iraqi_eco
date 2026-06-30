@@ -8,47 +8,59 @@
         body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
         .item { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ddd; }
         .admin-section { margin-top: 50px; padding: 20px; border-top: 2px dashed #ccc; display: none; }
-        #login-btn { position: fixed; bottom: 10px; left: 10px; opacity: 0.1; }
     </style>
 </head>
 <body>
 
 <h1>النتائج المسجلة</h1>
-<div id="results">جاري تحميل البيانات...</div>
+<div id="results">جاري جلب البيانات...</div>
 
 <div id="admin-area" class="admin-section">
-    <h3>لوحة التحكم (خاص بالمدير)</h3>
+    <h3>لوحة التحكم</h3>
     <input type="text" id="arName" placeholder="الاسم العربي"><br>
     <input type="text" id="laName" placeholder="الاسم اللاتيني"><br>
     <input type="text" id="imgUrl" placeholder="رابط الصورة"><br>
     <button onclick="addItem()">إضافة للسجل</button>
-    <button onclick="logout()">خروج من الإدارة</button>
+    <button onclick="logout()">خروج</button>
 </div>
 
-<button id="login-btn" onclick="showLogin()">.</button>
+<button onclick="showLogin()">.</button>
 
 <script>
-    const supabase = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA');
+    // ضع بياناتك هنا بدقة
+    const supabase = supabase.createClient(
+        'https://rmqtopxawrrgntcqqnpa.supabase.co', 
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA' 
+    );
 
-    // 1. جلب البيانات للجميع
     async function loadData() {
-        const { data } = await supabase.from('species').select('*');
         const container = document.getElementById('results');
-        container.innerHTML = data.map(i => `<div class="item">
-            <h3>${i.arabic_name}</h3><p>${i.latin_name}</p><img src="${i.image_url}" width="100">
-        </div>`).join('');
-    }
-    loadData();
-
-    // 2. إدارة ظهور لوحة التحكم
-    supabase.auth.onAuthStateChange((event, session) => {
-        if (session) {
-            document.getElementById('admin-area').style.display = 'block';
+        const { data, error } = await supabase.from('species').select('*');
+        
+        if (error) {
+            container.innerHTML = "خطأ في الاتصال: " + error.message;
+            return;
         }
+        
+        if (data && data.length > 0) {
+            container.innerHTML = data.map(i => `
+                <div class="item">
+                    <h3>${i.arabic_name || 'بدون اسم'}</h3>
+                    <p>${i.latin_name || 'بدون اسم'}</p>
+                    <img src="${i.image_url || ''}" width="100">
+                </div>
+            `).join('');
+        } else {
+            container.innerHTML = "لا توجد بيانات.";
+        }
+    }
+
+    supabase.auth.onAuthStateChange((event, session) => {
+        if (session) document.getElementById('admin-area').style.display = 'block';
     });
 
     function showLogin() {
-        const email = prompt("البريد الإلكتروني:");
+        const email = prompt("البريد:");
         const pass = prompt("كلمة المرور:");
         supabase.auth.signInWithPassword({ email, password: pass });
     }
@@ -64,6 +76,8 @@
     }
 
     function logout() { supabase.auth.signOut(); location.reload(); }
+
+    loadData();
 </script>
 </body>
 </html>

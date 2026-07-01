@@ -1,31 +1,16 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>فحص الاتصال الفوري</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body>
-    <h1>حالة البيانات:</h1>
-    <div id="output" style="border:1px solid #000; padding:10px;">جاري الاتصال بقاعدة البيانات...</div>
-
-    <script>
-        const out = document.getElementById('output');
-        const supabase = window.supabase.createClient(
-            'https://rmqtopxawrrgntcqqnpa.supabase.co', 
-            'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX'
-        );
-
-        // طلب مباشر وسريع
-        supabase.from('species').select('name_ar').then(({ data, error }) => {
-            if (error) {
-                out.innerHTML = "خطأ في الاتصال: " + error.message;
-            } else if (data) {
-                out.innerHTML = "تم الاتصال بنجاح! البيانات هي: " + JSON.stringify(data);
-            }
-        }).catch(err => {
-            out.innerHTML = "تعذر الوصول للسيرفر: " + err;
-        });
-    </script>
-</body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<div id="test">بدء الاختبار...</div>
+<script>
+    const supabase = window.supabase.createClient(
+        'https://rmqtopxawrrgntcqqnpa.supabase.co', 
+        'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX'
+    );
+    
+    supabase.from('species').select('name_ar').limit(1)
+    .then(res => {
+        document.getElementById('test').innerText = JSON.stringify(res);
+    })
+    .catch(err => {
+        document.getElementById('test').innerText = "خطأ: " + err;
+    });
+</script>

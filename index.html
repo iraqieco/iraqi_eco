@@ -2,43 +2,30 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>عراقي إيكو</title>
+    <title>فحص الاتصال الفوري</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        body { font-family: sans-serif; padding: 20px; }
-        .card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 8px; background: #fff; }
-    </style>
 </head>
 <body>
-    <h1>قائمة الكائنات</h1>
-    <div id="container">جاري جلب البيانات...</div>
+    <h1>حالة البيانات:</h1>
+    <div id="output" style="border:1px solid #000; padding:10px;">جاري الاتصال بقاعدة البيانات...</div>
 
     <script>
+        const out = document.getElementById('output');
         const supabase = window.supabase.createClient(
             'https://rmqtopxawrrgntcqqnpa.supabase.co', 
             'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX'
         );
 
-        async function init() {
-            const container = document.getElementById('container');
-            // نقوم بجلب كل الأعمدة
-            const { data, error } = await supabase.from('species').select('*');
-            
+        // طلب مباشر وسريع
+        supabase.from('species').select('name_ar').then(({ data, error }) => {
             if (error) {
-                container.innerHTML = "خطأ قاعدة البيانات: " + error.message;
-            } else if (!data || data.length === 0) {
-                container.innerHTML = "الجدول فارغ.";
-            } else {
-                // نستخدم الأسماء الصحيحة: name_ar و scientific_name
-                container.innerHTML = data.map(item => `
-                    <div class="card">
-                        <h3>${item.name_ar || 'بدون اسم'}</h3>
-                        <p>الاسم العلمي: ${item.scientific_name || 'غير متوفر'}</p>
-                    </div>
-                `).join('');
+                out.innerHTML = "خطأ في الاتصال: " + error.message;
+            } else if (data) {
+                out.innerHTML = "تم الاتصال بنجاح! البيانات هي: " + JSON.stringify(data);
             }
-        }
-        init();
+        }).catch(err => {
+            out.innerHTML = "تعذر الوصول للسيرفر: " + err;
+        });
     </script>
 </body>
 </html>

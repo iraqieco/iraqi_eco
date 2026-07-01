@@ -2,11 +2,11 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>عراقي إيكو - القائمة الكاملة</title>
+    <title>عراقي إيكو</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { font-family: sans-serif; padding: 20px; }
-        .item { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 8px; background: #f9f9f9; }
+        .card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 8px; background: #fff; }
     </style>
 </head>
 <body>
@@ -19,22 +19,26 @@
             'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX'
         );
 
-        async function fetchAll() {
+        async function init() {
             const container = document.getElementById('container');
+            // نقوم بجلب كل الأعمدة
             const { data, error } = await supabase.from('species').select('*');
             
             if (error) {
-                container.innerText = "خطأ: " + error.message;
+                container.innerHTML = "خطأ قاعدة البيانات: " + error.message;
+            } else if (!data || data.length === 0) {
+                container.innerHTML = "الجدول فارغ.";
             } else {
+                // نستخدم الأسماء الصحيحة: name_ar و scientific_name
                 container.innerHTML = data.map(item => `
-                    <div class="item">
-                        <h3>${item.name_ar || 'اسم غير موجود'}</h3>
-                        <p>${item.description || 'لا توجد تفاصيل'}</p>
+                    <div class="card">
+                        <h3>${item.name_ar || 'بدون اسم'}</h3>
+                        <p>الاسم العلمي: ${item.scientific_name || 'غير متوفر'}</p>
                     </div>
                 `).join('');
             }
         }
-        fetchAll();
+        init();
     </script>
 </body>
 </html>

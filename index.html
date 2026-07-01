@@ -2,52 +2,53 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>عراقي إيكو - لوحة الإضافة</title>
+    <title>لوحة التحكم - عراقي إيكو</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        body { font-family: sans-serif; padding: 20px; }
-        .form-box { border: 2px solid #2e7d32; padding: 15px; margin-bottom: 20px; border-radius: 10px; }
-        input, textarea { display: block; width: 100%; margin: 10px 0; padding: 8px; }
-    </style>
 </head>
 <body>
 
-    <div class="form-box">
-        <h3>إضافة كائن جديد:</h3>
-        <input type="text" id="name" placeholder="اسم الحيوان">
-        <input type="text" id="scientific" placeholder="الاسم العلمي">
-        <textarea id="desc" placeholder="الوصف"></textarea>
-        <button onclick="addSpecies()">إضافة إلى الموقع</button>
+    <!-- منطقة تسجيل الدخول -->
+    <div id="auth-section">
+        <h3>تسجيل دخول المشرف</h3>
+        <input type="email" id="email" placeholder="البريد الإلكتروني">
+        <input type="password" id="password" placeholder="كلمة السر">
+        <button onclick="login()">دخول</button>
     </div>
 
-    <h1>قائمة الكائنات</h1>
-    <div id="list">جاري التحميل...</div>
+    <!-- منطقة النشر (تظهر فقط بعد الدخول) -->
+    <div id="publish-section" style="display:none;">
+        <h3>إضافة كائن جديد</h3>
+        <input type="text" id="name" placeholder="اسم الكائن">
+        <button onclick="publish()">نشر</button>
+        <button onclick="logout()">خروج</button>
+    </div>
 
     <script>
-        const URL = 'https://rmqtopxawrrgntcqqnpa.supabase.co';
-        const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA';
-        const supabase = window.supabase.createClient(URL, KEY);
+        const supabase = window.supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA');
 
-        async function addSpecies() {
-            const name = document.getElementById('name').value;
-            const scientific = document.getElementById('scientific').value;
-            const desc = document.getElementById('desc').value;
-
-            const { error } = await supabase.from('species').insert([{ 
-                name_ar: name, 
-                scientific_name: scientific, 
-                description: desc 
-            }]);
-
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const { error } = await supabase.auth.signInWithPassword({ email, password });
+            
             if (error) {
                 alert("خطأ: " + error.message);
             } else {
-                alert("تمت الإضافة بنجاح!");
-                location.reload(); // تحديث الصفحة لرؤية الإضافة
+                document.getElementById('auth-section').style.display = 'none';
+                document.getElementById('publish-section').style.display = 'block';
+                alert("أهلاً بك يا مشرف");
             }
         }
-        // دالة العرض (نفس السابقة)
-        // ... (يمكنك وضع دالة الـ fetch السابقة هنا)
+
+        async function publish() {
+            const { error } = await supabase.from('species').insert([{ name_ar: document.getElementById('name').value }]);
+            error ? alert("خطأ: " + error.message) : alert("تم النشر بنجاح!");
+        }
+
+        async function logout() {
+            await supabase.auth.signOut();
+            location.reload();
+        }
     </script>
 </body>
 </html>

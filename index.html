@@ -6,11 +6,12 @@
     <title>عراقي إيكو - Iraqi Eco</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
-        .card { background: white; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 10px; border-right: 5px solid #2e7d32; }
-        #admin-panel { margin-top: 50px; padding: 20px; background: white; border: 1px solid #ccc; display: none; }
-        input { display: block; width: 100%; margin: 10px 0; padding: 10px; }
-        button { padding: 10px; cursor: pointer; }
+        body { font-family: sans-serif; padding: 20px; background: #f9f9f9; line-height: 1.6; }
+        .card { background: white; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 10px; border-right: 5px solid #2e7d32; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .admin-area { margin-top: 50px; padding: 20px; border-top: 2px dashed #ccc; text-align: center; }
+        #admin-panel { margin-top: 20px; padding: 20px; background: white; border-radius: 10px; display: none; }
+        input { display: block; width: 100%; max-width: 300px; margin: 10px auto; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 20px; background: #2e7d32; color: white; border: none; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -18,8 +19,8 @@
     <h1>قائمة الكائنات الحية</h1>
     <div id="list">جاري تحميل البيانات...</div>
 
-    <div style="margin-top: 50px;">
-        <button id="admin-btn" onclick="showAdminPanel()">لوحة تحكم الإدارة</button>
+    <div class="admin-area">
+        <button id="admin-toggle-btn" onclick="document.getElementById('admin-panel').style.display='block'; this.style.display='none';">لوحة تحكم الإدارة</button>
         
         <div id="admin-panel">
             <div id="login-area">
@@ -42,33 +43,30 @@
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA'
         );
 
-        // تحميل البيانات فوراً للجميع
+        // 1. تحميل البيانات دائماً (لا علاقة لها بتسجيل الدخول)
         async function loadData() {
-            const { data, error } = await supabase.from('species').select('*');
             const listDiv = document.getElementById('list');
+            const { data, error } = await supabase.from('species').select('*');
             if (error) {
                 listDiv.innerText = "خطأ في تحميل البيانات.";
-            } else if (data.length === 0) {
-                listDiv.innerText = "لا توجد كائنات حالياً.";
+            } else if (!data || data.length === 0) {
+                listDiv.innerText = "لا توجد بيانات.";
             } else {
-                listDiv.innerHTML = data.map(i => `<div class="card"><h2>${i.name_ar}</h2></div>`).join('');
+                listDiv.innerHTML = data.map(i => `
+                    <div class="card">
+                        <h2>${i.name_ar || 'بدون اسم'}</h2>
+                    </div>
+                `).join('');
             }
         }
 
-        function showAdminPanel() {
-            document.getElementById('admin-panel').style.display = 'block';
-        }
-
+        // 2. دوال الإدارة
         async function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const { error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) {
-                alert("خطأ: " + error.message);
-            } else {
-                alert("تم الدخول!");
-                location.reload();
-            }
+            if (error) alert("خطأ: " + error.message);
+            else location.reload();
         }
 
         async function publish() {
@@ -83,15 +81,18 @@
             location.reload();
         }
 
-        // عند فتح الصفحة، حمل البيانات أولاً
-        window.addEventListener('load', async () => {
-            await loadData();
+        // 3. التحقق عند التحميل
+        window.onload = async () => {
+            loadData(); // تحميل البيانات فوراً
             const { data } = await supabase.auth.getSession();
             if (data.session) {
+                document.getElementById('admin-panel').style.display = 'block';
+                document.getElementById('admin-toggle-btn').style.display = 'none';
                 document.getElementById('login-area').style.display = 'none';
                 document.getElementById('publish-area').style.display = 'block';
             }
-        });
+        };
     </script>
 </body>
 </html>
+

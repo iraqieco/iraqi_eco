@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html dir="rtl">
+<html lang="ar" dir="rtl">
 <head>
+    <meta charset="UTF-8">
+    <title>فحص الاتصال - عراقي إيكو</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <h1>اختبار الاتصال:</h1>
-    <div id="status">جاري الاختبار...</div>
+    <h1>حالة النظام:</h1>
+    <div id="status">جاري الفحص...</div>
 
     <script>
         const supabase = window.supabase.createClient(
@@ -13,15 +15,23 @@
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA'
         );
 
-        async function test() {
-            const { data, error } = await supabase.from('species').select('*');
-            if (error) {
-                document.getElementById('status').innerText = "خطأ: " + error.message;
-            } else {
-                document.getElementById('status').innerText = "تم الاتصال بنجاح! عدد الكائنات: " + data.length;
+        async function check() {
+            const statusDiv = document.getElementById('status');
+            try {
+                // محاولة جلب بيانات
+                const { data, error } = await supabase.from('species').select('*');
+                
+                if (error) {
+                    statusDiv.innerHTML = "<b style='color:red;'>خطأ في القاعدة:</b> " + error.message;
+                } else {
+                    statusDiv.innerHTML = "<b style='color:green;'>تم الاتصال بنجاح!</b><br> عدد الكائنات: " + data.length;
+                }
+            } catch (err) {
+                statusDiv.innerHTML = "<b style='color:red;'>خطأ في الاتصال (قد يكون حظر شبكة):</b> " + err.message;
             }
         }
-        test();
+        check();
     </script>
 </body>
 </html>
+

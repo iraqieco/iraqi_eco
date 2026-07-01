@@ -7,8 +7,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
-        .species-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 8px; }
-        .error { color: red; font-weight: bold; }
+        .species-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 10px; background: #f9f9f9; }
+        h2 { color: #2e7d32; margin-top: 0; }
+        .error { color: red; }
     </style>
 </head>
 <body>
@@ -17,7 +18,6 @@
     <div id="species-list">جاري تحميل البيانات...</div>
 
     <script>
-        // إعدادات الاتصال بمشروعك
         const SUPABASE_URL = 'https://rmqtopxawrrgntcqqnpa.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA';
 
@@ -38,24 +38,26 @@
                     return;
                 }
 
-                listDiv.innerHTML = ''; // تنظيف القائمة
+                listDiv.innerHTML = ''; // تنظيف شاشة التحميل
+                
                 data.forEach(item => {
-                    listDiv.innerHTML += `
-                        <div class="species-card">
-                            <h2>${item.name_ar || 'بدون اسم'}</h2>
-                            <p><strong>الاسم العلمي:</strong> ${item.scientific_name || 'غير متوفر'}</p>
-                            <p><strong>حالة الحفظ:</strong> ${item.conservation_status || 'غير معروف'}</p>
-                            <p><strong>الوصف:</strong> ${item.description || 'لا يوجد وصف'}</p>
-                        </div>
-                    `;
+                    // ننشئ عناصر البطاقة فقط إذا كانت البيانات موجودة
+                    let cardHTML = `<div class="species-card">`;
+                    
+                    if (item.name_ar) cardHTML += `<h2>${item.name_ar}</h2>`;
+                    if (item.scientific_name) cardHTML += `<p><strong>الاسم العلمي:</strong> ${item.scientific_name}</p>`;
+                    if (item.conservation_status) cardHTML += `<p><strong>حالة الحفظ:</strong> ${item.conservation_status}</p>`;
+                    if (item.description) cardHTML += `<p>${item.description}</p>`;
+                    
+                    cardHTML += `</div>`;
+                    listDiv.innerHTML += cardHTML;
                 });
             } catch (err) {
                 console.error("خطأ:", err);
-                listDiv.innerHTML = `<p class="error">حدث خطأ أثناء جلب البيانات: ${err.message}</p>`;
+                listDiv.innerHTML = `<p class="error">حدث خطأ أثناء جلب البيانات. تأكد من إعدادات السياسات (Policies) في Supabase.</p>`;
             }
         }
 
-        // تشغيل الوظيفة عند تحميل الصفحة
         fetchSpecies();
     </script>
 </body>

@@ -6,12 +6,11 @@
     <title>عراقي إيكو - Iraqi Eco</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: sans-serif; padding: 20px; line-height: 1.6; background: #f9f9f9; }
+        body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
         .card { background: white; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 10px; border-right: 5px solid #2e7d32; }
-        .admin-section { margin-top: 50px; padding: 20px; border-top: 2px solid #ccc; text-align: center; }
-        #admin-panel { display: none; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        input { display: block; width: 100%; max-width: 300px; margin: 10px auto; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
-        button { padding: 10px 20px; background: #2e7d32; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #admin-panel { margin-top: 50px; padding: 20px; background: white; border: 1px solid #ccc; display: none; }
+        input { display: block; width: 100%; margin: 10px 0; padding: 10px; }
+        button { padding: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -19,8 +18,8 @@
     <h1>قائمة الكائنات الحية</h1>
     <div id="list">جاري تحميل البيانات...</div>
 
-    <div class="admin-section">
-        <button id="toggle-admin" onclick="showAdmin()">تسجيل دخول الإدارة</button>
+    <div style="margin-top: 50px;">
+        <button id="admin-btn" onclick="showAdminPanel()">لوحة تحكم الإدارة</button>
         
         <div id="admin-panel">
             <div id="login-area">
@@ -43,22 +42,21 @@
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA'
         );
 
+        // تحميل البيانات فوراً للجميع
         async function loadData() {
             const { data, error } = await supabase.from('species').select('*');
+            const listDiv = document.getElementById('list');
             if (error) {
-                document.getElementById('list').innerText = "خطأ في الاتصال بقاعدة البيانات.";
+                listDiv.innerText = "خطأ في تحميل البيانات.";
+            } else if (data.length === 0) {
+                listDiv.innerText = "لا توجد كائنات حالياً.";
             } else {
-                document.getElementById('list').innerHTML = data.map(i => `
-                    <div class="card">
-                        <h2>${i.name_ar || 'كائن بدون اسم'}</h2>
-                    </div>
-                `).join('');
+                listDiv.innerHTML = data.map(i => `<div class="card"><h2>${i.name_ar}</h2></div>`).join('');
             }
         }
 
-        function showAdmin() {
+        function showAdminPanel() {
             document.getElementById('admin-panel').style.display = 'block';
-            document.getElementById('toggle-admin').style.display = 'none';
         }
 
         async function login() {
@@ -68,7 +66,7 @@
             if (error) {
                 alert("خطأ: " + error.message);
             } else {
-                alert("تم الدخول بنجاح!");
+                alert("تم الدخول!");
                 location.reload();
             }
         }
@@ -85,11 +83,11 @@
             location.reload();
         }
 
+        // عند فتح الصفحة، حمل البيانات أولاً
         window.addEventListener('load', async () => {
-            loadData();
+            await loadData();
             const { data } = await supabase.auth.getSession();
             if (data.session) {
-                showAdmin();
                 document.getElementById('login-area').style.display = 'none';
                 document.getElementById('publish-area').style.display = 'block';
             }
@@ -97,4 +95,3 @@
     </script>
 </body>
 </html>
-

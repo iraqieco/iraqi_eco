@@ -3,19 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عراقي إيكو - Iraqi Eco</title>
+    <title>عراقي إيكو - تشخيص</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
-        .species-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 10px; background: #f9f9f9; }
-        h2 { color: #2e7d32; margin-top: 0; }
-        .error { color: red; }
-    </style>
 </head>
 <body>
-
-    <h1>قائمة الكائنات الحية - عراقي إيكو</h1>
-    <div id="species-list">جاري تحميل البيانات...</div>
+    <h1>حالة الاتصال</h1>
+    <div id="status">جاري الفحص...</div>
 
     <script>
         const SUPABASE_URL = 'https://rmqtopxawrrgntcqqnpa.supabase.co';
@@ -23,42 +16,26 @@
 
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        async function fetchSpecies() {
-            const listDiv = document.getElementById('species-list');
-            
+        async function checkConnection() {
+            const statusDiv = document.getElementById('status');
             try {
-                const { data, error } = await supabase
-                    .from('species')
-                    .select('*');
-
-                if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    listDiv.innerHTML = '<p>لا توجد بيانات حالياً في قاعدة البيانات.</p>';
-                    return;
-                }
-
-                listDiv.innerHTML = ''; // تنظيف شاشة التحميل
+                // محاولة جلب أي صف واحد فقط
+                const { data, error } = await supabase.from('species').select('*').limit(1);
                 
-                data.forEach(item => {
-                    // ننشئ عناصر البطاقة فقط إذا كانت البيانات موجودة
-                    let cardHTML = `<div class="species-card">`;
-                    
-                    if (item.name_ar) cardHTML += `<h2>${item.name_ar}</h2>`;
-                    if (item.scientific_name) cardHTML += `<p><strong>الاسم العلمي:</strong> ${item.scientific_name}</p>`;
-                    if (item.conservation_status) cardHTML += `<p><strong>حالة الحفظ:</strong> ${item.conservation_status}</p>`;
-                    if (item.description) cardHTML += `<p>${item.description}</p>`;
-                    
-                    cardHTML += `</div>`;
-                    listDiv.innerHTML += cardHTML;
-                });
+                if (error) {
+                    statusDiv.innerHTML = `<b style="color:red">خطأ في الاتصال:</b> ${error.message} <br> <b>التفاصيل:</b> ${error.details || 'لا توجد تفاصيل'}`;
+                } else {
+                    statusDiv.innerHTML = `<b style="color:green">الاتصال ناجح!</b> <br> عدد العناصر الموجودة: ${data.length}`;
+                    if(data.length > 0) {
+                        statusDiv.innerHTML += `<br> اسم أول حيوان: ${data[0].name_ar || 'بدون اسم'}`;
+                    }
+                }
             } catch (err) {
-                console.error("خطأ:", err);
-                listDiv.innerHTML = `<p class="error">حدث خطأ أثناء جلب البيانات. تأكد من إعدادات السياسات (Policies) في Supabase.</p>`;
+                statusDiv.innerHTML = "خطأ غير متوقع: " + err.message;
             }
         }
 
-        fetchSpecies();
+        checkConnection();
     </script>
 </body>
 </html>

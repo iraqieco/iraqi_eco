@@ -1,99 +1,184 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
+
 <head>
+
     <meta charset="UTF-8">
+
     <title>عراقي إيكو</title>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
+
         body { font-family: sans-serif; background: #f4f4f4; margin: 0; }
+
         header { background: #1b5e20; color: white; padding: 20px; text-align: center; }
+
         .container { padding: 20px; }
+
         .card { border: 2px solid #1b5e20; padding: 15px; margin: 10px; border-radius: 10px; background: white; width: 280px; display: inline-block; vertical-align: top; }
-        input { display: block; width: 90%; margin: 5px 0; padding: 8px; }
-        #modal { display: none; position: fixed; top: 5%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 100; overflow-y: auto; max-height: 90vh; }
+
+        .search-box { width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid #1b5e20; border-radius: 5px; }
+
+        #modal { display: none; position: fixed; top: 20%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 100; border-radius: 10px; }
+
     </style>
+
 </head>
+
 <body>
 
+
+
 <header>
+
     <h1>عراقي إيكو</h1>
+
     <p>قاعدة بيانات الكائنات الحية في العراق</p>
+
 </header>
 
+
+
 <div class="container">
-    <input type="text" id="search" style="width:100%; padding:10px;" placeholder="بحث..." onkeyup="render()">
-    <br><br>
-    <button onclick="handleBtnClick()" style="background:#1b5e20; color:white; padding:10px;">+ إضافة مخلوق</button>
-    <button onclick="logout()" style="background:#d32f2f; color:white; padding:10px;">تسجيل خروج</button>
+
+    <input type="text" id="search" class="search-box" placeholder="بحث بالاسم العربي أو اللاتيني..." onkeyup="render()">
+
+    <button onclick="handleBtnClick()" style="padding: 10px 20px; background: #1b5e20; color: white; border: none; border-radius: 5px; cursor:pointer;">+ إضافة مخلوق</button>
+
     <div id="content"></div>
+
 </div>
+
+
 
 <div id="modal">
+
     <button onclick="document.getElementById('modal').style.display='none'">✖ إغلاق</button>
-    <h3>إضافة / تعديل بيانات المخلوق</h3>
-    <input id="n_ar" placeholder="الاسم العربي (مطلوب)" required>
-    <input id="n_sci" placeholder="الاسم اللاتيني (مطلوب)" required>
-    <input id="desc" placeholder="الوصف (اختياري)">
-    <input id="family" placeholder="العائلة (اختياري)">
-    <input id="img" placeholder="رابط الصورة (اختياري)">
-    <button onclick="addItem()" style="background:#1b5e20; color:white; padding:10px; width:100%;">حفظ البيانات</button>
+
+    <h3>إضافة مخلوق جديد</h3>
+
+    <input id="n_ar" placeholder="الاسم العربي"><br><br>
+
+    <input id="n_sci" placeholder="الاسم اللاتيني"><br><br>
+
+    <button onclick="addItem()" style="background:#1b5e20; color:white; padding:10px;">حفظ المخلوق</button>
+
 </div>
 
+
+
 <script>
-    const client = supabase.createClient('URL', 'KEY');
+
+    // ضع بيانات مشروعك هنا بدقة
+
+    const supabaseUrl = 'https://rmqtopxawrrgntcqqnpa.supabase.co';
+
+    const supabaseKey = 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX';
+
+    const client = supabase.createClient(supabaseUrl, supabaseKey);
+
+    
+
     let species = [];
 
+
+
     async function init() {
+
         const { data } = await client.from('species').select('*');
+
         species = data || [];
+
         render();
+
     }
+
+
 
     async function handleBtnClick() {
+
         const { data: { session } } = await client.auth.getSession();
+
+        
+
         if (!session) {
-            const email = prompt("البريد الإلكتروني:");
-            const pass = prompt("كلمة المرور:");
+
+            const email = prompt("أدخل البريد الإلكتروني:");
+
+            const pass = prompt("أدخل كلمة المرور:");
+
+            if (!email || !pass) return;
+
+            
+
             const { error } = await client.auth.signInWithPassword({ email, password: pass });
-            if (error) alert(error.message); else alert("تم تسجيل الدخول!");
+
+            if (error) alert("خطأ: " + error.message);
+
+            else alert("تم تسجيل الدخول! اضغط على زر الإضافة مجدداً.");
+
         } else {
+
             document.getElementById('modal').style.display = 'block';
+
         }
+
     }
 
-    function logout() { client.auth.signOut().then(() => location.reload()); }
+
 
     function render() {
+
         const q = document.getElementById('search').value.toLowerCase();
+
         document.getElementById('content').innerHTML = species
+
             .filter(i => (i.name_ar||'').includes(q) || (i.scientific_name||'').includes(q))
+
             .map(item => `
+
                 <div class="card">
+
                     <h3>${item.name_ar}</h3>
+
                     <p><i>${item.scientific_name}</i></p>
-                    <p><small>${item.family || ''}</small></p>
-                    <p>${item.description || ''}</p>
+
                 </div>
+
             `).join('');
+
     }
+
+
 
     async function addItem() {
-        const data = {
-            name_ar: document.getElementById('n_ar').value,
-            scientific_name: document.getElementById('n_sci').value,
-            description: document.getElementById('desc').value,
-            family: document.getElementById('family').value,
-            image_url: document.getElementById('img').value
-        };
-        if (!data.name_ar || !data.scientific_name) return alert("الاسم العربي واللاتيني إجباريتان!");
+
+        const name_ar = document.getElementById('n_ar').value;
+
+        const scientific_name = document.getElementById('n_sci').value;
+
+        if (!name_ar || !scientific_name) return alert("الاسم العربي واللاتيني مطلوبان!");
+
         
-        await client.from('species').insert([data]);
-        alert("تمت الإضافة!");
-        location.reload();
+
+        const { error } = await client.from('species').insert([{ name_ar, scientific_name }]);
+
+        if (error) alert("خطأ: " + error.message);
+
+        else { alert("تمت الإضافة!"); location.reload(); }
+
     }
 
+
+
     init();
+
 </script>
+
 </body>
+
 </html>
 

@@ -9,19 +9,32 @@
         header { background: #1b5e20; color: white; padding: 20px; text-align: center; }
         .container { padding: 20px; }
         
-        /* تنظيم الممالك والبطاقات */
+        /* تنظيم الممالك */
         .kingdom-section { margin-bottom: 40px; }
         .kingdom-title { 
             background: #1b5e20; color: white; padding: 10px 20px; 
-            border-radius: 5px; margin-bottom: 15px; display: inline-block; 
+            border-radius: 5px; margin-bottom: 15px; display: block; 
             font-weight: bold; font-size: 1.2em;
         }
-        .cards-wrapper { display: flex; flex-wrap: wrap; gap: 15px; justify-content: flex-start; }
+        
+        /* جعل الحاوية مرنة لتظهر البطاقات بجانب بعضها */
+        .cards-wrapper { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+            justify-content: flex-start; 
+            direction: rtl; 
+        }
         
         .card { 
             border: 1px solid #ddd; padding: 15px; border-radius: 10px; 
-            background: white; width: 250px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            background: white; 
+            /* البطاقة ستأخذ عرض 250px ولكن ستنكمش إذا لم توجد مساحة */
+            flex: 1 1 250px; 
+            max-width: 300px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
         }
+        
         .status-badge { 
             display: inline-block; padding: 4px 10px; border-radius: 15px; 
             color: white; font-size: 0.8em; margin-top: 10px; font-weight: bold; 

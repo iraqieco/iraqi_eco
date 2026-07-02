@@ -11,6 +11,7 @@
         .container { padding: 20px; }
         .kingdom-section { margin-bottom: 30px; }
         .kingdom-title { background: #1b5e20; color: white; padding: 5px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; font-weight: bold; }
+        .count-badge { background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin-right: 10px; }
         .cards-wrapper { display: flex; flex-wrap: wrap; gap: 15px; }
         .card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; background: white; width: 220px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .menu-btn { position: absolute; top: 5px; left: 5px; cursor: pointer; font-size: 1.2em; }
@@ -96,7 +97,7 @@
             if (items.length === 0) return '';
             return `
                 <div class="kingdom-section">
-                    <div class="kingdom-title">${k}</div>
+                    <div class="kingdom-title">${k} <span class="count-badge">${items.length}</span></div>
                     <div class="cards-wrapper">
                         ${items.map(item => `
                             <div class="card" id="card-${item.id}">
@@ -146,7 +147,6 @@
         const n_ar = document.getElementById('n_ar').value;
         const n_sci = document.getElementById('n_sci').value;
 
-        // التحقق من الحقول الإجبارية
         if (!n_ar || !n_sci) {
             alert("الرجاء تعبئة الاسم العربي والاسم العلمي!");
             return;

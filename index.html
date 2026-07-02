@@ -9,32 +9,34 @@
         body { font-family: sans-serif; background: #f4f4f4; margin: 0; zoom: 1.5; }
         header { background: #1b5e20; color: white; padding: 20px; text-align: center; }
         .container { padding: 20px; }
-        .kingdom-section { margin-bottom: 30px; }
+        .desc-text { font-size: 0.9em; opacity: 0.9; margin-top: 5px; }
+        .kingdom-section { margin-bottom: 40px; }
         .kingdom-title { background: #1b5e20; color: white; padding: 5px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; font-weight: bold; }
         .cards-wrapper { display: flex; flex-wrap: wrap; gap: 15px; }
         .card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; background: white; width: 220px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .menu-btn { position: absolute; top: 5px; left: 5px; cursor: pointer; font-weight: bold; }
-        .menu-options { display: none; position: absolute; top: 25px; left: 5px; background: white; border: 1px solid #ccc; z-index: 10; padding: 5px; }
+        .menu-btn { position: absolute; top: 5px; left: 5px; cursor: pointer; font-size: 1.2em; font-weight: bold; }
+        .menu-options { display: none; position: absolute; top: 25px; left: 5px; background: white; border: 1px solid #ccc; z-index: 100; padding: 5px; }
         .menu-options div { padding: 5px; cursor: pointer; font-size: 0.8em; }
-        input, select { display: block; width: 90%; margin: 5px 0; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
-        #modal { display: none; position: fixed; top: 10%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 100; border-radius: 10px; }
+        input, select { display: block; width: 90%; margin: 8px 0; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        #modal { display: none; position: fixed; top: 5%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 1000; border-radius: 10px; max-height: 90vh; overflow-y: auto; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>عراقي إيكو</h1>
-    <p>قاعدة بيانات الكائنات الحية في العراق</p>
+    <p class="desc-text">قاعدة بيانات الكائنات الحية في العراق</p>
 </header>
 
 <div class="container">
     <input type="text" id="search" placeholder="بحث بالاسم..." onkeyup="render()" style="width:100%; padding:10px;">
-    <button onclick="document.getElementById('modal').style.display='block'" style="margin:10px 0; padding:10px; background:#1b5e20; color:white; border:none; border-radius:5px;">+ إضافة مخلوق</button>
+    <button onclick="document.getElementById('modal').style.display='block'" style="margin:15px 0; padding:10px; background:#1b5e20; color:white; border:none; border-radius:5px;">+ إضافة مخلوق</button>
     <div id="content"></div>
 </div>
 
 <div id="modal">
-    <h3>إضافة مخلوق جديد</h3>
+    <button onclick="document.getElementById('modal').style.display='none'" style="float:left;">✖</button>
+    <h3>إضافة/تعديل مخلوق</h3>
     <input id="n_ar" placeholder="الاسم العربي">
     <input id="n_sci" placeholder="الاسم العلمي">
     <input id="kingdom" placeholder="المملكة">
@@ -45,7 +47,9 @@
         <option value="EN">مهدد (EN)</option>
         <option value="CR">خطر أقصى (CR)</option>
     </select>
-    <button onclick="addItem()" style="background:#1b5e20; color:white; padding:10px; width:100%;">حفظ</button>
+    <input id="img" placeholder="رابط الصورة">
+    <input id="desc" placeholder="الوصف">
+    <button onclick="addItem()" style="background:#1b5e20; color:white; padding:10px; width:100%;">حفظ البيانات</button>
 </div>
 
 <script>
@@ -67,19 +71,25 @@
                 <div class="cards-wrapper">
                     ${species.filter(i => (i.kingdom||'غير مصنف') === k && (i.name_ar||'').includes(q)).map(item => `
                         <div class="card" id="card-${item.id}">
-                            <div class="menu-btn" onclick="this.nextElementSibling.style.display='block'">⋮</div>
-                            <div class="menu-options" onmouseleave="this.style.display='none'">
-                                <div onclick="deleteItem(${item.id})">حذف</div>
-                                <div onclick="downloadCard('card-${item.id}')">تنزيل</div>
+                            <div class="menu-btn" onclick="toggleMenu(${item.id})">⋮</div>
+                            <div class="menu-options" id="menu-${item.id}">
+                                <div onclick="deleteItem(${item.id})">🗑 حذف</div>
+                                <div onclick="alert('ميزة التعديل تتطلب اتصالاً كاملاً بالجدول')">✏ تعديل</div>
+                                <div onclick="downloadCard('card-${item.id}')">⬇ تنزيل</div>
                             </div>
                             <h3>${item.name_ar}</h3>
                             <p><i>${item.scientific_name}</i></p>
-                            <small>العائلة: ${item.family || 'غير معروف'}</small>
+                            <small>العائلة: ${item.family || 'غير محدد'}</small>
                         </div>
                     `).join('')}
                 </div>
             </div>
         `).join('');
+    }
+
+    function toggleMenu(id) {
+        const menu = document.getElementById('menu-'+id);
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
     }
 
     async function addItem() {
@@ -89,15 +99,19 @@
             kingdom: document.getElementById('kingdom').value,
             phylum: document.getElementById('phylum').value,
             family: document.getElementById('family').value,
-            conservation_status: document.getElementById('conservation_status').value
+            conservation_status: document.getElementById('conservation_status').value,
+            image_url: document.getElementById('img').value,
+            description: document.getElementById('desc').value
         };
         await client.from('species').insert([data]);
         location.reload();
     }
 
     async function deleteItem(id) {
-        await client.from('species').delete().eq('id', id);
-        location.reload();
+        if(confirm('هل أنت متأكد؟')) {
+            await client.from('species').delete().eq('id', id);
+            location.reload();
+        }
     }
 
     function downloadCard(id) {

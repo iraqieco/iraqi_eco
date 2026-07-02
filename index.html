@@ -84,7 +84,7 @@
         else { alert("تم تسجيل الدخول بنجاح!"); location.reload(); }
     }
 
-    function render() {
+       function render() {
         const q = document.getElementById('search').value.toLowerCase();
         const kingdoms = ["حيوانات", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
         
@@ -103,7 +103,8 @@
                                     <div onclick="openModal(${item.id})">✏ تعديل</div>
                                     <div onclick="downloadCard('card-${item.id}')">⬇ تنزيل</div>
                                 </div>
-                                <img src="${item.img || ''}" style="width:100%; border-radius:5px; margin-bottom:10px;">
+                                <img src="${item.img ? item.img : ''}" style="width:100%; height:150px; object-fit:cover; border-radius:5px; margin-bottom:10px;" alt="صورة المخلوق">
+                                
                                 <h3>${item.name_ar}</h3>
                                 <p><i>${item.scientific_name}</i></p>
                                 <span class="card-desc">${item.description || ''}</span>
@@ -115,6 +116,8 @@
             `;
         }).join('');
     }
+ 
+    
 
     function toggleMenu(id) {
         const menu = document.getElementById('menu-'+id);

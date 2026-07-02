@@ -8,9 +8,9 @@
         body { font-family: sans-serif; background: #f4f4f4; margin: 0; }
         header { background: #1b5e20; color: white; padding: 20px; text-align: center; }
         .container { padding: 20px; }
-        .card { border: 2px solid #1b5e20; padding: 15px; margin: 10px; border-radius: 10px; background: white; width: 280px; display: inline-block; vertical-align: top; }
+        .card { border: 2px solid #1b5e20; padding: 15px; margin: 10px; border-radius: 10px; background: white; width: 280px; display: inline-block; }
         .search-box { width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid #1b5e20; border-radius: 5px; }
-        #modal { display: none; position: fixed; top: 10%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 100; border-radius: 10px; }
+        #modal { display: none; position: fixed; top: 20%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 100; }
     </style>
 </head>
 <body>
@@ -22,68 +22,65 @@
 
 <div class="container">
     <input type="text" id="search" class="search-box" placeholder="بحث بالاسم العربي أو اللاتيني..." onkeyup="render()">
-    <button onclick="checkAuth()">+ إضافة مخلوق</button>
+    <button onclick="handleBtnClick()" style="padding: 10px 20px; background: #1b5e20; color: white; border: none; border-radius: 5px;">+ إضافة مخلوق</button>
     <div id="content"></div>
 </div>
 
 <div id="modal">
-    <button onclick="this.parentElement.style.display='none'">✖</button>
-    <h3>إضافة مخلوق</h3>
-    <input id="n_ar" placeholder="الاسم العربي (مطلوب)"><br>
-    <input id="n_sci" placeholder="الاسم اللاتيني (مطلوب)"><br>
+    <button onclick="this.parentElement.style.display='none'">✖ إغلاق</button>
+    <h3>إضافة مخلوق جديد</h3>
+    <input id="n_ar" placeholder="الاسم العربي"><br><br>
+    <input id="n_sci" placeholder="الاسم اللاتيني"><br><br>
     <button onclick="addItem()">حفظ المخلوق</button>
 </div>
 
 <script>
     const client = supabase.createClient('URL', 'KEY');
-    let species = [], user = null;
+    let species = [];
 
     async function init() {
         const { data } = await client.from('species').select('*');
         species = data || [];
-        user = (await client.auth.getSession()).data.session;
         render();
     }
 
-    function checkAuth() {
-        if (!user) {
-            const email = prompt("أدخل البريد الإلكتروني:");
+    async function handleBtnClick() {
+        const { data: { session } } = await client.auth.getSession();
+        
+        if (!session) {
+            // غير مسجل: اطلب تسجيل الدخول
+            const email = prompt("أدخل البريد الإلكتروني لتسجيل الدخول:");
             const pass = prompt("أدخل كلمة المرور:");
-            client.auth.signInWithPassword({ email, password: pass }).then(res => {
-                if(res.error) alert(res.error.message); else location.reload();
-            });
+            const { error } = await client.auth.signInWithPassword({ email, password: pass });
+            
+            if (error) {
+                alert("خطأ في تسجيل الدخول: " + error.message);
+            } else {
+                alert("تم تسجيل الدخول! يمكنك الآن الضغط على زر الإضافة مجدداً.");
+            }
         } else {
+            // مسجل: افتح نافذة الإضافة
             document.getElementById('modal').style.display = 'block';
         }
     }
 
     function render() {
         const q = document.getElementById('search').value.toLowerCase();
-        const filtered = species.filter(i => (i.name_ar||'').includes(q) || (i.scientific_name||'').includes(q));
-        
-        let html = '';
-        const kingdoms = [...new Set(filtered.map(i => i.kingdom || 'غير مصنف'))];
-        
-        kingdoms.forEach(k => {
-            html += `<h2>${k}</h2>`;
-            filtered.filter(i => (i.kingdom || 'غير مصنف') === k).forEach(item => {
-                html += `
+        document.getElementById('content').innerHTML = species
+            .filter(i => (i.name_ar||'').includes(q) || (i.scientific_name||'').includes(q))
+            .map(item => `
                 <div class="card">
-                    <div style="color:#1b5e20; font-weight:bold">عراقي إيكو</div>
                     <h3>${item.name_ar}</h3>
                     <p><i>${item.scientific_name}</i></p>
-                    <p>${item.description || ''}</p>
-                </div>`;
-            });
-        });
-        document.getElementById('content').innerHTML = html;
+                </div>
+            `).join('');
     }
 
     async function addItem() {
         const name_ar = document.getElementById('n_ar').value;
         const scientific_name = document.getElementById('n_sci').value;
-        await client.from('species').insert([{ name_ar, scientific_name }]);
-        location.reload();
+        const { error } = await client.from('species').insert([{ name_ar, scientific_name }]);
+        if (error) alert(error.message); else { alert("تمت الإضافة!"); location.reload(); }
     }
 
     init();

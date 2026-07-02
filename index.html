@@ -2,79 +2,51 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>عراقي إيكو</title>
-    <!-- استدعاء مكتبة Supabase -->
+    <title>عراقي إيكو - لوحة التحكم</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <h1>قائمة الكائنات</h1>
     
-    <!-- زر الإضافة -->
-    <button id="add-btn" onclick="handleAuth()">إضافة مخلوق جديد</button>
-    
-    <!-- منطقة عرض البيانات -->
-    <div id="output" style="margin-top:20px;">جاري تحميل البيانات...</div>
+    <!-- واجهة تسجيل الدخول -->
+    <div id="auth-box">
+        <input type="email" id="email" placeholder="البريد الإلكتروني">
+        <input type="password" id="password" placeholder="كلمة المرور">
+        <button onclick="login()">تسجيل دخول</button>
+    </div>
+
+    <!-- منطقة عرض البيانات مع أزرار التحكم -->
+    <div id="output" style="margin-top:20px;"></div>
 
     <script>
-        // إعداد العميل
         const supabaseUrl = 'https://rmqtopxawrrgntcqqnpa.supabase.co';
         const supabaseKey = 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX';
         const client = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // دالة عرض البيانات
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const { error } = await client.auth.signInWithPassword({ email, password });
+            if (error) alert(error.message);
+            else { alert("تم تسجيل الدخول!"); loadData(); }
+        }
+
         async function loadData() {
-            const { data, error } = await client.from('species').select('*');
-            if (error) {
-                document.getElementById('output').innerText = "خطأ في تحميل البيانات: " + error.message;
-            } else {
-                document.getElementById('output').innerHTML = data.map(item => `
-                    <div style="border:1px solid #ccc; padding:10px; margin:5px;">
-                        <h3>${item.name_ar}</h3>
-                        <p>${item.scientific_name}</p>
-                    </div>
-                `).join('');
-            }
+            const { data } = await client.from('species').select('*');
+            document.getElementById('output').innerHTML = data.map(item => `
+                <div style="border:1px solid #ccc; padding:10px; margin:5px;">
+                    <h3>${item.name_ar}</h3>
+                    <button onclick="deleteItem(${item.id})">حذف</button>
+                </div>
+            `).join('');
         }
 
-        // دالة الزر الذكية (محدثة لتستخدم الإيميل مباشرة)
-        async function handleAuth() {
-            const { data: { session } } = await client.auth.getSession();
-            
-            if (session) {
-                // المستخدم مسجل دخوله مسبقاً
-                const nameAr = prompt("أدخل اسم المخلوق بالعربية:");
-                const sciName = prompt("أدخل الاسم العلمي:");
-                
-                if (nameAr && sciName) {
-                    const { error } = await client.from('species').insert([{ 
-                        name_ar: nameAr, 
-                        scientific_name: sciName 
-                    }]);
-                    
-                    if (error) alert("خطأ في الإضافة: " + error.message);
-                    else {
-                        alert("تمت الإضافة بنجاح!");
-                        loadData(); 
-                    }
-                }
-            } else {
-                // استخدام الإيميل (Magic Link) بدلاً من Google لتجنب خطأ الـ provider
-                const email = prompt("يرجى إدخال بريدك الإلكتروني لتسجيل الدخول:");
-                if (email) {
-                    const { error } = await client.auth.signInWithOtp({
-                        email: email,
-                        options: {
-                            emailRedirectTo: 'https://iraqieco.github.io'
-                        }
-                    });
-                    
-                    if (error) alert("خطأ: " + error.message);
-                    else alert("تم إرسال رابط الدخول إلى بريدك الإلكتروني. يرجى الضغط عليه والعودة للموقع للإضافة.");
-                }
-            }
+        async function deleteItem(id) {
+            const { error } = await client.from('species').delete().eq('id', id);
+            if (error) alert(error.message);
+            else loadData();
         }
 
-        // تشغيل التحميل عند فتح الصفحة
         loadData();
     </script>
 </body>

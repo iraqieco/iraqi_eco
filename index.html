@@ -40,7 +40,15 @@
     <input type="hidden" id="editId">
     <input id="n_ar" placeholder="الاسم العربي">
     <input id="n_sci" placeholder="الاسم العلمي">
-    <input id="kingdom" placeholder="المملكة">
+    
+    <select id="kingdom">
+        <option value="حيوانات">حيوانات</option>
+        <option value="نباتات">نباتات</option>
+        <option value="فطريات">فطريات</option>
+        <option value="طلائعيات">طلائعيات</option>
+        <option value="بدائيات">بدائيات</option>
+    </select>
+
     <input id="phylum" placeholder="الشعبة">
     <input id="family" placeholder="العائلة">
     <select id="conservation_status">
@@ -59,7 +67,6 @@
 <script>
     const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX');
     let species = [];
-
     const statusColors = { 'EX': '#000', 'CR': '#d32f2f', 'EN': '#f44336', 'VU': '#ff9800', 'NT': '#ffc107', 'LC': '#4caf50' };
 
     async function init() {
@@ -70,27 +77,32 @@
 
     function render() {
         const q = document.getElementById('search').value.toLowerCase();
-        const kingdoms = [...new Set(species.map(i => i.kingdom || 'غير مصنف'))];
-        document.getElementById('content').innerHTML = kingdoms.map(k => `
-            <div class="kingdom-section">
-                <div class="kingdom-title">${k}</div>
-                <div class="cards-wrapper">
-                    ${species.filter(i => (i.kingdom||'غير مصنف') === k && (i.name_ar||'').includes(q)).map(item => `
-                        <div class="card" id="card-${item.id}">
-                            <div class="menu-btn" onclick="toggleMenu(${item.id})">⋮</div>
-                            <div class="menu-options" id="menu-${item.id}">
-                                <div onclick="deleteItem(${item.id})">🗑 حذف</div>
-                                <div onclick="openModal(${item.id})">✏ تعديل</div>
-                                <div onclick="downloadCard('card-${item.id}')">⬇ تنزيل</div>
+        const kingdoms = ["حيوانات", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
+        
+        document.getElementById('content').innerHTML = kingdoms.map(k => {
+            const items = species.filter(i => (i.kingdom || 'حيوانات') === k && (i.name_ar||'').includes(q));
+            if (items.length === 0) return '';
+            return `
+                <div class="kingdom-section">
+                    <div class="kingdom-title">${k}</div>
+                    <div class="cards-wrapper">
+                        ${items.map(item => `
+                            <div class="card" id="card-${item.id}">
+                                <div class="menu-btn" onclick="toggleMenu(${item.id})">⋮</div>
+                                <div class="menu-options" id="menu-${item.id}">
+                                    <div onclick="deleteItem(${item.id})">🗑 حذف</div>
+                                    <div onclick="openModal(${item.id})">✏ تعديل</div>
+                                    <div onclick="downloadCard('card-${item.id}')">⬇ تنزيل</div>
+                                </div>
+                                <h3>${item.name_ar}</h3>
+                                <p><i>${item.scientific_name}</i></p>
+                                <div class="status-badge" style="background:${statusColors[item.conservation_status] || '#757575'}">${item.conservation_status || 'غير محدد'}</div>
                             </div>
-                            <h3>${item.name_ar}</h3>
-                            <p><i>${item.scientific_name}</i></p>
-                            <div class="status-badge" style="background:${statusColors[item.conservation_status] || '#757575'}">${item.conservation_status || 'غير محدد'}</div>
-                        </div>
-                    `).join('')}
+                        `).join('')}
+                    </div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
     function toggleMenu(id) {
@@ -105,7 +117,7 @@
         
         document.getElementById('n_ar').value = item ? item.name_ar : '';
         document.getElementById('n_sci').value = item ? item.scientific_name : '';
-        document.getElementById('kingdom').value = item ? item.kingdom : '';
+        document.getElementById('kingdom').value = item ? item.kingdom : 'حيوانات';
         document.getElementById('phylum').value = item ? item.phylum : '';
         document.getElementById('family').value = item ? item.family : '';
         document.getElementById('conservation_status').value = item ? item.conservation_status : 'LC';

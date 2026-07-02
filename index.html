@@ -3,8 +3,8 @@
 <head>
     <meta name="google-site-verification" content="0jRTIrdsb7aj8SvFaH9WswrLn506cgoyudn40MhxDiE" />
     <meta charset="UTF-8">
-    <title>عراقي إيكو | مشروع تطوعي لدراسة وحماية التنوع البيولوجي</title>
-    <meta name="description" content="عراقي إيكو: مشروع تطوعي يهدف لدراسة وحماية التنوع البيولوجي والنظام البيئي في العراق، مع تطلعات عالمية.">
+    <title>عراقي إيكو | مشروع تطوعي لدراسة وحماية البيئة </title>
+    <meta name="description" content="عراقي إيكو: مشروع تطوعي يهدف لدراسة وحماية التنوع الإحيائي والنظام البيئي في العراق، مع تطلعات عالمية بإذن اللّٰه.">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -104,7 +104,7 @@
                                     <div onclick="openModal(${item.id})">✏ تعديل</div>
                                     <div onclick="downloadCard('card-${item.id}')">⬇ تنزيل</div>
                                 </div>
-                                ${item.img ? `<img src="${item.img}" onerror="this.style.display='none'">` : ''}
+                                ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : ''}
                                 <h3>${item.name_ar}</h3>
                                 <p><i>${item.scientific_name}</i></p>
                                 <span class="card-desc">${item.description || ''}</span>
@@ -128,7 +128,7 @@
         document.getElementById('editId').value = id || '';
         document.getElementById('n_ar').value = item ? item.name_ar : '';
         document.getElementById('n_sci').value = item ? item.scientific_name : '';
-        document.getElementById('img').value = item ? (item.img || '') : '';
+        document.getElementById('img').value = item ? (item.image_url || '') : '';
         document.getElementById('desc').value = item ? (item.description || '') : '';
         modal.style.display = 'block';
     }
@@ -136,7 +136,7 @@
     async function saveItem() {
         const n_ar = document.getElementById('n_ar').value;
         const n_sci = document.getElementById('n_sci').value;
-        const img = document.getElementById('img').value;
+        const img_url = document.getElementById('img').value;
         const desc = document.getElementById('desc').value;
         if (!n_ar || !n_sci) return alert("البيانات ناقصة!");
         
@@ -145,7 +145,7 @@
             name_ar: n_ar, 
             scientific_name: n_sci, 
             description: desc,
-            img: img,
+            image_url: img_url,
             kingdom: document.getElementById('kingdom').value, 
             conservation_status: document.getElementById('conservation_status').value 
         };

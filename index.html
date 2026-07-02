@@ -4,82 +4,49 @@
     <meta charset="UTF-8">
     <title>عراقي إيكو</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        body { font-family: sans-serif; background: #f4f4f4; margin: 0; }
+        body { font-family: sans-serif; background: #f4f4f4; margin: 0; zoom: 1.5; } /* تكبير الموقع 50% */
         header { background: #1b5e20; color: white; padding: 20px; text-align: center; }
         .container { padding: 20px; }
+        .desc-text { font-size: 0.9em; opacity: 0.9; margin-top: 5px; }
         
-        /* تنظيم الممالك */
         .kingdom-section { margin-bottom: 40px; }
-        .kingdom-title { 
-            background: #1b5e20; color: white; padding: 10px 20px; 
-            border-radius: 5px; margin-bottom: 15px; display: block; 
-            font-weight: bold; font-size: 1.2em;
-        }
+        .kingdom-title { background: #1b5e20; color: white; padding: 5px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; font-weight: bold; }
+        .cards-wrapper { display: flex; flex-wrap: wrap; gap: 15px; }
         
-        /* جعل الحاوية مرنة لتظهر البطاقات بجانب بعضها */
-        .cards-wrapper { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 15px; 
-            justify-content: flex-start; 
-            direction: rtl; 
-        }
+        .card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; background: white; width: 200px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .menu-btn { position: absolute; top: 5px; left: 5px; cursor: pointer; font-weight: bold; }
+        .menu-options { display: none; position: absolute; top: 25px; left: 5px; background: white; border: 1px solid #ccc; z-index: 10; }
+        .menu-options div { padding: 5px; cursor: pointer; font-size: 0.8em; }
         
-        .card { 
-            border: 1px solid #ddd; padding: 15px; border-radius: 10px; 
-            background: white; 
-            /* البطاقة ستأخذ عرض 250px ولكن ستنكمش إذا لم توجد مساحة */
-            flex: 1 1 250px; 
-            max-width: 300px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-        }
-        
-        .status-badge { 
-            display: inline-block; padding: 4px 10px; border-radius: 15px; 
-            color: white; font-size: 0.8em; margin-top: 10px; font-weight: bold; 
-        }
-        
-        input, select { display: block; width: 90%; margin: 8px 0; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        #modal { display: none; position: fixed; top: 5%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 100; border-radius: 10px; max-height: 90vh; overflow-y: auto; }
+        .status-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; color: white; font-size: 0.7em; margin-top: 10px; }
+        input, select { display: block; width: 90%; margin: 5px 0; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        #modal { display: none; position: fixed; top: 10%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 100; border-radius: 10px; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>عراقي إيكو</h1>
+    <p class="desc-text">قاعدة بيانات الكائنات الحية في العراق</p>
 </header>
 
 <div class="container">
-    <input type="text" id="search" style="width:100%; padding:12px; margin-bottom:20px;" placeholder="بحث بالاسم العربي أو العلمي..." onkeyup="render()">
-    <button onclick="handleBtnClick()" style="padding: 10px 20px; background: #1b5e20; color: white; border: none; border-radius: 5px; cursor:pointer;">+ إضافة مخلوق</button>
-    <div id="content"></div>
+    <input type="text" id="search" style="width:100%; padding:8px; margin-bottom:20px;" placeholder="بحث..." onkeyup="render()">
+    <button onclick="document.getElementById('modal').style.display='block'" style="padding: 5px 15px; background: #1b5e20; color: white; border: none; border-radius: 5px;">+ إضافة</button>
+    <div id="content" style="margin-top:20px;"></div>
 </div>
 
 <div id="modal">
-    <button onclick="document.getElementById('modal').style.display='none'">✖ إغلاق</button>
-    <h3>إضافة مخلوق جديد</h3>
+    <h3>إضافة/تعديل</h3>
     <input id="n_ar" placeholder="الاسم العربي">
     <input id="n_sci" placeholder="الاسم العلمي">
-    <input id="kingdom" placeholder="المملكة">
-    <input id="phylum" placeholder="الشعبة">
-    <input id="family" placeholder="العائلة">
-    <select id="conservation_status">
-        <option value="">حالة الحفظ</option>
-        <option value="EX">منقرض (EX)</option>
-        <option value="CR">خطر أقصى (CR)</option>
-        <option value="EN">مهدد بالانقراض (EN)</option>
-        <option value="VU">معرض للخطر (VU)</option>
-        <option value="NT">قريب من التهديد (NT)</option>
-        <option value="LC">غير مهدد (LC)</option>
-    </select>
-    <input id="img" placeholder="رابط الصورة">
-    <input id="desc" placeholder="الوصف">
-    <button onclick="addItem()" style="background:#1b5e20; color:white; padding:10px; width:100%; margin-top:10px;">حفظ</button>
+    <button onclick="addItem()" style="background:#1b5e20; color:white; padding:10px; width:100%;">حفظ</button>
 </div>
 
 <script>
-    const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX');
+    const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'YOUR_KEY');
     let species = [];
 
     async function init() {
@@ -88,61 +55,42 @@
         render();
     }
 
-    function getStatusColor(status) {
-        const colors = { 'EX': '#000', 'CR': '#d32f2f', 'EN': '#f44336', 'VU': '#ff9800', 'NT': '#ffc107', 'LC': '#4caf50' };
-        return colors[status] || '#757575';
-    }
-
     function render() {
-        const q = document.getElementById('search').value.toLowerCase();
-        const filtered = species.filter(i => (i.name_ar||'').includes(q) || (i.scientific_name||'').includes(q));
-        const kingdoms = [...new Set(filtered.map(i => i.kingdom || 'غير مصنف'))];
-        
-        document.getElementById('content').innerHTML = kingdoms.map(k => `
-            <div class="kingdom-section">
-                <div class="kingdom-title">${k}</div>
-                <div class="cards-wrapper">
-                    ${filtered.filter(i => (i.kingdom||'غير مصنف') === k).map(item => `
-                        <div class="card">
-                            <h3>${item.name_ar}</h3>
-                            <p><i>${item.scientific_name}</i></p>
-                            <div class="status-badge" style="background:${getStatusColor(item.conservation_status)}">${item.conservation_status || 'غير محدد'}</div>
-                        </div>
-                    `).join('')}
+        document.getElementById('content').innerHTML = species.map(item => `
+            <div class="card" id="card-${item.id}">
+                <div class="menu-btn" onclick="this.nextElementSibling.style.display='block'">⋮</div>
+                <div class="menu-options" onmouseleave="this.style.display='none'">
+                    <div onclick="deleteItem(${item.id})">حذف</div>
+                    <div onclick="alert('ميزة التعديل قيد التطوير')">تعديل</div>
+                    <div onclick="downloadCard('card-${item.id}')">تنزيل</div>
                 </div>
+                <h3>${item.name_ar}</h3>
+                <p><i>${item.scientific_name}</i></p>
             </div>
         `).join('');
     }
 
-    async function handleBtnClick() {
-        const { data: { session } } = await client.auth.getSession();
-        if (!session) {
-            const email = prompt("البريد:");
-            const pass = prompt("كلمة المرور:");
-            const { error } = await client.auth.signInWithPassword({ email, password: pass });
-            if (error) alert(error.message); else alert("تم!");
-        } else {
-            document.getElementById('modal').style.display = 'block';
-        }
+    async function deleteItem(id) {
+        await client.from('species').delete().eq('id', id);
+        location.reload();
+    }
+
+    function downloadCard(id) {
+        html2canvas(document.getElementById(id)).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'creature.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
     }
 
     async function addItem() {
         const data = {
-            name_ar: document.getElementById('n_ar').value.trim(),
-            scientific_name: document.getElementById('n_sci').value.trim(),
-            kingdom: document.getElementById('kingdom').value.trim() || 'غير مصنف',
-            phylum: document.getElementById('phylum').value.trim(),
-            family: document.getElementById('family').value.trim(),
-            conservation_status: document.getElementById('conservation_status').value,
-            image_url: document.getElementById('img').value.trim(),
-            description: document.getElementById('desc').value.trim()
+            name_ar: document.getElementById('n_ar').value,
+            scientific_name: document.getElementById('n_sci').value
         };
-
-        if (!data.name_ar || !data.scientific_name) return alert("الاسم العربي والعلمي إجباريان!");
-        
-        const { error } = await client.from('species').insert([data]);
-        if (error) alert("خطأ: " + error.message);
-        else { alert("تمت الإضافة!"); location.reload(); }
+        await client.from('species').insert([data]);
+        location.reload();
     }
     init();
 </script>

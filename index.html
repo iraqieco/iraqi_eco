@@ -4,7 +4,7 @@
     <meta name="google-site-verification" content="0jRTIrdsb7aj8SvFaH9WswrLn506cgoyudn40MhxDiE" />
     <meta charset="UTF-8">
     <title>عراقي إيكو | مشروع تطوعي لدراسة وحماية البيئة</title>
-    <meta name="description" content="عراقي إيكو: مشروع تطوعي يهدف لدراسة وحماية البيئة، مع تطلعات عالمية بإذن اللّٰه. استكشف قاعدة بياناتنا، و نرجو أن تنال اعجابك.">
+    <meta name="description" content="عراقي إيكو: مشروع تطوعي يهدف لدراسة وحماية البيئة و التنوع الإحيائي، بدأنا بالعراق و نتطلع لباقي للعالم بأذن اللّٰه.  .">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -48,14 +48,12 @@
         <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option><option value="فطريات">فطريات</option>
         <option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
     </select>
-    <input id="phylum" placeholder="الشعبة">
-    <input id="family" placeholder="العائلة">
+    <input id="img" placeholder="رابط الصورة">
+    <input id="desc" placeholder="الوصف">
     <select id="conservation_status">
         <option value="EX">منقرض</option><option value="CR">خطر أقصى</option><option value="EN">مهدد</option>
         <option value="VU">معرض للخطر</option><option value="NT">قريب من التهديد</option><option value="LC">غير مهدد</option>
     </select>
-    <input id="img" placeholder="رابط الصورة">
-    <input id="desc" placeholder="الوصف">
     <button onclick="saveItem()" style="background:#1b5e20; color:white; padding:10px; width:100%;">حفظ</button>
     <button onclick="document.getElementById('modal').style.display='none'" style="margin-top:10px; width:100%;">إغلاق</button>
 </div>
@@ -105,6 +103,7 @@
                                     <div onclick="openModal(${item.id})">✏ تعديل</div>
                                     <div onclick="downloadCard('card-${item.id}')">⬇ تنزيل</div>
                                 </div>
+                                <img src="${item.img || ''}" style="width:100%; border-radius:5px; margin-bottom:10px;">
                                 <h3>${item.name_ar}</h3>
                                 <p><i>${item.scientific_name}</i></p>
                                 <span class="card-desc">${item.description || ''}</span>
@@ -128,6 +127,7 @@
         document.getElementById('editId').value = id || '';
         document.getElementById('n_ar').value = item ? item.name_ar : '';
         document.getElementById('n_sci').value = item ? item.scientific_name : '';
+        document.getElementById('img').value = item ? item.img : '';
         document.getElementById('desc').value = item ? item.description : '';
         modal.style.display = 'block';
     }
@@ -135,6 +135,7 @@
     async function saveItem() {
         const n_ar = document.getElementById('n_ar').value;
         const n_sci = document.getElementById('n_sci').value;
+        const img = document.getElementById('img').value;
         const desc = document.getElementById('desc').value;
         if (!n_ar || !n_sci) return alert("البيانات ناقصة!");
         
@@ -143,6 +144,7 @@
             name_ar: n_ar, 
             scientific_name: n_sci, 
             description: desc,
+            img: img,
             kingdom: document.getElementById('kingdom').value, 
             conservation_status: document.getElementById('conservation_status').value 
         };

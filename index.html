@@ -8,9 +8,14 @@
         body { font-family: sans-serif; background: #f4f4f4; margin: 0; }
         header { background: #1b5e20; color: white; padding: 20px; text-align: center; }
         .container { padding: 20px; }
-        .kingdom-section { margin-top: 30px; border-bottom: 2px solid #1b5e20; padding-bottom: 10px; }
-        .card { border: 2px solid #1b5e20; padding: 15px; margin: 10px; border-radius: 10px; background: white; width: 280px; display: inline-block; vertical-align: top; }
-        .status-badge { display: inline-block; padding: 5px 10px; border-radius: 5px; color: white; font-size: 0.8em; margin-top: 5px; }
+        
+        /* تصميم الممالك بالعرض */
+        .kingdom-container { margin-bottom: 40px; }
+        .kingdom-title { background: #1b5e20; color: white; padding: 10px 20px; border-radius: 5px; margin-bottom: 15px; display: inline-block; }
+        
+        .card { border: 1px solid #ddd; padding: 15px; margin: 10px; border-radius: 10px; background: white; width: 250px; display: inline-block; vertical-align: top; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .status-badge { display: inline-block; padding: 4px 8px; border-radius: 15px; color: white; font-size: 0.75em; margin-top: 8px; font-weight: bold; }
+        
         input, select { display: block; width: 90%; margin: 5px 0; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
         #modal { display: none; position: fixed; top: 5%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 100; border-radius: 10px; max-height: 90vh; overflow-y: auto; }
     </style>
@@ -19,11 +24,10 @@
 
 <header>
     <h1>عراقي إيكو</h1>
-    <p>قاعدة بيانات الكائنات الحية في العراق</p>
 </header>
 
 <div class="container">
-    <input type="text" id="search" style="width:100%; padding:12px; margin-bottom:20px;" placeholder="بحث..." onkeyup="render()">
+    <input type="text" id="search" style="width:100%; padding:12px; margin-bottom:20px;" placeholder="بحث بالاسم..." onkeyup="render()">
     <button onclick="handleBtnClick()" style="padding: 10px 20px; background: #1b5e20; color: white; border: none; border-radius: 5px; cursor:pointer;">+ إضافة مخلوق</button>
     <div id="content"></div>
 </div>
@@ -34,7 +38,6 @@
     <input id="n_ar" placeholder="الاسم العربي (إجباري)">
     <input id="n_sci" placeholder="الاسم اللاتيني (إجباري)">
     <input id="kingdom" placeholder="المملكة">
-    <input id="phylum" placeholder="الشعبة">
     <select id="conservation_status">
         <option value="">حالة الحفظ</option>
         <option value="محمي">محمي</option>
@@ -43,7 +46,7 @@
     </select>
     <input id="img" placeholder="رابط الصورة">
     <input id="desc" placeholder="الوصف">
-    <button onclick="addItem()" style="background:#1b5e20; color:white; padding:10px; width:100%; margin-top:10px;">حفظ المخلوق</button>
+    <button onclick="addItem()" style="background:#1b5e20; color:white; padding:10px; width:100%; margin-top:10px;">حفظ</button>
 </div>
 
 <script>
@@ -56,27 +59,32 @@
         render();
     }
 
+    function getStatusColor(status) {
+        if (status === 'مهدد') return '#e53935'; // أحمر للتهديد
+        if (status === 'محمي') return '#43a047'; // أخضر للحماية
+        if (status === 'غير مهدد') return '#fb8c00'; // برتقالي للمستقر
+        return '#757575'; // رمادي للمجهول
+    }
+
     function render() {
         const q = document.getElementById('search').value.toLowerCase();
         const filtered = species.filter(i => (i.name_ar||'').includes(q) || (i.scientific_name||'').includes(q));
         const kingdoms = [...new Set(filtered.map(i => i.kingdom || 'غير مصنف'))];
         
         document.getElementById('content').innerHTML = kingdoms.map(k => `
-            <div class="kingdom-section"><h2>${k}</h2></div>
-            ${filtered.filter(i => (i.kingdom||'غير مصنف') === k).map(item => `
-                <div class="card">
-                    <h3>${item.name_ar}</h3>
-                    <p><i>${item.scientific_name}</i></p>
-                    <div class="status-badge" style="background:${getStatusColor(item.conservation_status)}">${item.conservation_status || 'غير محدد'}</div>
+            <div class="kingdom-container">
+                <div class="kingdom-title">${k}</div>
+                <div>
+                    ${filtered.filter(i => (i.kingdom||'غير مصنف') === k).map(item => `
+                        <div class="card">
+                            <h3>${item.name_ar}</h3>
+                            <p><i>${item.scientific_name}</i></p>
+                            <div class="status-badge" style="background:${getStatusColor(item.conservation_status)}">${item.conservation_status || 'غير محدد'}</div>
+                        </div>
+                    `).join('')}
                 </div>
-            `).join('')}
+            </div>
         `).join('');
-    }
-
-    function getStatusColor(status) {
-        if (status === 'محمي') return '#2e7d32';
-        if (status === 'مهدد') return '#c62828';
-        return '#f9a825';
     }
 
     async function handleBtnClick() {
@@ -85,7 +93,7 @@
             const email = prompt("البريد:");
             const pass = prompt("كلمة المرور:");
             const { error } = await client.auth.signInWithPassword({ email, password: pass });
-            if (error) alert(error.message); else alert("تم تسجيل الدخول!");
+            if (error) alert(error.message); else alert("تم!");
         } else {
             document.getElementById('modal').style.display = 'block';
         }
@@ -95,9 +103,8 @@
         const data = {
             name_ar: document.getElementById('n_ar').value.trim(),
             scientific_name: document.getElementById('n_sci').value.trim(),
-            kingdom: document.getElementById('kingdom').value.trim(),
-            phylum: document.getElementById('phylum').value.trim(),
-            conservation_status: document.getElementById('conservation_status').value, // الاسم الصحيح
+            kingdom: document.getElementById('kingdom').value.trim() || 'غير مصنف',
+            conservation_status: document.getElementById('conservation_status').value,
             image_url: document.getElementById('img').value.trim(),
             description: document.getElementById('desc').value.trim()
         };
@@ -105,13 +112,8 @@
         if (!data.name_ar || !data.scientific_name) return alert("الاسم العربي واللاتيني إجباريان!");
         
         const { error } = await client.from('species').insert([data]);
-        
-        if (error) {
-            alert("خطأ: " + error.message);
-        } else {
-            alert("تمت الإضافة بنجاح!");
-            location.reload();
-        }
+        if (error) alert("خطأ: " + error.message);
+        else { alert("تمت الإضافة!"); location.reload(); }
     }
     init();
 </script>

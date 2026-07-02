@@ -120,17 +120,31 @@
         const menu = document.getElementById('menu-'+id);
         menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
     }
-
-    function openModal(id = null) {
-        const modal = document.getElementById('modal');
-        const item = species.find(i => i.id === id);
-        document.getElementById('editId').value = id || '';
-        document.getElementById('n_ar').value = item ? item.name_ar : '';
-        document.getElementById('n_sci').value = item ? item.scientific_name : '';
-        document.getElementById('img').value = item ? item.img : '';
-        document.getElementById('desc').value = item ? item.description : '';
-        modal.style.display = 'block';
+// استبدل دالة openModal الحالية بهذه الدالة
+function openModal(id = null) {
+    const modal = document.getElementById('modal');
+    // البحث عن العنصر في المصفوفة species
+    const item = species.find(i => i.id === id);
+    
+    document.getElementById('editId').value = id || '';
+    document.getElementById('n_ar').value = item ? item.name_ar : '';
+    document.getElementById('n_sci').value = item ? item.scientific_name : '';
+    
+    // التأكد من جلب رابط الصورة ووصفها
+    document.getElementById('img').value = item ? (item.img || '') : '';
+    document.getElementById('desc').value = item ? (item.description || '') : '';
+    
+    // تحديث القوائم المنسدلة
+    if(item) {
+        document.getElementById('kingdom').value = item.kingdom || 'حيوانات';
+        document.getElementById('conservation_status').value = item.conservation_status || 'LC';
     }
+    
+    modal.style.display = 'block';
+}
+
+   
+
 
     async function saveItem() {
         const n_ar = document.getElementById('n_ar').value;

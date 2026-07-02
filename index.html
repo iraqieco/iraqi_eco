@@ -13,10 +13,10 @@
     <button id="add-btn" onclick="handleAuth()">إضافة مخلوق جديد</button>
     
     <!-- منطقة عرض البيانات -->
-    <div id="output" style="margin-top:20px;">جاري التحميل...</div>
+    <div id="output" style="margin-top:20px;">جاري تحميل البيانات...</div>
 
     <script>
-        // إعداد العميل
+        // إعداد العميل (تأكد من مطابقة هذه البيانات مع لوحة تحكم Supabase الخاصة بك)
         const supabaseUrl = 'https://rmqtopxawrrgntcqqnpa.supabase.co';
         const supabaseKey = 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX';
         const client = supabase.createClient(supabaseUrl, supabaseKey);
@@ -36,12 +36,12 @@
             }
         }
 
-        // دالة الزر الذكية
+        // دالة الزر الذكية (تستخدم نظام البريد الإلكتروني المفعل في حسابك)
         async function handleAuth() {
             const { data: { session } } = await client.auth.getSession();
             
             if (session) {
-                // المستخدم مسجل: نطلب البيانات ونضيفها
+                // إذا كان المستخدم مسجلاً، نطلب البيانات ونضيفها
                 const nameAr = prompt("أدخل اسم المخلوق بالعربية:");
                 const sciName = prompt("أدخل الاسم العلمي:");
                 
@@ -51,18 +51,26 @@
                         scientific_name: sciName 
                     }]);
                     
-                    if (error) alert("خطأ في الإضافة: " + error.message);
+                    if (error) alert("خطأ في الإضافة (تأكد من تسجيل دخولك): " + error.message);
                     else {
                         alert("تمت الإضافة بنجاح!");
-                        loadData(); // تحديث القائمة فوراً
+                        loadData(); 
                     }
                 }
             } else {
-                // المستخدم غير مسجل: توجيه لتسجيل الدخول
-                const { error } = await client.auth.signInWithOAuth({
-                    provider: 'google',
-                });
-                if (error) alert("خطأ في تسجيل الدخول: " + error.message);
+                // إذا لم يكن مسجلاً، نرسل رابط سحري لبريده الإلكتروني
+                const email = prompt("يرجى إدخال بريدك الإلكتروني لتسجيل الدخول:");
+                if (email) {
+                    const { error } = await client.auth.signInWithOtp({
+                        email: email,
+                        options: {
+                            emailRedirectTo: 'https://iraqieco.github.io'
+                        }
+                    });
+                    
+                    if (error) alert("خطأ: " + error.message);
+                    else alert("تم إرسال رابط الدخول إلى بريدك الإلكتروني. يرجى الضغط عليه والعودة للموقع للإضافة.");
+                }
             }
         }
 

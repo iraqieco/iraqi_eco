@@ -2,61 +2,183 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>عراقي إيكو</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عراقي إيكو | الموسوعة البيئية</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
-        .card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; background: white; margin-bottom: 20px; }
-        .card img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 5px; }
-        input { display: block; width: 100%; margin: 10px 0; padding: 10px; }
+        /* التنسيقات العامة للموقع */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f9f9f9; 
+            margin: 0; 
+            padding: 0; 
+        }
+        /* تصميم الرأس */
+        header { 
+            background-color: #1b5e20; 
+            color: #ffffff; 
+            padding: 30px; 
+            text-align: center; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+        }
+        /* حاوية المحتوى الرئيسية */
+        .container { 
+            max-width: 900px; 
+            margin: 30px auto; 
+            padding: 25px; 
+            background: #fff; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
+        }
+        /* قسم الإدخال */
+        .form-section { 
+            background: #f1f8e9; 
+            padding: 25px; 
+            border-radius: 10px; 
+            margin-bottom: 40px; 
+            border: 2px solid #c8e6c9; 
+        }
+        /* تحسينات المدخلات */
+        input, select { 
+            display: block; 
+            width: 100%; 
+            padding: 14px; 
+            margin: 12px 0; 
+            border: 1px solid #a5d6a7; 
+            border-radius: 6px; 
+            box-sizing: border-box; 
+            font-size: 15px;
+        }
+        /* زر الحفظ */
+        button { 
+            width: 100%; 
+            padding: 15px; 
+            background-color: #2e7d32; 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 18px; 
+            font-weight: bold; 
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #1b5e20; }
+        
+        /* تصميم كروت عرض الكائنات */
+        .card { 
+            border: 1px solid #e0e0e0; 
+            padding: 20px; 
+            border-radius: 12px; 
+            background: #ffffff; 
+            margin-bottom: 25px; 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: scale(1.01); }
+        .card img { 
+            width: 140px; 
+            height: 140px; 
+            object-fit: cover; 
+            border-radius: 10px; 
+            border: 2px solid #f0f0f0;
+        }
+        .card-info h3 { margin: 0 0 8px 0; color: #1b5e20; }
+        .card-info p { margin: 5px 0; color: #444; font-size: 14px; }
+        .loading-text { text-align: center; color: #888; font-size: 18px; }
     </style>
 </head>
 <body>
 
+<header>
+    <h1>عراقي إيكو</h1>
+    <p>قاعدة البيانات التفاعلية للحياة البرية في العراق</p>
+</header>
+
 <div class="container">
-    <input type="text" id="n_ar" placeholder="الاسم العربي">
-    <input type="text" id="n_sci" placeholder="الاسم العلمي">
-    <input type="file" id="imgFile">
-    <button onclick="saveItem()" style="padding:10px; background:green; color:white;">حفظ المخلوق</button>
-    <div id="content"></div>
+    <div class="form-section">
+        <h3>إضافة كائن حي جديد</h3>
+        <input type="text" id="n_ar" placeholder="الاسم العربي للكائن">
+        <input type="text" id="n_sci" placeholder="الاسم العلمي (لاتيني)">
+        <input type="text" id="img_url" placeholder="رابط الصورة المباشر (URL)">
+        <select id="kingdom">
+            <option value="حيوانات">حيوانات</option>
+            <option value="نباتات">نباتات</option>
+            <option value="فطريات">فطريات</option>
+            <option value="طلائعيات">طلائعيات</option>
+        </select>
+        <button onclick="saveItem()">إدراج في قاعدة البيانات</button>
+    </div>
+
+    <div id="content">
+        <p class="loading-text">جاري تحميل المحتوى من السيرفر...</p>
+    </div>
 </div>
 
 <script>
-    const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA');
+    /* إعدادات الاتصال بمخدم Supabase */
+    const SUPABASE_URL = 'https://rmqtopxawrrgntcqqnpa.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA';
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+    /* دالة جلب وعرض البيانات */
     async function init() {
-        const { data } = await client.from('species').select('*');
+        const { data, error } = await client.from('species').select('*');
+        if (error) {
+            document.getElementById('content').innerHTML = "فشل في جلب البيانات.";
+            return;
+        }
+        
         const content = document.getElementById('content');
-        content.innerHTML = (data || []).map(item => `
-            <div class="card">
-                <img src="${item.image_url}" onerror="this.src='https://via.placeholder.com/150'">
-                <h3>${item.name_ar}</h3>
-                <p style="font-size:10px;">${item.image_url}</p>
-            </div>
-        `).join('');
+        if (!data || data.length === 0) {
+            content.innerHTML = "قاعدة البيانات فارغة حالياً.";
+        } else {
+            content.innerHTML = data.map(item => `
+                <div class="card">
+                    <img src="${item.image_url || 'https://via.placeholder.com/150'}" 
+                         onerror="this.src='https://via.placeholder.com/150'">
+                    <div class="card-info">
+                        <h3>${item.name_ar || 'كائن بدون اسم'}</h3>
+                        <p><strong>الاسم العلمي:</strong> ${item.scientific_name || 'غير متوفر'}</p>
+                        <p><strong>التصنيف:</strong> ${item.kingdom || 'غير مصنف'}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
     }
 
+    /* دالة حفظ كائن جديد */
     async function saveItem() {
-        const file = document.getElementById('imgFile').files[0];
-        let publicUrl = "";
-        
-        if (file) {
-            const fileName = `${Date.now()}.jpg`;
-            const { error } = await client.storage.from('IraqiEco_img').upload(fileName, file);
-            if (!error) {
-                // الحصول على الرابط العام بشكل صحيح
-                publicUrl = client.storage.from('IraqiEco_img').getPublicUrl(fileName).data.publicUrl;
-            }
+        const n_ar = document.getElementById('n_ar').value;
+        const n_sci = document.getElementById('n_sci').value;
+        const img_url = document.getElementById('img_url').value;
+        const kingdom = document.getElementById('kingdom').value;
+
+        if (!n_ar || !n_sci) {
+            alert("يرجى التأكد من ملء الاسم العربي والعلمي!");
+            return;
         }
 
-        await client.from('species').insert([{
-            name_ar: document.getElementById('n_ar').value,
-            scientific_name: document.getElementById('n_sci').value,
-            image_url: publicUrl
+        const { error } = await client.from('species').insert([{
+            name_ar: n_ar,
+            scientific_name: n_sci,
+            image_url: img_url,
+            kingdom: kingdom
         }]);
-        location.reload();
+
+        if (error) {
+            alert("خطأ: " + error.message);
+        } else {
+            alert("تمت إضافة الكائن بنجاح!");
+            location.reload();
+        }
     }
-    init();
+
+    /* بدء تشغيل الصفحة */
+    window.onload = init;
 </script>
+
 </body>
 </html>
+

@@ -82,14 +82,13 @@
     async function saveItem() {
         const n_ar = document.getElementById('n_ar').value;
         const n_sci = document.getElementById('n_sci').value;
+        const id = document.getElementById('editId').value;
         
-        // التحقق من الحقول الإجبارية
         if (!n_ar || !n_sci) {
             alert("يرجى تعبئة الاسم العربي والاسم العلمي!");
             return;
         }
 
-        const id = document.getElementById('editId').value;
         const fileInput = document.getElementById('imgFile');
         let imgUrl = species.find(i => i.id == id)?.image_url || "";
 
@@ -97,17 +96,11 @@
             const file = fileInput.files[0];
             const fileName = `${Date.now()}_${file.name}`;
             const { error: uploadError } = await client.storage.from('IraqiEco_img').upload(fileName, file);
-            
-            if (uploadError) {
-                alert("خطأ في رفع الصورة: " + uploadError.message);
-                return;
-            }
-            // الحصول على الرابط العام
-            const { data: urlData } = client.storage.from('IraqiEco_img').getPublicUrl(fileName);
-            imgUrl = urlData.publicUrl;
+            if (uploadError) { alert("خطأ رفع الصورة: " + uploadError.message); return; }
+            imgUrl = client.storage.from('IraqiEco_img').getPublicUrl(fileName).data.publicUrl;
         }
 
-        const data = { 
+        const payload = { 
             name_ar: n_ar, 
             scientific_name: n_sci, 
             description: document.getElementById('desc').value,
@@ -116,8 +109,8 @@
             conservation_status: document.getElementById('conservation_status').value 
         };
         
-        if (id) await client.from('species').update(data).eq('id', id);
-        else await client.from('species').insert([data]);
+        if (id) await client.from('species').update(payload).eq('id', id);
+        else await client.from('species').insert([payload]);
         
         location.reload();
     }
@@ -140,7 +133,7 @@
                                     <div onclick="deleteItem(${item.id})">🗑 حذف</div>
                                     <div onclick="openModal(${item.id})">✏ تعديل</div>
                                 </div>
-                                <img src="${item.image_url}" onerror="this.style.display='none'">
+                                ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : ''}
                                 <h3>${item.name_ar}</h3>
                                 <p><i>${item.scientific_name}</i></p>
                                 <span class="card-desc">${item.description || ''}</span>

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>عراقي إيكو | مشروع تطوعي يهدف لدراسة وحماية البيئة</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body { font-family: sans-serif; background: #f4f4f4; margin: 0; zoom: 1.2; }
         header { background: #1b5e20; color: white; padding: 20px; text-align: center; }
@@ -41,8 +40,8 @@
 <div id="modal">
     <h3 id="modalTitle">إضافة/تعديل مخلوق</h3>
     <input type="hidden" id="editId">
-    <input id="n_ar" placeholder="الاسم العربي" required>
-    <input id="n_sci" placeholder="الاسم العلمي" required>
+    <input id="n_ar" placeholder="الاسم العربي (إجباري)" required>
+    <input id="n_sci" placeholder="الاسم العلمي (إجباري)" required>
     <select id="kingdom">
         <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option><option value="فطريات">فطريات</option>
         <option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
@@ -61,7 +60,6 @@
 <div class="admin-footer" onclick="loginPrompt()">⚙️</div>
 
 <script>
-    // تهيئة الاتصال بـ Supabase
     const client = supabase.createClient(
         'https://rmqtopxawrrgntcqqnpa.supabase.co', 
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA'
@@ -82,21 +80,36 @@
     }
 
     async function saveItem() {
+        const n_ar = document.getElementById('n_ar').value;
+        const n_sci = document.getElementById('n_sci').value;
+        
+        // التحقق من الحقول الإجبارية
+        if (!n_ar || !n_sci) {
+            alert("يرجى تعبئة الاسم العربي والاسم العلمي!");
+            return;
+        }
+
         const id = document.getElementById('editId').value;
         const fileInput = document.getElementById('imgFile');
         let imgUrl = species.find(i => i.id == id)?.image_url || "";
 
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
-            const fileName = `${Math.random()}_${file.name}`;
+            const fileName = `${Date.now()}_${file.name}`;
             const { error: uploadError } = await client.storage.from('IraqiEco_img').upload(fileName, file);
-            if (uploadError) return alert("خطأ في رفع الصورة: " + uploadError.message);
-            imgUrl = client.storage.from('IraqiEco_img').getPublicUrl(fileName).data.publicUrl;
+            
+            if (uploadError) {
+                alert("خطأ في رفع الصورة: " + uploadError.message);
+                return;
+            }
+            // الحصول على الرابط العام
+            const { data: urlData } = client.storage.from('IraqiEco_img').getPublicUrl(fileName);
+            imgUrl = urlData.publicUrl;
         }
 
         const data = { 
-            name_ar: document.getElementById('n_ar').value, 
-            scientific_name: document.getElementById('n_sci').value, 
+            name_ar: n_ar, 
+            scientific_name: n_sci, 
             description: document.getElementById('desc').value,
             image_url: imgUrl,
             kingdom: document.getElementById('kingdom').value, 
@@ -105,6 +118,7 @@
         
         if (id) await client.from('species').update(data).eq('id', id);
         else await client.from('species').insert([data]);
+        
         location.reload();
     }
 
@@ -126,7 +140,7 @@
                                     <div onclick="deleteItem(${item.id})">🗑 حذف</div>
                                     <div onclick="openModal(${item.id})">✏ تعديل</div>
                                 </div>
-                                ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : ''}
+                                <img src="${item.image_url}" onerror="this.style.display='none'">
                                 <h3>${item.name_ar}</h3>
                                 <p><i>${item.scientific_name}</i></p>
                                 <span class="card-desc">${item.description || ''}</span>

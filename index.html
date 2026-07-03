@@ -47,7 +47,7 @@
         <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option><option value="فطريات">فطريات</option>
         <option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
     </select>
-    <label>صورة المخلوق (اختياري عند التعديل):</label>
+    <label>صورة المخلوق:</label>
     <input type="file" id="imgFile" accept="image/*">
     <input id="desc" placeholder="الوصف">
     <select id="conservation_status">
@@ -61,9 +61,13 @@
 <div class="admin-footer" onclick="loginPrompt()">⚙️</div>
 
 <script>
-    const client = supabase.createClient('URL_PROJECT', 'KEY_PROJECT');
-    let species = [];
+    // تهيئة الاتصال بـ Supabase
+    const client = supabase.createClient(
+        'https://rmqtopxawrrgntcqqnpa.supabase.co', 
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA'
+    );
     
+    let species = [];
     const statusConfig = { 
         'EX': { color: '#000', text: 'منقرض' }, 'CR': { color: '#d32f2f', text: 'خطر أقصى' }, 
         'EN': { color: '#f44336', text: 'مهدد' }, 'VU': { color: '#ff9800', text: 'معرض للخطر' }, 
@@ -71,7 +75,8 @@
     };
 
     async function init() {
-        const { data } = await client.from('species').select('*');
+        const { data, error } = await client.from('species').select('*');
+        if (error) console.error("خطأ جلب البيانات:", error);
         species = data || [];
         render();
     }
@@ -83,9 +88,9 @@
 
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
-            const fileName = `${Math.random()}.${file.name.split('.').pop()}`;
+            const fileName = `${Math.random()}_${file.name}`;
             const { error: uploadError } = await client.storage.from('IraqiEco_img').upload(fileName, file);
-            if (uploadError) return alert("خطأ في الرفع: " + uploadError.message);
+            if (uploadError) return alert("خطأ في رفع الصورة: " + uploadError.message);
             imgUrl = client.storage.from('IraqiEco_img').getPublicUrl(fileName).data.publicUrl;
         }
 

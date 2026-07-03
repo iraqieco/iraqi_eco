@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>عراقي إيكو | مشروع تطوعي يهدف لدراسة وحماية البيئة</title>
+    <title>عراقي إيكو | مشروع تطوعي</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { font-family: sans-serif; background: #f4f4f4; margin: 0; zoom: 1.2; }
@@ -28,154 +28,67 @@
 
 <header>
     <h1>عراقي إيكو</h1>
-    <p>قاعدة بيانات الكائنات الحية في العراق</p>
 </header>
 
 <div class="container">
-    <input type="text" id="search" placeholder="بحث بالاسم العربي أو العلمي..." onkeyup="render()" style="width:100%; padding:10px;">
+    <input type="text" id="search" placeholder="بحث..." onkeyup="render()" style="width:100%; padding:10px;">
     <button onclick="openModal()" style="margin:15px 0; padding:10px; background:#1b5e20; color:white; border:none; border-radius:5px;">+ إضافة مخلوق</button>
     <div id="content"></div>
 </div>
 
 <div id="modal">
-    <h3 id="modalTitle">إضافة/تعديل مخلوق</h3>
+    <h3>إضافة/تعديل</h3>
     <input type="hidden" id="editId">
-    <input id="n_ar" placeholder="الاسم العربي (إجباري)" required>
-    <input id="n_sci" placeholder="الاسم العلمي (إجباري)" required>
-    <select id="kingdom">
-        <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option><option value="فطريات">فطريات</option>
-        <option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
-    </select>
-    <label>صورة المخلوق:</label>
+    <input id="n_ar" placeholder="الاسم العربي" required>
+    <input id="n_sci" placeholder="الاسم العلمي" required>
+    <label>صورة:</label>
     <input type="file" id="imgFile" accept="image/*">
     <input id="desc" placeholder="الوصف">
-    <select id="conservation_status">
-        <option value="EX">منقرض</option><option value="CR">خطر أقصى</option><option value="EN">مهدد</option>
-        <option value="VU">معرض للخطر</option><option value="NT">قريب من التهديد</option><option value="LC">غير مهدد</option>
-    </select>
     <button onclick="saveItem()" style="background:#1b5e20; color:white; padding:10px; width:100%;">حفظ</button>
-    <button onclick="document.getElementById('modal').style.display='none'" style="margin-top:10px; width:100%;">إغلاق</button>
 </div>
 
-<div class="admin-footer" onclick="loginPrompt()">⚙️</div>
-
 <script>
-    const client = supabase.createClient(
-        'https://rmqtopxawrrgntcqqnpa.supabase.co', 
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA'
-    );
-    
+    const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA');
     let species = [];
-    const statusConfig = { 
-        'EX': { color: '#000', text: 'منقرض' }, 'CR': { color: '#d32f2f', text: 'خطر أقصى' }, 
-        'EN': { color: '#f44336', text: 'مهدد' }, 'VU': { color: '#ff9800', text: 'معرض للخطر' }, 
-        'NT': { color: '#ffc107', text: 'قريب من التهديد' }, 'LC': { color: '#4caf50', text: 'غير مهدد' } 
-    };
 
     async function init() {
-        const { data, error } = await client.from('species').select('*');
-        if (error) console.error("خطأ جلب البيانات:", error);
+        const { data } = await client.from('species').select('*');
         species = data || [];
         render();
     }
 
     async function saveItem() {
-        const n_ar = document.getElementById('n_ar').value;
-        const n_sci = document.getElementById('n_sci').value;
-        const id = document.getElementById('editId').value;
-        
-        if (!n_ar || !n_sci) {
-            alert("يرجى تعبئة الاسم العربي والاسم العلمي!");
-            return;
-        }
-
         const fileInput = document.getElementById('imgFile');
-        let imgUrl = species.find(i => i.id == id)?.image_url || "";
+        let imgUrl = "";
 
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
-            const fileName = `${Date.now()}_${file.name}`;
-            const { error: uploadError } = await client.storage.from('IraqiEco_img').upload(fileName, file);
-            if (uploadError) { alert("خطأ رفع الصورة: " + uploadError.message); return; }
-            imgUrl = client.storage.from('IraqiEco_img').getPublicUrl(fileName).data.publicUrl;
+            const fileName = `${Date.now()}.jpg`;
+            const { error } = await client.storage.from('IraqiEco_img').upload(fileName, file);
+            if (!error) {
+                imgUrl = client.storage.from('IraqiEco_img').getPublicUrl(fileName).data.publicUrl;
+            }
         }
 
-        const payload = { 
-            name_ar: n_ar, 
-            scientific_name: n_sci, 
-            description: document.getElementById('desc').value,
-            image_url: imgUrl,
-            kingdom: document.getElementById('kingdom').value, 
-            conservation_status: document.getElementById('conservation_status').value 
+        const data = { 
+            name_ar: document.getElementById('n_ar').value, 
+            scientific_name: document.getElementById('n_sci').value, 
+            image_url: imgUrl 
         };
-        
-        if (id) await client.from('species').update(payload).eq('id', id);
-        else await client.from('species').insert([payload]);
-        
+        await client.from('species').insert([data]);
         location.reload();
     }
 
     function render() {
-        const q = document.getElementById('search').value.toLowerCase();
-        const kingdoms = ["حيوانات", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
-        
-        document.getElementById('content').innerHTML = kingdoms.map(k => {
-            const items = species.filter(i => (i.kingdom || 'حيوانات') === k && ((i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q)));
-            if (items.length === 0) return '';
-            return `
-                <div class="kingdom-section">
-                    <div class="kingdom-title">${k} <span class="count-badge">${items.length}</span></div>
-                    <div class="cards-wrapper">
-                        ${items.map(item => `
-                            <div class="card" id="card-${item.id}">
-                                <div class="menu-btn" onclick="toggleMenu(${item.id})">⋮</div>
-                                <div class="menu-options" id="menu-${item.id}">
-                                    <div onclick="deleteItem(${item.id})">🗑 حذف</div>
-                                    <div onclick="openModal(${item.id})">✏ تعديل</div>
-                                </div>
-                                <img src="${item.image_url}" onerror="this.style.display='none'">
-                                <p style="font-size: 8px; word-break: break-all; color: #999;">رابط الصورة: ${item.image_url || 'لا يوجد'}</p>
-                                <h3>${item.name_ar}</h3>
-                                <p><i>${item.scientific_name}</i></p>
-                                <span class="card-desc">${item.description || ''}</span>
-                                <div class="status-badge" style="background:${statusConfig[item.conservation_status]?.color || '#757575'}">${statusConfig[item.conservation_status]?.text || 'غير محدد'}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }).join('');
+        document.getElementById('content').innerHTML = species.map(item => `
+            <div class="card">
+                ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : '<div style="height:150px; background:#eee; text-align:center; padding-top:60px;">لا توجد صورة</div>'}
+                <p style="font-size:10px; color:blue;">${item.image_url || 'الرابط فارغ'}</p>
+                <h3>${item.name_ar}</h3>
+            </div>
+        `).join('');
     }
 
-    function toggleMenu(id) {
-        const menu = document.getElementById('menu-'+id);
-        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-    }
-
-    function openModal(id = null) {
-        const item = species.find(i => i.id === id);
-        document.getElementById('editId').value = id || '';
-        document.getElementById('n_ar').value = item ? item.name_ar : '';
-        document.getElementById('n_sci').value = item ? item.scientific_name : '';
-        document.getElementById('desc').value = item ? (item.description || '') : '';
-        document.getElementById('modal').style.display = 'block';
-    }
-
-    async function deleteItem(id) {
-        if(confirm('هل أنت متأكد؟')) {
-            await client.from('species').delete().eq('id', id);
-            location.reload();
-        }
-    }
-
-    async function loginPrompt() {
-        const email = prompt("أدخل البريد الإلكتروني:");
-        const password = prompt("أدخل كلمة المرور:");
-        const { error } = await client.auth.signInWithPassword({ email, password });
-        if (error) alert("خطأ: " + error.message);
-        else location.reload();
-    }
-    
     init();
 </script>
 </body>

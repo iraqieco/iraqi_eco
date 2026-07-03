@@ -1,184 +1,177 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <meta name="google-site-verification" content="0jRTIrdsb7aj8SvFaH9WswrLn506cgoyudn40MhxDiE" />
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عراقي إيكو | الموسوعة البيئية</title>
+    <title>عراقي إيكو | مشروع تطوعي يهدف لدراسة وحماية  البيئة</title>
+    <meta name="description" content="عراقي إيكو: مشروع تطوعي يهدف لدراسة وحماية التنوع الإحيائي والنظام البيئي في العراق، مع تطلعات عالمية بإذن اللّٰه.">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* التنسيقات العامة للموقع */
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #f9f9f9; 
-            margin: 0; 
-            padding: 0; 
-        }
-        /* تصميم الرأس */
-        header { 
-            background-color: #1b5e20; 
-            color: #ffffff; 
-            padding: 30px; 
-            text-align: center; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-        }
-        /* حاوية المحتوى الرئيسية */
-        .container { 
-            max-width: 900px; 
-            margin: 30px auto; 
-            padding: 25px; 
-            background: #fff; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
-        }
-        /* قسم الإدخال */
-        .form-section { 
-            background: #f1f8e9; 
-            padding: 25px; 
-            border-radius: 10px; 
-            margin-bottom: 40px; 
-            border: 2px solid #c8e6c9; 
-        }
-        /* تحسينات المدخلات */
-        input, select { 
-            display: block; 
-            width: 100%; 
-            padding: 14px; 
-            margin: 12px 0; 
-            border: 1px solid #a5d6a7; 
-            border-radius: 6px; 
-            box-sizing: border-box; 
-            font-size: 15px;
-        }
-        /* زر الحفظ */
-        button { 
-            width: 100%; 
-            padding: 15px; 
-            background-color: #2e7d32; 
-            color: white; 
-            border: none; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-size: 18px; 
-            font-weight: bold; 
-            transition: background 0.3s;
-        }
-        button:hover { background-color: #1b5e20; }
-        
-        /* تصميم كروت عرض الكائنات */
-        .card { 
-            border: 1px solid #e0e0e0; 
-            padding: 20px; 
-            border-radius: 12px; 
-            background: #ffffff; 
-            margin-bottom: 25px; 
-            display: flex; 
-            align-items: center; 
-            gap: 20px; 
-            transition: transform 0.2s;
-        }
-        .card:hover { transform: scale(1.01); }
-        .card img { 
-            width: 140px; 
-            height: 140px; 
-            object-fit: cover; 
-            border-radius: 10px; 
-            border: 2px solid #f0f0f0;
-        }
-        .card-info h3 { margin: 0 0 8px 0; color: #1b5e20; }
-        .card-info p { margin: 5px 0; color: #444; font-size: 14px; }
-        .loading-text { text-align: center; color: #888; font-size: 18px; }
+        body { font-family: sans-serif; background: #f4f4f4; margin: 0; zoom: 1.5; }
+        header { background: #1b5e20; color: white; padding: 20px; text-align: center; }
+        .container { padding: 20px; }
+        .kingdom-section { margin-bottom: 30px; }
+        .kingdom-title { background: #1b5e20; color: white; padding: 5px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; font-weight: bold; }
+        .count-badge { background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin-right: 10px; }
+        .cards-wrapper { display: flex; flex-wrap: wrap; gap: 15px; }
+        .card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; background: white; width: 220px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; display: block; }
+        .menu-btn { position: absolute; top: 5px; left: 5px; cursor: pointer; font-size: 1.2em; }
+        .menu-options { display: none; position: absolute; top: 25px; left: 5px; background: white; border: 1px solid #ccc; z-index: 100; padding: 5px; }
+        .menu-options div { padding: 5px; cursor: pointer; font-size: 0.8em; }
+        .status-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; color: white; font-size: 0.7em; margin-top: 5px; font-weight: bold; }
+        .card-desc { font-size: 0.85em; color: #555; margin-top: 10px; display: block; }
+        input, select { display: block; width: 90%; margin: 8px 0; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        #modal { display: none; position: fixed; top: 5%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 1000; border-radius: 10px; max-height: 90vh; overflow-y: auto; }
+        .admin-footer { margin-top: 50px; text-align: center; opacity: 0.3; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>عراقي إيكو</h1>
-    <p>قاعدة البيانات التفاعلية للحياة البرية في العراق</p>
+    <p>قاعدة بيانات الكائنات الحية في العراق</p>
 </header>
 
 <div class="container">
-    <div class="form-section">
-        <h3>إضافة كائن حي جديد</h3>
-        <input type="text" id="n_ar" placeholder="الاسم العربي للكائن">
-        <input type="text" id="n_sci" placeholder="الاسم العلمي (لاتيني)">
-        <input type="text" id="img_url" placeholder="رابط الصورة المباشر (URL)">
-        <select id="kingdom">
-            <option value="حيوانات">حيوانات</option>
-            <option value="نباتات">نباتات</option>
-            <option value="فطريات">فطريات</option>
-            <option value="طلائعيات">طلائعيات</option>
-        </select>
-        <button onclick="saveItem()">إدراج في قاعدة البيانات</button>
-    </div>
-
-    <div id="content">
-        <p class="loading-text">جاري تحميل المحتوى من السيرفر...</p>
-    </div>
+    <input type="text" id="search" placeholder="بحث بالاسم العربي أو العلمي..." onkeyup="render()" style="width:100%; padding:10px;">
+    <button onclick="openModal()" style="margin:15px 0; padding:10px; background:#1b5e20; color:white; border:none; border-radius:5px;">+ إضافة مخلوق</button>
+    <div id="content"></div>
 </div>
 
-<script>
-    /* إعدادات الاتصال بمخدم Supabase */
-    const SUPABASE_URL = 'https://rmqtopxawrrgntcqqnpa.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA';
-    const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<div id="modal">
+    <h3 id="modalTitle">إضافة/تعديل مخلوق</h3>
+    <input type="hidden" id="editId">
+    <input id="n_ar" placeholder="الاسم العربي" required>
+    <input id="n_sci" placeholder="الاسم العلمي" required>
+    <select id="kingdom">
+        <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option><option value="فطريات">فطريات</option>
+        <option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
+    </select>
+    <input id="img" placeholder="رابط الصورة المباشر">
+    <input id="desc" placeholder="الوصف">
+    <select id="conservation_status">
+        <option value="EX">منقرض</option><option value="CR">خطر أقصى</option><option value="EN">مهدد</option>
+        <option value="VU">معرض للخطر</option><option value="NT">قريب من التهديد</option><option value="LC">غير مهدد</option>
+    </select>
+    <button onclick="saveItem()" style="background:#1b5e20; color:white; padding:10px; width:100%;">حفظ</button>
+    <button onclick="document.getElementById('modal').style.display='none'" style="margin-top:10px; width:100%;">إغلاق</button>
+</div>
 
-    /* دالة جلب وعرض البيانات */
+<div class="admin-footer" onclick="loginPrompt()">⚙️</div>
+
+<script>
+    const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX');
+    let species = [];
+    
+    const statusConfig = { 
+        'EX': { color: '#000', text: 'منقرض' }, 'CR': { color: '#d32f2f', text: 'خطر أقصى' }, 
+        'EN': { color: '#f44336', text: 'مهدد' }, 'VU': { color: '#ff9800', text: 'معرض للخطر' }, 
+        'NT': { color: '#ffc107', text: 'قريب من التهديد' }, 'LC': { color: '#4caf50', text: 'غير مهدد' } 
+    };
+
     async function init() {
-        const { data, error } = await client.from('species').select('*');
-        if (error) {
-            document.getElementById('content').innerHTML = "فشل في جلب البيانات.";
-            return;
-        }
-        
-        const content = document.getElementById('content');
-        if (!data || data.length === 0) {
-            content.innerHTML = "قاعدة البيانات فارغة حالياً.";
-        } else {
-            content.innerHTML = data.map(item => `
-                <div class="card">
-                    <img src="${item.image_url || 'https://via.placeholder.com/150'}" 
-                         onerror="this.src='https://via.placeholder.com/150'">
-                    <div class="card-info">
-                        <h3>${item.name_ar || 'كائن بدون اسم'}</h3>
-                        <p><strong>الاسم العلمي:</strong> ${item.scientific_name || 'غير متوفر'}</p>
-                        <p><strong>التصنيف:</strong> ${item.kingdom || 'غير مصنف'}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
+        const { data } = await client.from('species').select('*');
+        species = data || [];
+        render();
     }
 
-    /* دالة حفظ كائن جديد */
+    async function loginPrompt() {
+        const email = prompt("أدخل البريد الإلكتروني للمسؤول:");
+        const password = prompt("أدخل كلمة المرور:");
+        const { error } = await client.auth.signInWithPassword({ email, password });
+        if (error) alert("خطأ: " + error.message);
+        else { alert("تم تسجيل الدخول بنجاح!"); location.reload(); }
+    }
+
+    function render() {
+        const q = document.getElementById('search').value.toLowerCase();
+        const kingdoms = ["حيوانات", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
+        
+        document.getElementById('content').innerHTML = kingdoms.map(k => {
+            const items = species.filter(i => (i.kingdom || 'حيوانات') === k && ((i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q)));
+            if (items.length === 0) return '';
+            return `
+                <div class="kingdom-section">
+                    <div class="kingdom-title">${k} <span class="count-badge">${items.length}</span></div>
+                    <div class="cards-wrapper">
+                        ${items.map(item => `
+                            <div class="card" id="card-${item.id}">
+                                <div class="menu-btn" onclick="toggleMenu(${item.id})">⋮</div>
+                                <div class="menu-options" id="menu-${item.id}">
+                                    <div onclick="deleteItem(${item.id})">🗑 حذف</div>
+                                    <div onclick="openModal(${item.id})">✏ تعديل</div>
+                                    <div onclick="downloadCard('card-${item.id}')">⬇ تنزيل</div>
+                                </div>
+                                ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : ''}
+                                <h3>${item.name_ar}</h3>
+                                <p><i>${item.scientific_name}</i></p>
+                                <span class="card-desc">${item.description || ''}</span>
+                                <div class="status-badge" style="background:${statusConfig[item.conservation_status]?.color || '#757575'}">${statusConfig[item.conservation_status]?.text || 'غير محدد'}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function toggleMenu(id) {
+        const menu = document.getElementById('menu-'+id);
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function openModal(id = null) {
+        const modal = document.getElementById('modal');
+        const item = species.find(i => i.id === id);
+        document.getElementById('editId').value = id || '';
+        document.getElementById('n_ar').value = item ? item.name_ar : '';
+        document.getElementById('n_sci').value = item ? item.scientific_name : '';
+        document.getElementById('img').value = item ? (item.image_url || '') : '';
+        document.getElementById('desc').value = item ? (item.description || '') : '';
+        modal.style.display = 'block';
+    }
+
     async function saveItem() {
         const n_ar = document.getElementById('n_ar').value;
         const n_sci = document.getElementById('n_sci').value;
-        const img_url = document.getElementById('img_url').value;
-        const kingdom = document.getElementById('kingdom').value;
-
-        if (!n_ar || !n_sci) {
-            alert("يرجى التأكد من ملء الاسم العربي والعلمي!");
-            return;
-        }
-
-        const { error } = await client.from('species').insert([{
-            name_ar: n_ar,
-            scientific_name: n_sci,
+        const img_url = document.getElementById('img').value;
+        const desc = document.getElementById('desc').value;
+        if (!n_ar || !n_sci) return alert("البيانات ناقصة!");
+        
+        const id = document.getElementById('editId').value;
+        const data = { 
+            name_ar: n_ar, 
+            scientific_name: n_sci, 
+            description: desc,
             image_url: img_url,
-            kingdom: kingdom
-        }]);
+            kingdom: document.getElementById('kingdom').value, 
+            conservation_status: document.getElementById('conservation_status').value 
+        };
+        
+        if (id) await client.from('species').update(data).eq('id', id);
+        else await client.from('species').insert([data]);
+        location.reload();
+    }
 
-        if (error) {
-            alert("خطأ: " + error.message);
-        } else {
-            alert("تمت إضافة الكائن بنجاح!");
+    async function deleteItem(id) {
+        if(confirm('هل أنت متأكد؟')) {
+            await client.from('species').delete().eq('id', id);
             location.reload();
         }
     }
 
-    /* بدء تشغيل الصفحة */
-    window.onload = init;
+    function downloadCard(id) {
+        html2canvas(document.getElementById(id)).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'creature.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    }
+    init();
 </script>
-
 </body>
 </html>
-
+  

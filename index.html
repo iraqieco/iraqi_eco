@@ -2,93 +2,60 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>عراقي إيكو | مشروع تطوعي</title>
+    <title>عراقي إيكو</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: sans-serif; background: #f4f4f4; margin: 0; zoom: 1.2; }
-        header { background: #1b5e20; color: white; padding: 20px; text-align: center; }
-        .container { padding: 20px; }
-        .kingdom-section { margin-bottom: 30px; }
-        .kingdom-title { background: #1b5e20; color: white; padding: 5px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; font-weight: bold; }
-        .count-badge { background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin-right: 10px; }
-        .cards-wrapper { display: flex; flex-wrap: wrap; gap: 15px; }
-        .card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; background: white; width: 220px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; display: block; }
-        .menu-btn { position: absolute; top: 5px; left: 5px; cursor: pointer; font-size: 1.2em; }
-        .menu-options { display: none; position: absolute; top: 25px; left: 5px; background: white; border: 1px solid #ccc; z-index: 100; padding: 5px; }
-        .menu-options div { padding: 5px; cursor: pointer; font-size: 0.8em; }
-        .status-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; color: white; font-size: 0.7em; margin-top: 5px; font-weight: bold; }
-        .card-desc { font-size: 0.85em; color: #555; margin-top: 10px; display: block; }
-        input, select { display: block; width: 90%; margin: 8px 0; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        #modal { display: none; position: fixed; top: 5%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 1000; border-radius: 10px; max-height: 90vh; overflow-y: auto; }
-        .admin-footer { margin-top: 50px; text-align: center; opacity: 0.3; }
+        body { font-family: sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+        .card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; background: white; margin-bottom: 20px; }
+        .card img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 5px; }
+        input { display: block; width: 100%; margin: 10px 0; padding: 10px; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>عراقي إيكو</h1>
-</header>
-
 <div class="container">
-    <input type="text" id="search" placeholder="بحث..." onkeyup="render()" style="width:100%; padding:10px;">
-    <button onclick="openModal()" style="margin:15px 0; padding:10px; background:#1b5e20; color:white; border:none; border-radius:5px;">+ إضافة مخلوق</button>
+    <input type="text" id="n_ar" placeholder="الاسم العربي">
+    <input type="text" id="n_sci" placeholder="الاسم العلمي">
+    <input type="file" id="imgFile">
+    <button onclick="saveItem()" style="padding:10px; background:green; color:white;">حفظ المخلوق</button>
     <div id="content"></div>
-</div>
-
-<div id="modal">
-    <h3>إضافة/تعديل</h3>
-    <input type="hidden" id="editId">
-    <input id="n_ar" placeholder="الاسم العربي" required>
-    <input id="n_sci" placeholder="الاسم العلمي" required>
-    <label>صورة:</label>
-    <input type="file" id="imgFile" accept="image/*">
-    <input id="desc" placeholder="الوصف">
-    <button onclick="saveItem()" style="background:#1b5e20; color:white; padding:10px; width:100%;">حفظ</button>
 </div>
 
 <script>
     const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcXRvcHhhd3JyZ250Y3FxbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTIxMzQsImV4cCI6MjA5ODM2ODEzNH0.HoExHY9oNFdryWUC2u2UELLPfBNhH3P4L3zS03dvELA');
-    let species = [];
 
     async function init() {
         const { data } = await client.from('species').select('*');
-        species = data || [];
-        render();
-    }
-
-    async function saveItem() {
-        const fileInput = document.getElementById('imgFile');
-        let imgUrl = "";
-
-        if (fileInput.files.length > 0) {
-            const file = fileInput.files[0];
-            const fileName = `${Date.now()}.jpg`;
-            const { error } = await client.storage.from('IraqiEco_img').upload(fileName, file);
-            if (!error) {
-                imgUrl = client.storage.from('IraqiEco_img').getPublicUrl(fileName).data.publicUrl;
-            }
-        }
-
-        const data = { 
-            name_ar: document.getElementById('n_ar').value, 
-            scientific_name: document.getElementById('n_sci').value, 
-            image_url: imgUrl 
-        };
-        await client.from('species').insert([data]);
-        location.reload();
-    }
-
-    function render() {
-        document.getElementById('content').innerHTML = species.map(item => `
+        const content = document.getElementById('content');
+        content.innerHTML = (data || []).map(item => `
             <div class="card">
-                ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : '<div style="height:150px; background:#eee; text-align:center; padding-top:60px;">لا توجد صورة</div>'}
-                <p style="font-size:10px; color:blue;">${item.image_url || 'الرابط فارغ'}</p>
+                <img src="${item.image_url}" onerror="this.src='https://via.placeholder.com/150'">
                 <h3>${item.name_ar}</h3>
+                <p style="font-size:10px;">${item.image_url}</p>
             </div>
         `).join('');
     }
 
+    async function saveItem() {
+        const file = document.getElementById('imgFile').files[0];
+        let publicUrl = "";
+        
+        if (file) {
+            const fileName = `${Date.now()}.jpg`;
+            const { error } = await client.storage.from('IraqiEco_img').upload(fileName, file);
+            if (!error) {
+                // الحصول على الرابط العام بشكل صحيح
+                publicUrl = client.storage.from('IraqiEco_img').getPublicUrl(fileName).data.publicUrl;
+            }
+        }
+
+        await client.from('species').insert([{
+            name_ar: document.getElementById('n_ar').value,
+            scientific_name: document.getElementById('n_sci').value,
+            image_url: publicUrl
+        }]);
+        location.reload();
+    }
     init();
 </script>
 </body>

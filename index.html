@@ -133,7 +133,8 @@
                                     <div onclick="deleteItem(${item.id})">🗑 حذف</div>
                                     <div onclick="openModal(${item.id})">✏ تعديل</div>
                                 </div>
-                                ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : ''}
+                                <img src="${item.image_url}" onerror="this.style.display='none'">
+                                <p style="font-size: 8px; word-break: break-all; color: #999;">رابط الصورة: ${item.image_url || 'لا يوجد'}</p>
                                 <h3>${item.name_ar}</h3>
                                 <p><i>${item.scientific_name}</i></p>
                                 <span class="card-desc">${item.description || ''}</span>

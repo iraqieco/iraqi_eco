@@ -3,28 +3,46 @@
 <head>
     <meta name="google-site-verification" content="0jRTIrdsb7aj8SvFaH9WswrLn506cgoyudn40MhxDiE" />
     <meta charset="UTF-8">
-    <title>عراقي إيكو | مشروع تطوعي يهدف لدراسة وحماية  البيئة</title>
+    <title>عراقي إيكو | مشروع تطوعي يهدف لدراسة وحماية البيئة</title>
     <meta name="description" content="عراقي إيكو: مشروع تطوعي يهدف لدراسة وحماية التنوع الإحيائي والنظام البيئي في العراق، مع تطلعات عالمية بإذن اللّٰه.">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        body { font-family: sans-serif; background: #f4f4f4; margin: 0; zoom: 1.5; }
-        header { background: #1b5e20; color: white; padding: 20px; text-align: center; }
-        .container { padding: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+        header { background: #1b5e20; color: white; padding: 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; }
+        .container { padding: 10px; }
         .kingdom-section { margin-bottom: 30px; }
         .kingdom-title { background: #1b5e20; color: white; padding: 5px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; font-weight: bold; }
         .count-badge { background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin-right: 10px; }
-        .cards-wrapper { display: flex; flex-wrap: wrap; gap: 15px; }
-        .card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; background: white; width: 220px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; display: block; }
-        .menu-btn { position: absolute; top: 5px; left: 5px; cursor: pointer; font-size: 1.2em; }
-        .menu-options { display: none; position: absolute; top: 25px; left: 5px; background: white; border: 1px solid #ccc; z-index: 100; padding: 5px; }
-        .menu-options div { padding: 5px; cursor: pointer; font-size: 0.8em; }
-        .status-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; color: white; font-size: 0.7em; margin-top: 5px; font-weight: bold; }
-        .card-desc { font-size: 0.85em; color: #555; margin-top: 10px; display: block; }
-        input, select { display: block; width: 90%; margin: 8px 0; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        #modal { display: none; position: fixed; top: 5%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 1000; border-radius: 10px; max-height: 90vh; overflow-y: auto; }
-        .admin-footer { margin-top: 50px; text-align: center; opacity: 0.3; }
+        .cards-wrapper { display: flex; flex-wrap: wrap; gap: 20px; }
+        
+        /* تصميم البطاقة الجديد */
+        .card { 
+            width: 300px; 
+            border: 2px solid #1b5e20; 
+            padding: 20px; 
+            border-radius: 20px; 
+            background: white; 
+            position: relative; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .card-logo { color: #1b5e20; font-weight: bold; text-align: center; font-size: 1.1em; margin-bottom: 10px; }
+        .divider { height: 1px; background-color: #ddd; margin: 0 30px 15px 30px; }
+        .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; display: block; }
+        .common-name { font-size: 1.5em; font-weight: bold; text-align: center; margin: 0; color: #333; }
+        .latin-name { font-style: italic; color: #666; text-align: center; margin-bottom: 10px; display: block; }
+        .card-desc { font-size: 0.9em; color: #444; line-height: 1.5; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .read-more { color: #1b5e20; font-size: 0.8em; font-weight: bold; cursor: pointer; display: block; margin-bottom: 10px; }
+        .status-badge { display: block; padding: 8px; border-radius: 8px; color: white; text-align: center; font-weight: bold; font-size: 0.85em; }
+        
+        /* عناصر التحكم */
+        .menu-btn { position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 1.2em; color: #1b5e20; }
+        .menu-options { display: none; position: absolute; top: 35px; right: 10px; background: white; border: 1px solid #ccc; z-index: 100; padding: 5px; border-radius: 5px; }
+        .menu-options div { padding: 5px; cursor: pointer; font-size: 0.9em; }
+        
+        input, select { display: block; width: 95%; margin: 10px 0; padding: 12px; border: 1px solid #ccc; border-radius: 8px; }
+        #modal { display: none; position: fixed; top: 5%; right: 10%; width: 80%; background: white; padding: 20px; border: 3px solid #1b5e20; z-index: 1000; border-radius: 15px; max-height: 90vh; overflow-y: auto; }
+        .admin-footer { margin-top: 50px; text-align: center; opacity: 0.3; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -35,8 +53,8 @@
 </header>
 
 <div class="container">
-    <input type="text" id="search" placeholder="بحث بالاسم العربي أو العلمي..." onkeyup="render()" style="width:100%; padding:10px;">
-    <button onclick="openModal()" style="margin:15px 0; padding:10px; background:#1b5e20; color:white; border:none; border-radius:5px;">+ إضافة مخلوق</button>
+    <input type="text" id="search" placeholder="بحث بالاسم العربي أو العلمي..." onkeyup="render()" style="width:100%; padding:10px; box-sizing:border-box;">
+    <button onclick="openModal()" style="margin:15px 0; padding:12px; width:100%; background:#1b5e20; color:white; border:none; border-radius:8px; font-size:1em; cursor:pointer;">+ إضافة مخلوق</button>
     <div id="content"></div>
 </div>
 
@@ -50,13 +68,13 @@
         <option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
     </select>
     <input id="img" placeholder="رابط الصورة المباشر">
-    <input id="desc" placeholder="الوصف">
+    <input id="desc" placeholder="الوصف (3 أسطر)">
     <select id="conservation_status">
         <option value="EX">منقرض</option><option value="CR">خطر أقصى</option><option value="EN">مهدد</option>
         <option value="VU">معرض للخطر</option><option value="NT">قريب من التهديد</option><option value="LC">غير مهدد</option>
     </select>
-    <button onclick="saveItem()" style="background:#1b5e20; color:white; padding:10px; width:100%;">حفظ</button>
-    <button onclick="document.getElementById('modal').style.display='none'" style="margin-top:10px; width:100%;">إغلاق</button>
+    <button onclick="saveItem()" style="background:#1b5e20; color:white; padding:12px; width:100%; border:none; border-radius:8px;">حفظ</button>
+    <button onclick="document.getElementById('modal').style.display='none'" style="margin-top:10px; width:100%; padding:10px; border:1px solid #ccc; border-radius:8px;">إغلاق</button>
 </div>
 
 <div class="admin-footer" onclick="loginPrompt()">⚙️</div>
@@ -104,10 +122,13 @@
                                     <div onclick="openModal(${item.id})">✏ تعديل</div>
                                     <div onclick="downloadCard('card-${item.id}')">⬇ تنزيل</div>
                                 </div>
+                                <div class="card-logo">عراقي إيكو</div>
+                                <div class="divider"></div>
                                 ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : ''}
-                                <h3>${item.name_ar}</h3>
-                                <p><i>${item.scientific_name}</i></p>
+                                <div class="common-name">${item.name_ar}</div>
+                                <span class="latin-name">${item.scientific_name}</span>
                                 <span class="card-desc">${item.description || ''}</span>
+                                <span class="read-more">عرض المزيد</span>
                                 <div class="status-badge" style="background:${statusConfig[item.conservation_status]?.color || '#757575'}">${statusConfig[item.conservation_status]?.text || 'غير محدد'}</div>
                             </div>
                         `).join('')}
@@ -174,4 +195,3 @@
 </script>
 </body>
 </html>
-  

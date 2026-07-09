@@ -4,7 +4,7 @@
     <meta name="google-site-verification" content="0jRTIrdsb7aj8SvFaH9WswrLn506cgoyudn40MhxDiE" />
     <meta charset="UTF-8">
     <title>عراقي إيكو | مشروع تطوعي يهدف لدراسة وحماية البيئة</title>
-    <meta name="description" content="عراقي إيكو: مشروع تطوعي يهدف لدراسة وحماية التنوع الإحيائي والنظام البيئي في العراق، مع تطلعات عالمية بإذن اللّٰه.">
+    <meta name="description" content="عراقي إيكو: مشروع تطوعي يهدف لدراسة وحماية التنوع الإحيائي والنظام البيئي في العراق.">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -14,30 +14,16 @@
         .kingdom-section { margin-bottom: 30px; }
         .kingdom-title { background: #1b5e20; color: white; padding: 5px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; font-weight: bold; }
         .count-badge { background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin-right: 10px; }
-        
         .cards-wrapper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        
         .card { border: 2px solid #1b5e20; padding: 15px; border-radius: 15px; background: white; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .card-logo { color: #1b5e20; font-weight: bold; text-align: center; font-size: 0.6em; margin-bottom: 10px; }
-        .divider { height: 1px; background-color: #ddd; margin: 0 30px 15px 30px; }
         .card img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; display: block; }
-        .common-name { font-size: 0.6em; font-weight: bold; text-align: center; color: #333; margin-top: 5px; }
-        .latin-name { font-size: 0.3em; font-style: italic; color: #666; text-align: center; display: block; margin-bottom: 5px; }
-        .kingdom-tag { font-size: 0.75em; background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 5px; }
-        
-        .card-desc { font-size: 0.6em; color: #444; line-height: 1.4; margin-top: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .card.expanded .card-desc { -webkit-line-clamp: unset; }
-        .read-more { color: #1b5e20; font-size: 0.8em; font-weight: bold; cursor: pointer; display: none; margin-top: 5px; }
-        
+        .common-name { font-size: 1.1em; font-weight: bold; text-align: center; color: #333; margin: 5px 0 0 0; }
+        .latin-name { font-size: 0.8em; font-style: italic; color: #666; text-align: center; display: block; margin-bottom: 10px; }
+        .kingdom-tag { font-size: 0.7em; background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 5px; }
+        .card-desc { font-size: 0.8em; color: #444; line-height: 1.4; margin-top: 5px; }
         .status-badge { display: block; padding: 6px; border-radius: 8px; color: white; text-align: center; font-weight: bold; font-size: 0.8em; margin-top: 10px; }
-        
-        .menu-btn { position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 1.5em; color: #1b5e20; }
-        .menu-options { display: none; position: absolute; top: 40px; right: 10px; background: white; border: 2px solid #1b5e20; z-index: 100; padding: 15px; border-radius: 10px; min-width: 120px; }
-        .menu-options div { padding: 8px; cursor: pointer; border-bottom: 1px solid #eee; }
-        
-        input, select { display: block; width: 95%; margin: 10px 0; padding: 12px; border: 1px solid #ccc; border-radius: 8px; }
         #modal { display: none; position: fixed; top: 5%; right: 10%; width: 80%; background: white; padding: 25px; border: 3px solid #1b5e20; z-index: 1000; border-radius: 15px; max-height: 90vh; overflow-y: auto; }
-        .admin-footer { margin-top: 50px; text-align: center; opacity: 0.3; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -49,53 +35,34 @@
 
 <div class="container">
     <input type="text" id="search" placeholder="بحث بالاسم العربي أو العلمي..." onkeyup="render()" style="width:100%; padding:10px; box-sizing:border-box;">
-    <button onclick="openModal()" style="margin:15px 0; padding:12px; width:100%; background:#1b5e20; color:white; border:none; border-radius:8px; font-size:1em; cursor:pointer;">+ إضافة مخلوق</button>
+    <button onclick="openModal()" style="margin:15px 0; padding:12px; width:100%; background:#1b5e20; color:white; border:none; border-radius:8px; cursor:pointer;">+ إضافة مخلوق</button>
     <div id="content"></div>
 </div>
 
 <div id="modal">
     <h3 id="modalTitle">إضافة/تعديل مخلوق</h3>
     <input type="hidden" id="editId">
-    <input id="n_ar" placeholder="الاسم العربي (إجباري)" required>
-    <input id="n_sci" placeholder="الاسم العلمي (إجباري)" required>
-    <select id="kingdom">
-        <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option><option value="فطريات">فطريات</option>
-        <option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
-    </select>
-    <input id="img" placeholder="رابط الصورة المباشر">
+    <input id="n_ar" placeholder="الاسم العربي" required>
+    <input id="n_sci" placeholder="الاسم العلمي" required>
+    <select id="kingdom"><option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option><option value="فطريات">فطريات</option></select>
+    <input id="img" placeholder="رابط الصورة">
     <input id="desc" placeholder="الوصف">
     <select id="conservation_status">
-        <option value="EX">منقرض</option><option value="CR">خطر أقصى</option><option value="EN">مهدد</option>
-        <option value="VU">معرض للخطر</option><option value="NT">قريب من التهديد</option><option value="LC">غير مهدد</option>
+        <option value="LC">غير مهدد</option><option value="NT">قريب من التهديد</option><option value="VU">معرض للخطر</option>
+        <option value="EN">مهدد</option><option value="CR">خطر أقصى</option><option value="EX">منقرض</option>
     </select>
-    <button onclick="saveItem()" style="background:#1b5e20; color:white; padding:12px; width:100%; border:none; border-radius:8px;">حفظ</button>
+    <button id="saveBtn" onclick="saveItem()" style="background:#1b5e20; color:white; padding:12px; width:100%; border:none; border-radius:8px;">حفظ البيانات</button>
     <button onclick="document.getElementById('modal').style.display='none'" style="margin-top:10px; width:100%; padding:10px; border:1px solid #ccc; border-radius:8px;">إغلاق</button>
 </div>
-
-<div class="admin-footer" onclick="loginPrompt()">⚙️</div>
 
 <script>
     const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX');
     let species = [];
     
-    const statusConfig = { 
-        'EX': { color: '#000', text: 'منقرض' }, 'CR': { color: '#d32f2f', text: 'خطر أقصى' }, 
-        'EN': { color: '#f44336', text: 'مهدد' }, 'VU': { color: '#ff9800', text: 'معرض للخطر' }, 
-        'NT': { color: '#ffc107', text: 'قريب من التهديد' }, 'LC': { color: '#4caf50', text: 'غير مهدد' } 
-    };
-
     async function init() {
         const { data } = await client.from('species').select('*');
         species = data || [];
         render();
-    }
-
-    async function loginPrompt() {
-        const email = prompt("أدخل البريد الإلكتروني للمسؤول:");
-        const password = prompt("أدخل كلمة المرور:");
-        const { error } = await client.auth.signInWithPassword({ email, password });
-        if (error) alert("خطأ: " + error.message);
-        else { alert("تم تسجيل الدخول بنجاح!"); location.reload(); }
     }
 
     function render() {
@@ -110,64 +77,30 @@
                     <div class="kingdom-title">${k} <span class="count-badge">${items.length}</span></div>
                     <div class="cards-wrapper">
                         ${items.map(item => `
-                            <div class="card" id="card-${item.id}">
-                                <div class="menu-btn" onclick="toggleMenu(${item.id})">⋮</div>
-                                <div class="menu-options" id="menu-${item.id}">
-                                    <div onclick="toggleMenu(${item.id})">✕ إغلاق</div>
-                                    <div onclick="deleteItem(${item.id})">🗑 حذف</div>
-                                    <div onclick="openModal(${item.id})">✏ تعديل</div>
-                                    <div onclick="downloadCard('card-${item.id}')">⬇ تنزيل</div>
-                                </div>
-                                <div class="card-logo">عراقي إيكو</div>
-                                <div class="divider"></div>
+                            <div class="card">
                                 ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : ''}
                                 <div class="common-name">${item.name_ar}</div>
-                                <span class="latin-name">${item.scientific_name}</span>
+                                <div class="latin-name">${item.scientific_name}</div>
                                 <span class="kingdom-tag">${item.kingdom}</span>
-                                <div class="card-desc" id="desc-${item.id}">${item.description || ''}</div>
-                                <span class="read-more" id="more-${item.id}" onclick="expandCard(${item.id})">عرض المزيد</span>
-                                <div class="status-badge" style="background:${statusConfig[item.conservation_status]?.color || '#757575'}">${statusConfig[item.conservation_status]?.text || 'غير محدد'}</div>
+                                <div class="card-desc">${item.description || ''}</div>
+                                <div class="status-badge" style="background:#4caf50">${item.conservation_status || 'غير محدد'}</div>
                             </div>
                         `).join('')}
                     </div>
                 </div>
             `;
         }).join('');
-        
-        species.forEach(i => {
-            const el = document.getElementById('desc-' + i.id);
-            if (el && el.scrollHeight > 40) document.getElementById('more-' + i.id).style.display = 'block';
-        });
-    }
-
-    function expandCard(id) {
-        const card = document.getElementById('card-' + id);
-        const btn = document.getElementById('more-' + id);
-        card.classList.toggle('expanded');
-        btn.innerText = card.classList.contains('expanded') ? 'عرض أقل' : 'عرض المزيد';
-    }
-
-    function toggleMenu(id) {
-        const menu = document.getElementById('menu-'+id);
-        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-    }
-
-    function openModal(id = null) {
-        const modal = document.getElementById('modal');
-        const item = species.find(i => i.id === id);
-        document.getElementById('editId').value = id || '';
-        document.getElementById('n_ar').value = item ? item.name_ar : '';
-        document.getElementById('n_sci').value = item ? item.scientific_name : '';
-        document.getElementById('img').value = item ? (item.image_url || '') : '';
-        document.getElementById('desc').value = item ? (item.description || '') : '';
-        modal.style.display = 'block';
     }
 
     async function saveItem() {
+        const saveBtn = document.getElementById('saveBtn');
         const n_ar = document.getElementById('n_ar').value;
         const n_sci = document.getElementById('n_sci').value;
-        if (!n_ar || !n_sci) return alert("الاسم العربي والعلمي حقول إجبارية!");
-        
+        if (!n_ar || !n_sci) return alert("يرجى ملء الحقول المطلوبة");
+
+        saveBtn.innerText = "جاري الحفظ...";
+        saveBtn.disabled = true;
+
         const data = { 
             name_ar: n_ar, 
             scientific_name: n_sci, 
@@ -178,26 +111,26 @@
         };
         
         const id = document.getElementById('editId').value;
-        if (id) await client.from('species').update(data).eq('id', id);
-        else await client.from('species').insert([data]);
-        location.reload();
-    }
-
-    async function deleteItem(id) {
-        if(confirm('هل أنت متأكد من الحذف؟')) {
-            await client.from('species').delete().eq('id', id);
+        const { error } = id ? await client.from('species').update(data).eq('id', id) : await client.from('species').insert([data]);
+        
+        if (error) {
+            alert("خطأ: " + error.message);
+            saveBtn.innerText = "حفظ البيانات";
+            saveBtn.disabled = false;
+        } else {
+            alert("تم الحفظ بنجاح!");
             location.reload();
         }
     }
 
-    function downloadCard(id) {
-        html2canvas(document.getElementById(id)).then(canvas => {
-            const link = document.createElement('a');
-            link.download = 'creature.png';
-            link.href = canvas.toDataURL();
-            link.click();
-        });
+    function openModal(id = null) {
+        document.getElementById('modal').style.display = 'block';
+        const item = species.find(i => i.id === id);
+        document.getElementById('editId').value = id || '';
+        document.getElementById('n_ar').value = item ? item.name_ar : '';
+        document.getElementById('n_sci').value = item ? item.scientific_name : '';
     }
+
     init();
 </script>
 </body>

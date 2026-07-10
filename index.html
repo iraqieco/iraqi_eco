@@ -11,6 +11,9 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
         header { background: #1b5e20; color: white; padding: 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; }
         .container { padding: 10px; }
+        .stats-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+        .stat-item { background: white; padding: 8px 15px; border-radius: 20px; border: 1px solid #1b5e20; font-size: 0.8em; }
+        .search-area { display: flex; gap: 10px; margin-bottom: 20px; }
         .kingdom-section { margin-bottom: 30px; }
         .kingdom-title { background: #1b5e20; color: white; padding: 5px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; font-weight: bold; }
         .count-badge { background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin-right: 10px; }
@@ -42,7 +45,15 @@
 </header>
 
 <div class="container">
-    <input type="text" id="search" placeholder="بحث بالاسم العربي أو العلمي..." onkeyup="render()" style="width:100%; padding:10px; box-sizing:border-box;">
+    <div class="search-area">
+        <input type="text" id="search" placeholder="بحث بالاسم العربي أو العلمي..." onkeyup="render()" style="flex:2;">
+        <select id="filterKingdom" onchange="render()" style="flex:1;">
+            <option value="الكل">كل الممالك</option>
+            <option value="حيوانات">حيوانات</option><option value="طيور">طيور</option><option value="نباتات">نباتات</option>
+            <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
+        </select>
+    </div>
+    <div id="statsBar" class="stats-bar"></div>
     <button onclick="openModal()" style="margin:15px 0; padding:12px; width:100%; background:#1b5e20; color:white; border:none; border-radius:8px; font-size:1em; cursor:pointer;">+ إضافة مخلوق</button>
     <div id="content"></div>
 </div>
@@ -53,7 +64,7 @@
     <input id="n_ar" placeholder="الاسم العربي (إجباري)" required>
     <input id="n_sci" placeholder="الاسم العلمي (إجباري)" required>
     <select id="kingdom">
-        <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option>
+        <option value="حيوانات">حيوانات</option><option value="طيور">طيور</option><option value="نباتات">نباتات</option>
         <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
     </select>
     <input id="class" placeholder="الطائفة (Class)">
@@ -95,26 +106,29 @@
     async function init() {
         const { data } = await client.from('species').select('*').limit(10000); 
         species = data || [];
+        updateStats();
         render();
     }
 
-    async function loginPrompt() {
-        const email = prompt("أدخل البريد الإلكتروني للمسؤول:");
-        const password = prompt("أدخل كلمة المرور:");
-        const { error } = await client.auth.signInWithPassword({ email, password });
-        if (error) alert("خطأ: " + error.message);
-        else { alert("تم تسجيل الدخول بنجاح!"); location.reload(); }
+    function updateStats() {
+        const counts = {};
+        species.forEach(s => counts[s.kingdom] = (counts[s.kingdom] || 0) + 1);
+        document.getElementById('statsBar').innerHTML = Object.entries(counts)
+            .map(([k, v]) => `<div class="stat-item">${k}: ${v}</div>`).join('');
     }
 
     function render() {
         const q = document.getElementById('search').value.toLowerCase();
+        const f = document.getElementById('filterKingdom').value;
         const classes = [...new Set(species.map(i => (i.class && i.class.trim() !== "") ? i.class : "غير محدد"))];
         let htmlOutput = "";
         
         classes.forEach(c => {
             const filteredItems = species.filter(i => {
                 const itemClass = (i.class && i.class.trim() !== "") ? i.class : "غير محدد";
-                return itemClass === c && ((i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q));
+                const matchesSearch = (i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q);
+                const matchesKingdom = (f === "الكل" || i.kingdom === f);
+                return itemClass === c && matchesSearch && matchesKingdom;
             });
 
             if (filteredItems.length > 0) {
@@ -150,6 +164,14 @@
             }
         });
         document.getElementById('content').innerHTML = htmlOutput;
+    }
+
+    async function loginPrompt() {
+        const email = prompt("أدخل البريد الإلكتروني للمسؤول:");
+        const password = prompt("أدخل كلمة المرور:");
+        const { error } = await client.auth.signInWithPassword({ email, password });
+        if (error) alert("خطأ: " + error.message);
+        else { alert("تم تسجيل الدخول بنجاح!"); location.reload(); }
     }
 
     function expandCard(id) {

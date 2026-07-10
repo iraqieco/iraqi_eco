@@ -53,9 +53,10 @@
     <input id="n_ar" placeholder="الاسم العربي (إجباري)" required>
     <input id="n_sci" placeholder="الاسم العلمي (إجباري)" required>
     <select id="kingdom">
-        <option value="حيوانات">حيوانات</option><option value="طيور">طيور</option><option value="نباتات">نباتات</option>
+        <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option>
         <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
     </select>
+    <input id="class" placeholder="الطائفة (Class)">
     <input id="img" placeholder="رابط الصورة المباشر">
     <input id="desc" placeholder="الوصف">
     <select id="conservation_status">
@@ -107,19 +108,20 @@
 
     function render() {
         const q = document.getElementById('search').value.toLowerCase();
-        const kingdoms = [...new Set(species.map(i => (i.kingdom && i.kingdom.trim() !== "") ? i.kingdom : "غير مصنف"))];
+        // تجميع البيانات بناءً على الـ class بدلاً من الـ kingdom
+        const classes = [...new Set(species.map(i => (i.class && i.class.trim() !== "") ? i.class : "غير محدد"))];
         let htmlOutput = "";
         
-        kingdoms.forEach(k => {
+        classes.forEach(c => {
             const filteredItems = species.filter(i => {
-                const itemKingdom = (i.kingdom && i.kingdom.trim() !== "") ? i.kingdom : "غير مصنف";
-                return itemKingdom === k && ((i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q));
+                const itemClass = (i.class && i.class.trim() !== "") ? i.class : "غير محدد";
+                return itemClass === c && ((i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q));
             });
 
             if (filteredItems.length > 0) {
                 htmlOutput += `
                     <div class="kingdom-section">
-                        <div class="kingdom-title">${k} <span class="count-badge">${filteredItems.length}</span></div>
+                        <div class="kingdom-title">${c} <span class="count-badge">${filteredItems.length}</span></div>
                         <div class="cards-wrapper">
                             ${filteredItems.map(item => `
                                 <div class="card" id="card-${item.id}">
@@ -135,7 +137,7 @@
                                     ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : '<div style="height:140px; background:#eee; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">لا توجد صورة</div>'}
                                     <div class="common-name">${item.name_ar || 'غير محدد'}</div>
                                     <div class="latin-name">${item.scientific_name || 'غير محدد'}</div>
-                                    <span class="kingdom-tag">${item.kingdom || 'غير مصنف'}</span>
+                                    <span class="kingdom-tag">${item.class || 'غير محدد'}</span>
                                     <div class="card-desc" id="desc-${item.id}">${item.description || 'غير محدد'}</div>
                                     <span class="read-more" id="more-${item.id}" onclick="expandCard(${item.id})">عرض المزيد</span>
                                     <div class="status-badge" style="background:${statusConfig[item.conservation_status]?.color || '#757575'}">${statusConfig[item.conservation_status]?.text || 'غير محدد'}</div>
@@ -170,6 +172,7 @@
         document.getElementById('img').value = item ? (item.image_url || '') : '';
         document.getElementById('desc').value = item ? (item.description || '') : '';
         document.getElementById('kingdom').value = item ? (item.kingdom || 'حيوانات') : 'حيوانات';
+        document.getElementById('class').value = item ? (item.class || '') : '';
         document.getElementById('conservation_status').value = item ? (item.conservation_status || 'NE') : 'NE';
         modal.style.display = 'block';
     }
@@ -187,6 +190,7 @@
             description: document.getElementById('desc').value, 
             image_url: document.getElementById('img').value, 
             kingdom: document.getElementById('kingdom').value, 
+            class: document.getElementById('class').value,
             conservation_status: document.getElementById('conservation_status').value 
         };
         const id = document.getElementById('editId').value;

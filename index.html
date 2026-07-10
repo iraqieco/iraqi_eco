@@ -14,7 +14,6 @@
         .stats-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .stat-item { background: white; padding: 8px 15px; border-radius: 20px; border: 1px solid #1b5e20; font-size: 0.8em; }
         
-        /* الصندوق الموحد: 80% للبحث و 20% للمملكة */
         .search-wrapper { display: flex; background: white; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; margin-bottom: 20px; height: 50px; }
         #search { border: none; padding: 12px; flex: 0.8; outline: none; }
         #filterKingdom { border: none; border-right: 1px solid #ccc; padding: 10px; flex: 0.2; outline: none; background: #fff; cursor: pointer; }
@@ -157,7 +156,7 @@
                                     </div>
                                     <div class="card-logo">عراقي إيكو</div>
                                     <div class="divider"></div>
-                                    ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : '<div style="height:140px; background:#eee; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">لا توجد صورة</div>'}
+                                    ${item.image_url ? `<img src="${item.image_url}" alt="${item.name_ar}" onerror="this.style.display='none'">` : '<div style="height:140px; background:#eee; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">لا توجد صورة</div>'}
                                     <div class="common-name">${item.name_ar || 'غير محدد'}</div>
                                     <div class="latin-name">${item.scientific_name || 'غير محدد'}</div>
                                     <span class="kingdom-tag">${item.class || 'غير محدد'}</span>
@@ -212,6 +211,7 @@
         const saveBtn = document.getElementById('saveBtn');
         const n_ar = document.getElementById('n_ar').value;
         const n_sci = document.getElementById('n_sci').value;
+        const img_url = document.getElementById('img').value;
         if (!n_ar || !n_sci) return alert("الاسم العربي والعلمي حقول إجبارية!");
         saveBtn.innerText = "جاري الحفظ...";
         saveBtn.disabled = true;
@@ -219,15 +219,23 @@
             name_ar: n_ar, 
             scientific_name: n_sci, 
             description: document.getElementById('desc').value, 
-            image_url: document.getElementById('img').value, 
+            image_url: img_url, 
             kingdom: document.getElementById('kingdom').value, 
             class: document.getElementById('class').value,
             conservation_status: document.getElementById('conservation_status').value 
         };
         const id = document.getElementById('editId').value;
-        if (id) await client.from('species').update(data).eq('id', id);
-        else await client.from('species').insert([data]);
-        location.reload();
+        let response;
+        if (id) response = await client.from('species').update(data).eq('id', id);
+        else response = await client.from('species').insert([data]);
+        
+        if (response.error) {
+            alert("حدث خطأ أثناء الحفظ: " + response.error.message);
+            saveBtn.innerText = "حفظ";
+            saveBtn.disabled = false;
+        } else {
+            location.reload();
+        }
     }
 
     async function deleteItem(id) {

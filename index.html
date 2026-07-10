@@ -87,7 +87,6 @@
     };
 
     async function init() {
-        // تم التعديل هنا لجلب كل البيانات بدون تحديد نطاق (range)
         const { data, error } = await client.from('species').select('*').limit(10000); 
         species = data || [];
         render();
@@ -104,42 +103,54 @@
     function render() {
         const q = document.getElementById('search').value.toLowerCase();
         const kingdoms = ["حيوانات", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
+        let htmlOutput = "";
         
-        document.getElementById('content').innerHTML = kingdoms.map(k => {
-            const items = species.filter(i => (i.kingdom || 'حيوانات') === k && ((i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q)));
-            if (items.length === 0) return '';
-            return `
-                <div class="kingdom-section">
-                    <div class="kingdom-title">${k} <span class="count-badge">${items.length}</span></div>
-                    <div class="cards-wrapper">
-                        ${items.map(item => `
-                            <div class="card" id="card-${item.id}">
-                                <div class="menu-btn" onclick="toggleMenu(${item.id})">⋮</div>
-                                <div class="menu-options" id="menu-${item.id}">
-                                    <div onclick="toggleMenu(${item.id})">✕ إغلاق</div>
-                                    <div onclick="deleteItem(${item.id})">🗑 حذف</div>
-                                    <div onclick="openModal(${item.id})">✏ تعديل</div>
-                                    <div onclick="downloadCard('card-${item.id}')">⬇ تنزيل</div>
+        kingdoms.forEach(k => {
+            const filteredItems = species.filter(i => {
+                const kingdomMatch = (i.kingdom || 'حيوانات') === k;
+                const searchMatch = ((i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q));
+                return kingdomMatch && searchMatch;
+            });
+
+            if (filteredItems.length > 0) {
+                htmlOutput += `
+                    <div class="kingdom-section">
+                        <div class="kingdom-title">${k} <span class="count-badge">${filteredItems.length}</span></div>
+                        <div class="cards-wrapper">
+                            ${filteredItems.map(item => `
+                                <div class="card" id="card-${item.id}">
+                                    <div class="menu-btn" onclick="toggleMenu(${item.id})">⋮</div>
+                                    <div class="menu-options" id="menu-${item.id}">
+                                        <div onclick="toggleMenu(${item.id})">✕ إغلاق</div>
+                                        <div onclick="deleteItem(${item.id})">🗑 حذف</div>
+                                        <div onclick="openModal(${item.id})">✏ تعديل</div>
+                                        <div onclick="downloadCard('card-${item.id}')">⬇ تنزيل</div>
+                                    </div>
+                                    <div class="card-logo">عراقي إيكو</div>
+                                    <div class="divider"></div>
+                                    ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : ''}
+                                    <div class="common-name">${item.name_ar || 'بدون اسم'}</div>
+                                    <div class="latin-name">${item.scientific_name || '...'}</div>
+                                    <span class="kingdom-tag">${item.kingdom || 'حيوانات'}</span>
+                                    <div class="card-desc" id="desc-${item.id}">${item.description || ''}</div>
+                                    <span class="read-more" id="more-${item.id}" onclick="expandCard(${item.id})">عرض المزيد</span>
+                                    <div class="status-badge" style="background:${statusConfig[item.conservation_status]?.color || '#757575'}">${statusConfig[item.conservation_status]?.text || 'غير محدد'}</div>
                                 </div>
-                                <div class="card-logo">عراقي إيكو</div>
-                                <div class="divider"></div>
-                                ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : ''}
-                                <div class="common-name">${item.name_ar}</div>
-                                <div class="latin-name">${item.scientific_name}</div>
-                                <span class="kingdom-tag">${item.kingdom}</span>
-                                <div class="card-desc" id="desc-${item.id}">${item.description || ''}</div>
-                                <span class="read-more" id="more-${item.id}" onclick="expandCard(${item.id})">عرض المزيد</span>
-                                <div class="status-badge" style="background:${statusConfig[item.conservation_status]?.color || '#757575'}">${statusConfig[item.conservation_status]?.text || 'غير محدد'}</div>
-                            </div>
-                        `).join('')}
+                            `).join('')}
+                        </div>
                     </div>
-                </div>
-            `;
-        }).join('');
+                `;
+            }
+        });
+        
+        document.getElementById('content').innerHTML = htmlOutput;
         
         species.forEach(i => {
             const el = document.getElementById('desc-' + i.id);
-            if (el && el.scrollHeight > 40) document.getElementById('more-' + i.id).style.display = 'block';
+            if (el && el.scrollHeight > 40) {
+                const btn = document.getElementById('more-' + i.id);
+                if(btn) btn.style.display = 'block';
+            }
         });
     }
 

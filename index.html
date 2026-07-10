@@ -59,8 +59,15 @@
     <input id="img" placeholder="رابط الصورة المباشر">
     <input id="desc" placeholder="الوصف">
     <select id="conservation_status">
-        <option value="EX">منقرض</option><option value="CR">خطر أقصى</option><option value="EN">مهدد</option>
-        <option value="VU">معرض للخطر</option><option value="NT">قريب من التهديد</option><option value="LC">غير مهدد</option>
+        <option value="NE">غير مقيم (NE)</option>
+        <option value="DD">بيانات ناقصة (DD)</option>
+        <option value="LC">غير مهدد (LC)</option>
+        <option value="NT">قريب من التهديد (NT)</option>
+        <option value="VU">معرض للخطر (VU)</option>
+        <option value="EN">مهدد (EN)</option>
+        <option value="CR">خطر أقصى (CR)</option>
+        <option value="EW">منقرض في البرية (EW)</option>
+        <option value="EX">منقرض (EX)</option>
     </select>
     <button id="saveBtn" onclick="saveItem()" style="background:#1b5e20; color:white; padding:12px; width:100%; border:none; border-radius:8px;">حفظ</button>
     <button onclick="document.getElementById('modal').style.display='none'" style="margin-top:10px; width:100%; padding:10px; border:1px solid #ccc; border-radius:8px;">إغلاق</button>
@@ -73,9 +80,15 @@
     let species = [];
     
     const statusConfig = { 
-        'EX': { color: '#000', text: 'منقرض' }, 'CR': { color: '#d32f2f', text: 'خطر أقصى' }, 
-        'EN': { color: '#f44336', text: 'مهدد' }, 'VU': { color: '#ff9800', text: 'معرض للخطر' }, 
-        'NT': { color: '#ffc107', text: 'قريب من التهديد' }, 'LC': { color: '#4caf50', text: 'غير مهدد' } 
+        'NE': { color: '#9e9e9e', text: 'غير مقيم' },
+        'DD': { color: '#607d8b', text: 'بيانات ناقصة' },
+        'LC': { color: '#4caf50', text: 'غير مهدد' },
+        'NT': { color: '#ffc107', text: 'قريب من التهديد' },
+        'VU': { color: '#ff9800', text: 'معرض للخطر' },
+        'EN': { color: '#f44336', text: 'مهدد' },
+        'CR': { color: '#d32f2f', text: 'خطر أقصى' },
+        'EW': { color: '#795548', text: 'منقرض في البرية' },
+        'EX': { color: '#000', text: 'منقرض' }
     };
 
     async function init() {
@@ -94,7 +107,6 @@
 
     function render() {
         const q = document.getElementById('search').value.toLowerCase();
-        // استخراج الممالك الفريدة من البيانات الموجودة
         const kingdoms = [...new Set(species.map(i => (i.kingdom && i.kingdom.trim() !== "") ? i.kingdom : "غير مصنف"))];
         let htmlOutput = "";
         
@@ -185,17 +197,13 @@
         const card = document.getElementById(id);
         const menu = document.getElementById('menu-' + id.split('-')[1]);
         const btn = document.getElementById('more-' + id.split('-')[1]);
-        
-        // إخفاء الأزرار أثناء التقاط الصورة
         menu.style.display = 'none';
         btn.style.display = 'none';
-        
         html2canvas(card, { useCORS: true }).then(canvas => {
             const link = document.createElement('a');
             link.download = 'creature.png';
             link.href = canvas.toDataURL();
             link.click();
-            // إعادة إظهار الأزرار
             menu.style.display = 'none'; 
             btn.style.display = 'block';
         });
@@ -204,3 +212,4 @@
 </script>
 </body>
 </html>
+

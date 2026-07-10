@@ -14,10 +14,10 @@
         .stats-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .stat-item { background: white; padding: 8px 15px; border-radius: 20px; border: 1px solid #1b5e20; font-size: 0.8em; }
         
-        /* تنسيق الصندوق الموحد */
-        .search-wrapper { display: flex; background: white; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; margin-bottom: 20px; }
+        /* الصندوق الموحد: 80% للبحث و 20% للمملكة */
+        .search-wrapper { display: flex; background: white; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; margin-bottom: 20px; height: 50px; }
         #search { border: none; padding: 12px; flex: 0.8; outline: none; }
-        #filterKingdom { border: none; border-right: 1px solid #ccc; padding: 10px; flex: 0.2; outline: none; background: white; cursor: pointer; }
+        #filterKingdom { border: none; border-right: 1px solid #ccc; padding: 10px; flex: 0.2; outline: none; background: #fff; cursor: pointer; }
         
         .kingdom-section { margin-bottom: 30px; }
         .kingdom-title { background: #1b5e20; color: white; padding: 5px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; font-weight: bold; }
@@ -70,7 +70,7 @@
     <input id="n_ar" placeholder="الاسم العربي (إجباري)" required>
     <input id="n_sci" placeholder="الاسم العلمي (إجباري)" required>
     <select id="kingdom">
-        <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option>
+        <option value="حيوانات">حيوانات</option><option value="طيور">طيور</option><option value="نباتات">نباتات</option>
         <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
     </select>
     <input id="class" placeholder="الطائفة (Class)">
@@ -98,15 +98,15 @@
     let species = [];
     
     const statusConfig = { 
-        'NE': { color: '#9e9e9e', text: 'غير مقيم' },
-        'DD': { color: '#607d8b', text: 'بيانات ناقصة' },
-        'LC': { color: '#4caf50', text: 'غير مهدد' },
-        'NT': { color: '#ffc107', text: 'قريب من التهديد' },
-        'VU': { color: '#ff9800', text: 'معرض للخطر' },
-        'EN': { color: '#f44336', text: 'مهدد' },
-        'CR': { color: '#d32f2f', text: 'خطر أقصى' },
-        'EW': { color: '#795548', text: 'منقرض في البرية' },
-        'EX': { color: '#000', text: 'منقرض' }
+        'NE': 'غير مقيم', 'DD': 'بيانات ناقصة', 'LC': 'غير مهدد', 
+        'NT': 'قريب من التهديد', 'VU': 'معرض للخطر', 'EN': 'مهدد', 
+        'CR': 'خطر أقصى', 'EW': 'منقرض في البرية', 'EX': 'منقرض' 
+    };
+
+    const statusColors = { 
+        'NE': '#9e9e9e', 'DD': '#607d8b', 'LC': '#4caf50', 
+        'NT': '#ffc107', 'VU': '#ff9800', 'EN': '#f44336', 
+        'CR': '#d32f2f', 'EW': '#795548', 'EX': '#000' 
     };
 
     async function init() {
@@ -143,8 +143,10 @@
                         <div class="kingdom-title">${c} <span class="count-badge">${filteredItems.length}</span></div>
                         <div class="cards-wrapper">
                             ${filteredItems.map(item => {
-                                // سحب الاختصار من قاعدة البيانات ومطابقته مع statusConfig
-                                const statusInfo = statusConfig[item.conservation_status] || { color: '#757575', text: item.conservation_status || 'غير محدد' };
+                                // تنظيف الاختصار من المسافات
+                                const rawStatus = (item.conservation_status || '').trim();
+                                const statusText = statusConfig[rawStatus] || rawStatus || 'غير محدد';
+                                const statusColor = statusColors[rawStatus] || '#757575';
                                 return `
                                 <div class="card" id="card-${item.id}">
                                     <div class="menu-btn" onclick="toggleMenu(${item.id})">⋮</div>
@@ -159,10 +161,10 @@
                                     ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : '<div style="height:140px; background:#eee; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">لا توجد صورة</div>'}
                                     <div class="common-name">${item.name_ar || 'غير محدد'}</div>
                                     <div class="latin-name">${item.scientific_name || 'غير محدد'}</div>
-                                    <span class="kingdom-tag">${item.class || 'غير محدد'}</span>
+                                    <span class="kingdom-tag">${item.class || 'غير محدد'}</div>
                                     <div class="card-desc" id="desc-${item.id}">${item.description || 'غير محدد'}</div>
                                     <span class="read-more" id="more-${item.id}" onclick="expandCard(${item.id})">عرض المزيد</span>
-                                    <div class="status-badge" style="background:${statusInfo.color}">${statusInfo.text}</div>
+                                    <div class="status-badge" style="background:${statusColor}">${statusText}</div>
                                 </div>`;
                             }).join('')}
                         </div>
@@ -173,6 +175,7 @@
         document.getElementById('content').innerHTML = htmlOutput;
     }
 
+    // ... (باقي الدوال: loginPrompt, expandCard, toggleMenu, openModal, saveItem, deleteItem, downloadCard كما هي)
     async function loginPrompt() {
         const email = prompt("أدخل البريد الإلكتروني للمسؤول:");
         const password = prompt("أدخل كلمة المرور:");

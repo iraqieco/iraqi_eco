@@ -169,6 +169,8 @@
         document.getElementById('n_sci').value = item ? item.scientific_name : '';
         document.getElementById('img').value = item ? (item.image_url || '') : '';
         document.getElementById('desc').value = item ? (item.description || '') : '';
+        document.getElementById('kingdom').value = item ? (item.kingdom || 'حيوانات') : 'حيوانات';
+        document.getElementById('conservation_status').value = item ? (item.conservation_status || 'NE') : 'NE';
         modal.style.display = 'block';
     }
 
@@ -179,7 +181,14 @@
         if (!n_ar || !n_sci) return alert("الاسم العربي والعلمي حقول إجبارية!");
         saveBtn.innerText = "جاري الحفظ...";
         saveBtn.disabled = true;
-        const data = { name_ar: n_ar, scientific_name: n_sci, description: document.getElementById('desc').value, image_url: document.getElementById('img').value, kingdom: document.getElementById('kingdom').value, conservation_status: document.getElementById('conservation_status').value };
+        const data = { 
+            name_ar: n_ar, 
+            scientific_name: n_sci, 
+            description: document.getElementById('desc').value, 
+            image_url: document.getElementById('img').value, 
+            kingdom: document.getElementById('kingdom').value, 
+            conservation_status: document.getElementById('conservation_status').value 
+        };
         const id = document.getElementById('editId').value;
         if (id) await client.from('species').update(data).eq('id', id);
         else await client.from('species').insert([data]);
@@ -212,4 +221,3 @@
 </script>
 </body>
 </html>
-

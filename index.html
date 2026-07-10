@@ -108,7 +108,6 @@
 
     function render() {
         const q = document.getElementById('search').value.toLowerCase();
-        // تجميع البيانات بناءً على الـ class بدلاً من الـ kingdom
         const classes = [...new Set(species.map(i => (i.class && i.class.trim() !== "") ? i.class : "غير محدد"))];
         let htmlOutput = "";
         
@@ -123,7 +122,9 @@
                     <div class="kingdom-section">
                         <div class="kingdom-title">${c} <span class="count-badge">${filteredItems.length}</span></div>
                         <div class="cards-wrapper">
-                            ${filteredItems.map(item => `
+                            ${filteredItems.map(item => {
+                                const status = statusConfig[item.conservation_status] || { color: '#757575', text: item.conservation_status || 'غير محدد' };
+                                return `
                                 <div class="card" id="card-${item.id}">
                                     <div class="menu-btn" onclick="toggleMenu(${item.id})">⋮</div>
                                     <div class="menu-options" id="menu-${item.id}">
@@ -140,9 +141,9 @@
                                     <span class="kingdom-tag">${item.class || 'غير محدد'}</span>
                                     <div class="card-desc" id="desc-${item.id}">${item.description || 'غير محدد'}</div>
                                     <span class="read-more" id="more-${item.id}" onclick="expandCard(${item.id})">عرض المزيد</span>
-                                    <div class="status-badge" style="background:${statusConfig[item.conservation_status]?.color || '#757575'}">${statusConfig[item.conservation_status]?.text || 'غير محدد'}</div>
-                                </div>
-                            `).join('')}
+                                    <div class="status-badge" style="background:${status.color}">${status.text}</div>
+                                </div>`;
+                            }).join('')}
                         </div>
                     </div>
                 `;

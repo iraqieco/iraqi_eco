@@ -143,7 +143,6 @@
                         <div class="kingdom-title">${c} <span class="count-badge">${filteredItems.length}</span></div>
                         <div class="cards-wrapper">
                             ${filteredItems.map(item => {
-                                // تنظيف الاختصار من المسافات
                                 const rawStatus = (item.conservation_status || '').trim();
                                 const statusText = statusConfig[rawStatus] || rawStatus || 'غير محدد';
                                 const statusColor = statusColors[rawStatus] || '#757575';
@@ -161,7 +160,7 @@
                                     ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : '<div style="height:140px; background:#eee; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">لا توجد صورة</div>'}
                                     <div class="common-name">${item.name_ar || 'غير محدد'}</div>
                                     <div class="latin-name">${item.scientific_name || 'غير محدد'}</div>
-                                    <span class="kingdom-tag">${item.class || 'غير محدد'}</div>
+                                    <span class="kingdom-tag">${item.class || 'غير محدد'}</span>
                                     <div class="card-desc" id="desc-${item.id}">${item.description || 'غير محدد'}</div>
                                     <span class="read-more" id="more-${item.id}" onclick="expandCard(${item.id})">عرض المزيد</span>
                                     <div class="status-badge" style="background:${statusColor}">${statusText}</div>
@@ -175,7 +174,6 @@
         document.getElementById('content').innerHTML = htmlOutput;
     }
 
-    // ... (باقي الدوال: loginPrompt, expandCard, toggleMenu, openModal, saveItem, deleteItem, downloadCard كما هي)
     async function loginPrompt() {
         const email = prompt("أدخل البريد الإلكتروني للمسؤول:");
         const password = prompt("أدخل كلمة المرور:");

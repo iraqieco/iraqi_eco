@@ -74,6 +74,8 @@
 
 <div class="admin-footer" onclick="loginPrompt()">⚙️</div>
 
+<div id="status-message" style="position: fixed; bottom: 10px; left: 10px; background: #1b5e20; color: white; padding: 10px; border-radius: 5px; display: none;"></div>
+
 <script>
     const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX');
     let species = [];
@@ -85,7 +87,8 @@
     };
 
     async function init() {
-        const { data } = await client.from('species').select('*');
+        // تم التعديل هنا لجلب كل البيانات بدون تحديد نطاق (range)
+        const { data, error } = await client.from('species').select('*').limit(10000); 
         species = data || [];
         render();
     }

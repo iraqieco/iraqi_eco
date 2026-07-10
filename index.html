@@ -14,27 +14,21 @@
         .kingdom-section { margin-bottom: 30px; }
         .kingdom-title { background: #1b5e20; color: white; padding: 5px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; font-weight: bold; }
         .count-badge { background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin-right: 10px; }
-        
         .cards-wrapper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        
         .card { border: 2px solid #1b5e20; padding: 15px; border-radius: 15px; background: white; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .card-logo { color: #1b5e20; font-weight: bold; text-align: center; font-size: 0.6em; margin-bottom: 10px; }
         .divider { height: 1px; background-color: #ddd; margin: 0 30px 15px 30px; }
         .card img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; display: block; }
-        .common-name { font-size: 0.6em; font-weight: bold; text-align: center; color: #333; margin-top: 5px; }
-        .latin-name { font-size: 0.5em; font-style: italic; color: #666; text-align: center; display: block; margin-bottom: 5px; }
-        .kingdom-tag { font-size: 0.75em; background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 5px; }
-        
+        .common-name { font-size: 0.8em; font-weight: bold; text-align: center; color: #333; margin-top: 5px; }
+        .latin-name { font-size: 0.6em; font-style: italic; color: #666; text-align: center; display: block; margin-bottom: 5px; }
+        .kingdom-tag { font-size: 0.7em; background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 5px; }
         .card-desc { font-size: 0.6em; color: #444; line-height: 1.4; margin-top: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .card.expanded .card-desc { -webkit-line-clamp: unset; }
         .read-more { color: #1b5e20; font-size: 0.8em; font-weight: bold; cursor: pointer; display: none; margin-top: 5px; }
-        
-        .status-badge { display: block; padding: 6px; border-radius: 8px; color: white; text-align: center; font-weight: bold; font-size: 0.8em; margin-top: 10px; }
-        
+        .status-badge { display: block; padding: 6px; border-radius: 8px; color: white; text-align: center; font-weight: bold; font-size: 0.7em; margin-top: 10px; }
         .menu-btn { position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 1.5em; color: #1b5e20; }
         .menu-options { display: none; position: absolute; top: 40px; right: 10px; background: white; border: 2px solid #1b5e20; z-index: 100; padding: 15px; border-radius: 10px; min-width: 120px; }
         .menu-options div { padding: 8px; cursor: pointer; border-bottom: 1px solid #eee; }
-        
         input, select { display: block; width: 95%; margin: 10px 0; padding: 12px; border: 1px solid #ccc; border-radius: 8px; }
         #modal { display: none; position: fixed; top: 5%; right: 10%; width: 80%; background: white; padding: 25px; border: 3px solid #1b5e20; z-index: 1000; border-radius: 15px; max-height: 90vh; overflow-y: auto; }
         .admin-footer { margin-top: 50px; text-align: center; opacity: 0.3; cursor: pointer; }
@@ -100,15 +94,14 @@
 
     function render() {
         const q = document.getElementById('search').value.toLowerCase();
-        const kingdoms = ["حيوانات", "طيور", "نباتات", "فطريات", "طلائعيات", "بدائيات", "غير مصنف"];
+        // استخراج الممالك الفريدة من البيانات الموجودة
+        const kingdoms = [...new Set(species.map(i => (i.kingdom && i.kingdom.trim() !== "") ? i.kingdom : "غير مصنف"))];
         let htmlOutput = "";
         
         kingdoms.forEach(k => {
             const filteredItems = species.filter(i => {
                 const itemKingdom = (i.kingdom && i.kingdom.trim() !== "") ? i.kingdom : "غير مصنف";
-                const kingdomMatch = itemKingdom === k;
-                const searchMatch = ((i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q));
-                return kingdomMatch && searchMatch;
+                return itemKingdom === k && ((i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q));
             });
 
             if (filteredItems.length > 0) {
@@ -127,11 +120,11 @@
                                     </div>
                                     <div class="card-logo">عراقي إيكو</div>
                                     <div class="divider"></div>
-                                    ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : ''}
-                                    <div class="common-name">${item.name_ar || 'بدون اسم'}</div>
-                                    <div class="latin-name">${item.scientific_name || '...'}</div>
+                                    ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : '<div style="height:140px; background:#eee; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">لا توجد صورة</div>'}
+                                    <div class="common-name">${item.name_ar || 'غير محدد'}</div>
+                                    <div class="latin-name">${item.scientific_name || 'غير محدد'}</div>
                                     <span class="kingdom-tag">${item.kingdom || 'غير مصنف'}</span>
-                                    <div class="card-desc" id="desc-${item.id}">${item.description || ''}</div>
+                                    <div class="card-desc" id="desc-${item.id}">${item.description || 'غير محدد'}</div>
                                     <span class="read-more" id="more-${item.id}" onclick="expandCard(${item.id})">عرض المزيد</span>
                                     <div class="status-badge" style="background:${statusConfig[item.conservation_status]?.color || '#757575'}">${statusConfig[item.conservation_status]?.text || 'غير محدد'}</div>
                                 </div>
@@ -141,16 +134,7 @@
                 `;
             }
         });
-        
         document.getElementById('content').innerHTML = htmlOutput;
-        
-        species.forEach(i => {
-            const el = document.getElementById('desc-' + i.id);
-            if (el && el.scrollHeight > 40) {
-                const btn = document.getElementById('more-' + i.id);
-                if(btn) btn.style.display = 'block';
-            }
-        });
     }
 
     function expandCard(id) {
@@ -181,19 +165,9 @@
         const n_ar = document.getElementById('n_ar').value;
         const n_sci = document.getElementById('n_sci').value;
         if (!n_ar || !n_sci) return alert("الاسم العربي والعلمي حقول إجبارية!");
-        
         saveBtn.innerText = "جاري الحفظ...";
         saveBtn.disabled = true;
-
-        const data = { 
-            name_ar: n_ar, 
-            scientific_name: n_sci, 
-            description: document.getElementById('desc').value,
-            image_url: document.getElementById('img').value,
-            kingdom: document.getElementById('kingdom').value, 
-            conservation_status: document.getElementById('conservation_status').value 
-        };
-        
+        const data = { name_ar: n_ar, scientific_name: n_sci, description: document.getElementById('desc').value, image_url: document.getElementById('img').value, kingdom: document.getElementById('kingdom').value, conservation_status: document.getElementById('conservation_status').value };
         const id = document.getElementById('editId').value;
         if (id) await client.from('species').update(data).eq('id', id);
         else await client.from('species').insert([data]);
@@ -208,11 +182,22 @@
     }
 
     function downloadCard(id) {
-        html2canvas(document.getElementById(id)).then(canvas => {
+        const card = document.getElementById(id);
+        const menu = document.getElementById('menu-' + id.split('-')[1]);
+        const btn = document.getElementById('more-' + id.split('-')[1]);
+        
+        // إخفاء الأزرار أثناء التقاط الصورة
+        menu.style.display = 'none';
+        btn.style.display = 'none';
+        
+        html2canvas(card, { useCORS: true }).then(canvas => {
             const link = document.createElement('a');
             link.download = 'creature.png';
             link.href = canvas.toDataURL();
             link.click();
+            // إعادة إظهار الأزرار
+            menu.style.display = 'none'; 
+            btn.style.display = 'block';
         });
     }
     init();

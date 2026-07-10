@@ -59,8 +59,8 @@
     <input id="n_ar" placeholder="الاسم العربي (إجباري)" required>
     <input id="n_sci" placeholder="الاسم العلمي (إجباري)" required>
     <select id="kingdom">
-        <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option><option value="فطريات">فطريات</option>
-        <option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
+        <option value="حيوانات">حيوانات</option><option value="طيور">طيور</option><option value="نباتات">نباتات</option>
+        <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
     </select>
     <input id="img" placeholder="رابط الصورة المباشر">
     <input id="desc" placeholder="الوصف">
@@ -74,8 +74,6 @@
 
 <div class="admin-footer" onclick="loginPrompt()">⚙️</div>
 
-<div id="status-message" style="position: fixed; bottom: 10px; left: 10px; background: #1b5e20; color: white; padding: 10px; border-radius: 5px; display: none;"></div>
-
 <script>
     const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX');
     let species = [];
@@ -87,7 +85,7 @@
     };
 
     async function init() {
-        const { data, error } = await client.from('species').select('*').limit(10000); 
+        const { data } = await client.from('species').select('*').limit(10000); 
         species = data || [];
         render();
     }
@@ -102,12 +100,13 @@
 
     function render() {
         const q = document.getElementById('search').value.toLowerCase();
-        const kingdoms = ["حيوانات", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
+        const kingdoms = ["حيوانات", "طيور", "نباتات", "فطريات", "طلائعيات", "بدائيات", "غير مصنف"];
         let htmlOutput = "";
         
         kingdoms.forEach(k => {
             const filteredItems = species.filter(i => {
-                const kingdomMatch = (i.kingdom || 'حيوانات') === k;
+                const itemKingdom = (i.kingdom && i.kingdom.trim() !== "") ? i.kingdom : "غير مصنف";
+                const kingdomMatch = itemKingdom === k;
                 const searchMatch = ((i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q));
                 return kingdomMatch && searchMatch;
             });
@@ -131,7 +130,7 @@
                                     ${item.image_url ? `<img src="${item.image_url}" onerror="this.style.display='none'">` : ''}
                                     <div class="common-name">${item.name_ar || 'بدون اسم'}</div>
                                     <div class="latin-name">${item.scientific_name || '...'}</div>
-                                    <span class="kingdom-tag">${item.kingdom || 'حيوانات'}</span>
+                                    <span class="kingdom-tag">${item.kingdom || 'غير مصنف'}</span>
                                     <div class="card-desc" id="desc-${item.id}">${item.description || ''}</div>
                                     <span class="read-more" id="more-${item.id}" onclick="expandCard(${item.id})">عرض المزيد</span>
                                     <div class="status-badge" style="background:${statusConfig[item.conservation_status]?.color || '#757575'}">${statusConfig[item.conservation_status]?.text || 'غير محدد'}</div>

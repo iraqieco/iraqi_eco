@@ -159,7 +159,7 @@
                         </div>
                         <div class="card-logo">عراقي إيكو</div>
                         <div class="divider"></div>
-                        ${item.image_url ? `<img src="${item.image_url}" alt="${item.name_ar}">` : '<div style="height:140px; background:#eee; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">لا توجد صورة</div>'}
+                        ${item.image_url ? `<img src="${item.image_url}" alt="${item.name_ar}" crossorigin="anonymous">` : '<div style="height:140px; background:#eee; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">لا توجد صورة</div>'}
                         <div class="common-name">${item.name_ar}</div>
                         <div class="latin-name">${item.scientific_name}</div>
                         <span class="kingdom-tag">${item.class || 'غير محدد'}</span>
@@ -203,13 +203,20 @@
         if (res.error) alert("خطأ: " + res.error.message); else location.reload();
     }
     async function deleteItem(id) { if(confirm('تأكيد الحذف؟')) { await client.from('species').delete().eq('id', id); location.reload(); } }
+    
     function downloadCard(id) {
         const card = document.getElementById(id);
         document.getElementById('menu-' + id.split('-')[1]).style.display = 'none';
-        html2canvas(card).then(canvas => {
+        
+        // إعدادات html2canvas لضمان التعامل مع الصور الخارجية
+        html2canvas(card, {
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: "#ffffff"
+        }).then(canvas => {
             const link = document.createElement('a');
             link.download = 'creature.png';
-            link.href = canvas.toDataURL();
+            link.href = canvas.toDataURL('image/png');
             link.click();
         });
     }

@@ -58,10 +58,10 @@
         <div class="search-main-row">
             <select id="kingdomSelect" onchange="render()">
                 <option value="الكل">كل الممالك</option>
-                <option value="حيوانات">حيوانات</option><option value="طيور">طيور</option><option value="نباتات">نباتات</option>
+                <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option>
                 <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
             </select>
-            <input type="text" id="search" placeholder="بحث بالاسم العربي أو اللاتيني..." onkeyup="render()">
+            <input type="text" id="search" placeholder="بحث بالاسم العربي أو اللاتيني (للثدييات ابحث بالعربي أو الانجليزي..." onkeyup="render()">
         </div>
         <div class="btn-group" id="filterBtns"></div>
     </div>
@@ -77,7 +77,7 @@
     <input id="n_ar" placeholder="الاسم العربي (إجباري)" required>
     <input id="n_sci" placeholder="الاسم العلمي (إجباري)" required>
     <select id="kingdom">
-        <option value="حيوانات">حيوانات</option><option value="طيور">طيور</option><option value="نباتات">نباتات</option>
+        <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option>
         <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
     </select>
     <input id="class" placeholder="الطائفة (Class)">
@@ -114,7 +114,7 @@
 
     function updateControls() {
         const container = document.getElementById('filterBtns');
-        const kingdoms = ["الكل", "حيوانات", "طيور", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
+        const kingdoms = ["الكل", "حيوانات", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
         let html = kingdoms.map(k => `<button class="action-btn ${currentKingdom === k ? 'active' : ''}" onclick="setFilter('${k}', null)">${k}</button>`).join('');
         html += `<button class="action-btn ${imgFilter === true ? 'active' : ''}" onclick="setFilter(null, true)">مع الصور</button>`;
         html += `<button class="action-btn ${imgFilter === false ? 'active' : ''}" onclick="setFilter(null, false)">بدون صور</button>`;

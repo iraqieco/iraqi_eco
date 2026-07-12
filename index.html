@@ -15,9 +15,10 @@
         .stat-item { background: white; padding: 8px 15px; border-radius: 20px; border: 1px solid #1b5e20; font-size: 0.8em; }
         
         .controls-wrapper { background: white; border: 1px solid #ccc; border-radius: 20px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        #search { border: 1px solid #ccc; padding: 12px; width: 95%; border-radius: 8px; outline: none; margin-bottom: 15px; }
+        .search-main-row { display: flex; gap: 10px; margin-bottom: 15px; }
+        #search { border: 1px solid #ccc; padding: 12px; flex: 1; border-radius: 8px; outline: none; }
+        #kingdomSelect { border: 1px solid #ccc; padding: 10px; border-radius: 8px; cursor: pointer; }
         
-        /* الأزرار التفاعلية المدمجة */
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
         .action-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid #1b5e20; background: white; color: #1b5e20; cursor: pointer; font-size: 0.85em; transition: 0.3s; }
         .action-btn.active { background: #1b5e20; color: white; }
@@ -54,10 +55,15 @@
 
 <div class="container">
     <div class="controls-wrapper">
-        <input type="text" id="search" placeholder="بحث بالاسم العربي أو اللاتيني..." onkeyup="render()">
-        <div class="btn-group" id="filterBtns">
-            <!-- سيتم توليد الأزرار برمجياً -->
+        <div class="search-main-row">
+            <select id="kingdomSelect" onchange="render()">
+                <option value="الكل">كل الممالك</option>
+                <option value="حيوانات">حيوانات</option><option value="طيور">طيور</option><option value="نباتات">نباتات</option>
+                <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
+            </select>
+            <input type="text" id="search" placeholder="بحث بالاسم العربي أو اللاتيني..." onkeyup="render()">
         </div>
+        <div class="btn-group" id="filterBtns"></div>
     </div>
     
     <div id="statsBar" class="stats-bar"></div>
@@ -96,10 +102,10 @@
 
 <script>
     const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX');
-    const clickSound = new Audio('https://www.soundjay.com/buttons/sounds/button-16.mp3'); // صوت نقرة
+    const clickSound = new Audio('https://www.soundjay.com/buttons/sounds/button-16.mp3');
     let species = [];
     let currentKingdom = "الكل";
-    let imgFilter = null; // null, true, false
+    let imgFilter = null;
     
     const statusConfig = { 'NE': 'غير مقيم', 'DD': 'بيانات ناقصة', 'LC': 'غير مهدد', 'NT': 'قريب من التهديد', 'VU': 'معرض للخطر', 'EN': 'مهدد', 'CR': 'خطر أقصى', 'EW': 'منقرض في البرية', 'EX': 'منقرض' };
     const statusColors = { 'NE': '#9e9e9e', 'DD': '#607d8b', 'LC': '#4caf50', 'NT': '#ffc107', 'VU': '#ff9800', 'EN': '#f44336', 'CR': '#d32f2f', 'EW': '#795548', 'EX': '#000' };
@@ -109,14 +115,18 @@
     function updateControls() {
         const container = document.getElementById('filterBtns');
         const kingdoms = ["الكل", "حيوانات", "طيور", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
-        let html = kingdoms.map(k => `<button class="action-btn ${currentKingdom === k ? 'active' : ''}" onclick="filterByKingdom('${k}')">${k}</button>`).join('');
-        html += `<button class="action-btn ${imgFilter === true ? 'active' : ''}" onclick="filterByImg(true)">مع الصور</button>`;
-        html += `<button class="action-btn ${imgFilter === false ? 'active' : ''}" onclick="filterByImg(false)">بدون صور</button>`;
+        let html = kingdoms.map(k => `<button class="action-btn ${currentKingdom === k ? 'active' : ''}" onclick="setFilter('${k}', null)">${k}</button>`).join('');
+        html += `<button class="action-btn ${imgFilter === true ? 'active' : ''}" onclick="setFilter(null, true)">مع الصور</button>`;
+        html += `<button class="action-btn ${imgFilter === false ? 'active' : ''}" onclick="setFilter(null, false)">بدون صور</button>`;
         container.innerHTML = html;
     }
 
-    function filterByKingdom(k) { playSound(); currentKingdom = k; render(); updateControls(); }
-    function filterByImg(val) { playSound(); imgFilter = (imgFilter === val) ? null : val; render(); updateControls(); }
+    function setFilter(k, i) {
+        playSound();
+        if (k) { currentKingdom = k; document.getElementById('kingdomSelect').value = k; }
+        if (i !== null) imgFilter = (imgFilter === i) ? null : i;
+        render(); updateControls();
+    }
 
     async function init() {
         const { data } = await client.from('species').select('*').limit(10000); 
@@ -135,6 +145,7 @@
 
     function render() {
         const q = document.getElementById('search').value.toLowerCase();
+        const selK = document.getElementById('kingdomSelect').value;
         const classes = [...new Set(species.map(i => (i.class && i.class.trim() !== "") ? i.class : "غير محدد"))];
         let htmlOutput = "";
         
@@ -143,7 +154,7 @@
                 const itemClass = (i.class && i.class.trim() !== "") ? i.class : "غير محدد";
                 const hasImg = i.image_url && i.image_url.trim() !== "";
                 const matchesSearch = (i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q);
-                const matchesKingdom = (currentKingdom === "الكل" || i.kingdom === currentKingdom);
+                const matchesKingdom = (currentKingdom === "الكل" || i.kingdom === currentKingdom) && (selK === "الكل" || i.kingdom === selK);
                 const matchesImgFilter = (imgFilter === null || (imgFilter ? hasImg : !hasImg));
                 return itemClass === c && matchesSearch && matchesKingdom && matchesImgFilter;
             });

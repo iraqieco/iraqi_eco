@@ -14,13 +14,13 @@
         .stats-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .stat-item { background: white; padding: 8px 15px; border-radius: 20px; border: 1px solid #1b5e20; font-size: 0.8em; }
         
-        .search-wrapper { display: flex; flex-direction: column; background: white; border: 1px solid #ccc; border-radius: 20px; padding: 10px; margin-bottom: 20px; }
-        .search-main { display: flex; height: 60px; }
-        #search { border: none; padding: 12px; flex: 0.8; outline: none; }
-        #filterKingdom { border: none; border-right: 1px solid #ccc; padding: 10px; flex: 0.2; outline: none; background: #fff; cursor: pointer; }
-        
-        .filter-btns { display: flex; gap: 10px; padding: 10px; justify-content: center; }
-        .filter-btn { padding: 5px 15px; border-radius: 15px; border: 1px solid #1b5e20; background: white; cursor: pointer; font-size: 0.8em; }
+        /* الصندوق الموحد الجديد */
+        .controls-wrapper { background: white; border: 1px solid #ccc; border-radius: 20px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .search-row { display: flex; gap: 10px; margin-bottom: 15px; }
+        #search { border: 1px solid #ccc; padding: 12px; flex: 1; border-radius: 8px; outline: none; }
+        #filterKingdom { border: 1px solid #ccc; padding: 10px; flex: 0.3; border-radius: 8px; outline: none; cursor: pointer; }
+        .filter-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .filter-btn { padding: 6px 16px; border-radius: 15px; border: 1px solid #1b5e20; background: white; cursor: pointer; font-size: 0.8em; transition: 0.3s; }
         .filter-btn.active { background: #1b5e20; color: white; }
 
         .kingdom-section { margin-bottom: 30px; }
@@ -31,12 +31,15 @@
         .card-logo { color: #1b5e20; font-weight: bold; text-align: center; font-size: 0.6em; margin-bottom: 10px; }
         .divider { height: 1px; background-color: #ddd; margin: 0 30px 15px 30px; }
         .card img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; display: block; }
-        .common-name { font-size: 0.8em; font-weight: bold; text-align: center; color: #333; margin-top: 5px; }
-        .latin-name { font-size: 0.6em; font-style: italic; color: #666; text-align: center; display: block; margin-bottom: 5px; }
+        .common-name { font-size: 0.9em; font-weight: bold; text-align: center; color: #333; margin-top: 5px; }
+        .latin-name { font-size: 0.7em; font-style: italic; color: #666; text-align: center; display: block; margin-bottom: 5px; }
         .kingdom-tag { font-size: 0.7em; background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 5px; }
-        .card-desc { font-size: 0.6em; color: #444; line-height: 1.4; margin-top: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* تحسينات الوصف */
+        .card-desc { font-size: 0.85em; color: #444; line-height: 1.6; margin-top: 5px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; transition: 0.3s; }
         .card.expanded .card-desc { -webkit-line-clamp: unset; }
-        .read-more { color: #1b5e20; font-size: 0.8em; font-weight: bold; cursor: pointer; display: none; margin-top: 5px; }
+        .read-more { color: #1b5e20; font-size: 0.8em; font-weight: bold; cursor: pointer; display: none; margin-top: 5px; text-decoration: underline; }
+        
         .status-badge { display: block; padding: 6px; border-radius: 8px; color: white; text-align: center; font-weight: bold; font-size: 0.7em; margin-top: 10px; }
         .menu-btn { position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 1.5em; color: #1b5e20; }
         .menu-options { display: none; position: absolute; top: 40px; right: 10px; background: white; border: 2px solid #1b5e20; z-index: 100; padding: 15px; border-radius: 10px; min-width: 120px; }
@@ -54,12 +57,12 @@
 </header>
 
 <div class="container">
-    <div class="search-wrapper">
-        <div class="search-main">
+    <div class="controls-wrapper">
+        <div class="search-row">
             <input type="text" id="search" placeholder="بحث بالاسم العربي أو اللاتيني..." onkeyup="render()">
             <select id="filterKingdom" onchange="render()">
                 <option value="الكل">كل الممالك</option>
-                <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option>
+                <option value="حيوانات">حيوانات</option><option value="طيور">طيور</option><option value="نباتات">نباتات</option>
                 <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
             </select>
         </div>
@@ -107,19 +110,10 @@
 <script>
     const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX');
     let species = [];
-    let showOnlyWithImages = null; // null: الكل, true: مع صور, false: بدون صور
+    let showOnlyWithImages = null; 
     
-    const statusConfig = { 
-        'NE': 'غير مقيم', 'DD': 'بيانات ناقصة', 'LC': 'غير مهدد', 
-        'NT': 'قريب من التهديد', 'VU': 'معرض للخطر', 'EN': 'مهدد', 
-        'CR': 'خطر أقصى', 'EW': 'منقرض في البرية', 'EX': 'منقرض' 
-    };
-
-    const statusColors = { 
-        'NE': '#9e9e9e', 'DD': '#607d8b', 'LC': '#4caf50', 
-        'NT': '#ffc107', 'VU': '#ff9800', 'EN': '#f44336', 
-        'CR': '#d32f2f', 'EW': '#795548', 'EX': '#000' 
-    };
+    const statusConfig = { 'NE': 'غير مقيم', 'DD': 'بيانات ناقصة', 'LC': 'غير مهدد', 'NT': 'قريب من التهديد', 'VU': 'معرض للخطر', 'EN': 'مهدد', 'CR': 'خطر أقصى', 'EW': 'منقرض في البرية', 'EX': 'منقرض' };
+    const statusColors = { 'NE': '#9e9e9e', 'DD': '#607d8b', 'LC': '#4caf50', 'NT': '#ffc107', 'VU': '#ff9800', 'EN': '#f44336', 'CR': '#d32f2f', 'EW': '#795548', 'EX': '#000' };
 
     function setImgFilter(val) {
         showOnlyWithImages = val;
@@ -157,7 +151,6 @@
                 const matchesSearch = (i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q);
                 const matchesKingdom = (f === "الكل" || i.kingdom === f);
                 const matchesImgFilter = (showOnlyWithImages === null || (showOnlyWithImages ? hasImg : !hasImg));
-                
                 return itemClass === c && matchesSearch && matchesKingdom && matchesImgFilter;
             });
 
@@ -185,8 +178,8 @@
                                     <div class="common-name">${item.name_ar || 'غير محدد'}</div>
                                     <div class="latin-name">${item.scientific_name || 'غير محدد'}</div>
                                     <span class="kingdom-tag">${item.class || 'غير محدد'}</span>
-                                    <div class="card-desc" id="desc-${item.id}">${item.description || 'غير محدد'}</div>
-                                    <span class="read-more" id="more-${item.id}" onclick="expandCard(${item.id})" style="display:inline-block">عرض المزيد</span>
+                                    <div class="card-desc" id="desc-${item.id}">${item.description || 'لا يوجد وصف'}</div>
+                                    <span class="read-more" id="more-${item.id}" onclick="expandCard(${item.id})">عرض المزيد</span>
                                     <div class="status-badge" style="background:${statusColor}">${statusText}</div>
                                 </div>`;
                             }).join('')}
@@ -196,14 +189,16 @@
             }
         });
         document.getElementById('content').innerHTML = htmlOutput;
+        // تفعيل زر "عرض المزيد" فقط إذا كان النص طويلاً
+        species.forEach(item => checkDescLength(item.id));
     }
 
-    async function loginPrompt() {
-        const email = prompt("أدخل البريد الإلكتروني للمسؤول:");
-        const password = prompt("أدخل كلمة المرور:");
-        const { error } = await client.auth.signInWithPassword({ email, password });
-        if (error) alert("خطأ: " + error.message);
-        else { alert("تم تسجيل الدخول بنجاح!"); location.reload(); }
+    function checkDescLength(id) {
+        const desc = document.getElementById('desc-' + id);
+        const moreBtn = document.getElementById('more-' + id);
+        if (desc && desc.scrollHeight > desc.clientHeight) {
+            moreBtn.style.display = 'inline-block';
+        }
     }
 
     function expandCard(id) {
@@ -216,6 +211,14 @@
     function toggleMenu(id) {
         const menu = document.getElementById('menu-'+id);
         menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    }
+
+    async function loginPrompt() {
+        const email = prompt("أدخل البريد الإلكتروني للمسؤول:");
+        const password = prompt("أدخل كلمة المرور:");
+        const { error } = await client.auth.signInWithPassword({ email, password });
+        if (error) alert("خطأ: " + error.message);
+        else { alert("تم تسجيل الدخول بنجاح!"); location.reload(); }
     }
 
     function openModal(id = null) {
@@ -236,7 +239,6 @@
         const saveBtn = document.getElementById('saveBtn');
         const n_ar = document.getElementById('n_ar').value;
         const n_sci = document.getElementById('n_sci').value;
-        const img_url = document.getElementById('img').value;
         if (!n_ar || !n_sci) return alert("الاسم العربي والعلمي حقول إجبارية!");
         saveBtn.innerText = "جاري الحفظ...";
         saveBtn.disabled = true;
@@ -244,23 +246,15 @@
             name_ar: n_ar, 
             scientific_name: n_sci, 
             description: document.getElementById('desc').value, 
-            image_url: img_url, 
+            image_url: document.getElementById('img').value, 
             kingdom: document.getElementById('kingdom').value, 
             class: document.getElementById('class').value,
             conservation_status: document.getElementById('conservation_status').value 
         };
         const id = document.getElementById('editId').value;
-        let response;
-        if (id) response = await client.from('species').update(data).eq('id', id);
-        else response = await client.from('species').insert([data]);
-        
-        if (response.error) {
-            alert("حدث خطأ أثناء الحفظ: " + response.error.message);
-            saveBtn.innerText = "حفظ";
-            saveBtn.disabled = false;
-        } else {
-            location.reload();
-        }
+        const res = id ? await client.from('species').update(data).eq('id', id) : await client.from('species').insert([data]);
+        if (res.error) { alert("خطأ: " + res.error.message); saveBtn.innerText = "حفظ"; saveBtn.disabled = false; }
+        else { location.reload(); }
     }
 
     async function deleteItem(id) {
@@ -281,8 +275,7 @@
             link.download = 'creature.png';
             link.href = canvas.toDataURL();
             link.click();
-            menu.style.display = 'none'; 
-            btn.style.display = 'block';
+            btn.style.display = 'inline-block';
         });
     }
     init();

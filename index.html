@@ -80,7 +80,11 @@
     <input id="img" placeholder="رابط الصورة">
     <input id="desc" placeholder="الوصف">
     <select id="conservation_status">
-        <option value="NE">غير مقيم</option><option value="LC">غير مهدد</option><option value="VU">معرض للخطر</option><option value="EN">مهدد</option>
+        <option value="NE">غير مقيم (NE)</option><option value="DD">بيانات ناقصة (DD)</option>
+        <option value="LC">غير مهدد (LC)</option><option value="NT">قريب من التهديد (NT)</option>
+        <option value="VU">معرض للخطر (VU)</option><option value="EN">مهدد (EN)</option>
+        <option value="CR">خطر أقصى (CR)</option><option value="EW">منقرض في البرية (EW)</option>
+        <option value="EX">منقرض (EX)</option>
     </select>
     <button id="saveBtn" onclick="saveItem()" style="background:#1b5e20; color:white; padding:12px; width:100%; border:none; border-radius:8px;">حفظ</button>
     <button onclick="document.getElementById('modal').style.display='none'" style="margin-top:10px; width:100%; padding:10px; border:1px solid #ccc; border-radius:8px;">إغلاق</button>
@@ -100,15 +104,12 @@
     function updateControls() {
         const container = document.getElementById('filterBtns');
         const kingdoms = ["الكل", "حيوانات", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
-        
         let html = kingdoms.map(k => {
             const count = k === "الكل" ? species.length : species.filter(s => s.kingdom === k).length;
             return `<button class="action-btn ${currentKingdom === k ? 'active' : ''}" onclick="setFilter('${k}', null)">${k} (${count})</button>`;
         }).join('');
-
         const withImg = species.filter(s => s.image_url && s.image_url.trim() !== "").length;
         const noImg = species.length - withImg;
-
         html += `<button class="action-btn ${imgFilter === true ? 'active' : ''}" onclick="setFilter(null, true)">مع الصور (${withImg})</button>`;
         html += `<button class="action-btn ${imgFilter === false ? 'active' : ''}" onclick="setFilter(null, false)">بدون صور (${noImg})</button>`;
         container.innerHTML = html;
@@ -132,7 +133,6 @@
         const selK = document.getElementById('kingdomSelect').value;
         const classes = [...new Set(species.map(i => (i.class && i.class.trim() !== "") ? i.class : "غير محدد"))];
         let htmlOutput = "";
-        
         classes.forEach(c => {
             const filteredItems = species.filter(i => {
                 const itemClass = (i.class && i.class.trim() !== "") ? i.class : "غير محدد";
@@ -142,10 +142,13 @@
                 const matchesImgFilter = (imgFilter === null || (imgFilter ? hasImg : !hasImg));
                 return itemClass === c && matchesSearch && matchesKingdom && matchesImgFilter;
             });
-
             if (filteredItems.length > 0) {
                 htmlOutput += `<div class="kingdom-section"><div class="kingdom-title">${c} <span class="count-badge">${filteredItems.length}</span></div><div class="cards-wrapper">`;
-                htmlOutput += filteredItems.map(item => `
+                htmlOutput += filteredItems.map(item => {
+                    const statusKey = (item.conservation_status || '').trim();
+                    const statusText = statusConfig[statusKey] || 'غير محدد';
+                    const statusColor = statusColors[statusKey] || '#757575';
+                    return `
                     <div class="card" id="card-${item.id}">
                         <div class="menu-btn" onclick="toggleMenu(${item.id})">⋮</div>
                         <div class="menu-options" id="menu-${item.id}">
@@ -161,8 +164,9 @@
                         <div class="latin-name">${item.scientific_name}</div>
                         <span class="kingdom-tag">${item.class || 'غير محدد'}</span>
                         <div class="card-desc">${item.description || 'لا يوجد وصف'}</div>
-                        <div class="status-badge" style="background:${statusColors[item.conservation_status] || '#757575'}">${statusConfig[item.conservation_status] || 'غير محدد'}</div>
-                    </div>`).join('');
+                        <div class="status-badge" style="background:${statusColor}">${statusText}</div>
+                    </div>`;
+                }).join('');
                 htmlOutput += `</div></div>`;
             }
         });
@@ -184,16 +188,21 @@
         document.getElementById('conservation_status').value = item ? (item.conservation_status || 'NE') : 'NE';
         modal.style.display = 'block';
     }
-
     async function saveItem() {
-        const data = { name_ar: document.getElementById('n_ar').value, scientific_name: document.getElementById('n_sci').value, description: document.getElementById('desc').value, image_url: document.getElementById('img').value, kingdom: document.getElementById('kingdom').value, class: document.getElementById('class').value, conservation_status: document.getElementById('conservation_status').value };
+        const data = { 
+            name_ar: document.getElementById('n_ar').value, 
+            scientific_name: document.getElementById('n_sci').value, 
+            description: document.getElementById('desc').value, 
+            image_url: document.getElementById('img').value, 
+            kingdom: document.getElementById('kingdom').value, 
+            class: document.getElementById('class').value, 
+            conservation_status: document.getElementById('conservation_status').value 
+        };
         const id = document.getElementById('editId').value;
         const res = id ? await client.from('species').update(data).eq('id', id) : await client.from('species').insert([data]);
         if (res.error) alert("خطأ: " + res.error.message); else location.reload();
     }
-
     async function deleteItem(id) { if(confirm('تأكيد الحذف؟')) { await client.from('species').delete().eq('id', id); location.reload(); } }
-
     function downloadCard(id) {
         const card = document.getElementById(id);
         document.getElementById('menu-' + id.split('-')[1]).style.display = 'none';

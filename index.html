@@ -13,6 +13,7 @@
         .container { padding: 10px; }
         
         .controls-wrapper { background: white; border: 1px solid #ccc; border-radius: 20px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        /* تم دمج البحث والقائمة هنا */
         .search-main-row { display: flex; gap: 10px; margin-bottom: 15px; }
         #search { border: 1px solid #ccc; padding: 12px; flex: 2; border-radius: 8px; outline: none; }
         #kingdomSelect { border: 1px solid #ccc; padding: 10px; flex: 1; border-radius: 8px; cursor: pointer; }
@@ -52,13 +53,14 @@
 
 <div class="container">
     <div class="controls-wrapper">
+        <!-- تم تجميع العناصر في حاوية واحدة -->
         <div class="search-main-row">
+            <input type="text" id="search" placeholder="بحث..." onkeyup="render()">
             <select id="kingdomSelect" onchange="render()">
                 <option value="الكل">كل الممالك</option>
                 <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option>
                 <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
             </select>
-            <input type="text" id="search" placeholder="بحث..." onkeyup="render()">
         </div>
         <div class="btn-group" id="filterBtns"></div>
     </div>
@@ -208,7 +210,6 @@
         const card = document.getElementById(id);
         document.getElementById('menu-' + id.split('-')[1]).style.display = 'none';
         
-        // إعدادات html2canvas لضمان التعامل مع الصور الخارجية
         html2canvas(card, {
             useCORS: true,
             allowTaint: true,
@@ -224,3 +225,4 @@
 </script>
 </body>
 </html>
+

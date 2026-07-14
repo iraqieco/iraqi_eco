@@ -17,10 +17,10 @@
         
         .controls-wrapper { background: var(--card-bg); border: 1px solid #ccc; border-radius: 20px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         
-        /* دمج شريط البحث مع اختيار المملكة */
-        .search-main-row { display: flex; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; background: var(--card-bg); margin-bottom: 15px; }
-        #search { border: none; padding: 12px; flex: 1; outline: none; background: transparent; color: var(--text); }
-        #kingdomSelect { border: none; border-right: 1px solid #ccc; padding: 0 10px; cursor: pointer; background: transparent; color: var(--text); outline: none; }
+        /* تصحيح التوزيع: البحث يأخذ المساحة الأكبر والفلتر على اليسار */
+        .search-main-row { display: flex; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; background: var(--card-bg); margin-bottom: 15px; align-items: center; }
+        #kingdomSelect { border: none; border-left: 1px solid #ccc; padding: 0 10px; cursor: pointer; background: transparent; color: var(--text); outline: none; height: 45px; flex-shrink: 0; font-size: 0.9em; }
+        #search { border: none; padding: 12px; flex: 1; outline: none; background: transparent; color: var(--text); font-size: 1em; }
         
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; padding-top: 10px; border-top: 1px solid #eee; }
         .action-btn { padding: 8px 12px; border-radius: 20px; border: 1px solid var(--primary); background: var(--card-bg); color: var(--primary); cursor: pointer; font-size: 0.75em; transition: 0.3s; }
@@ -84,7 +84,6 @@
     <div id="content"></div>
 </div>
 
-<!-- بقية الكود كما هو تماماً لضمان عدم حذف أي خصائص -->
 <div id="modal">
     <h3>إضافة/تعديل مخلوق</h3>
     <input type="hidden" id="editId">
@@ -261,3 +260,4 @@
 </script>
 </body>
 </html>
+ 

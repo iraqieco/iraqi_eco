@@ -17,10 +17,9 @@
         
         .controls-wrapper { background: var(--card-bg); border: 1px solid #ccc; border-radius: 20px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         
-        /* تصحيح التوزيع: البحث يأخذ المساحة الأكبر والفلتر على اليسار */
-        .search-main-row { display: flex; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; background: var(--card-bg); margin-bottom: 15px; align-items: center; }
-        #kingdomSelect { border: none; border-left: 1px solid #ccc; padding: 0 10px; cursor: pointer; background: transparent; color: var(--text); outline: none; height: 45px; flex-shrink: 0; font-size: 0.9em; }
-        #search { border: none; padding: 12px; flex: 1; outline: none; background: transparent; color: var(--text); font-size: 1em; }
+        /* صندوق بحث بسيط بدون قائمة */
+        .search-main-row { border: 1px solid #ccc; border-radius: 8px; overflow: hidden; background: var(--card-bg); margin-bottom: 15px; }
+        #search { border: none; padding: 12px; width: 100%; outline: none; background: transparent; color: var(--text); font-size: 1em; box-sizing: border-box; }
         
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; padding-top: 10px; border-top: 1px solid #eee; }
         .action-btn { padding: 8px 12px; border-radius: 20px; border: 1px solid var(--primary); background: var(--card-bg); color: var(--primary); cursor: pointer; font-size: 0.75em; transition: 0.3s; }
@@ -65,12 +64,7 @@
 <div class="container">
     <div class="controls-wrapper">
         <div class="search-main-row">
-            <select id="kingdomSelect" onchange="updateFilterFromSelect()">
-                <option value="الكل">كل الممالك</option>
-                <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option>
-                <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
-            </select>
-            <input type="text" id="search" placeholder="ابحث بالإسم العربي أو اللاتيني..." onkeyup="render()">
+            <input type="text" id="search" placeholder="ابحث بالإسم العربي أو اللاتيني (للثدييات ابحث بالعربي أو الإنجليزي)..." onkeyup="render()">
         </div>
         <div class="btn-group" id="filterBtns"></div>
         <div class="view-controls">
@@ -91,7 +85,8 @@
     <input id="n_sci" placeholder="الاسم العلمي (إجباري)" required>
     <select id="kingdom">
         <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option>
-        <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option><option value="بدائيات">بدائيات</option>
+        <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option>
+        <option value="بدائيات">بدائيات</option>
     </select>
     <input id="class" placeholder="الطائفة">
     <input id="img" placeholder="رابط الصورة">
@@ -128,12 +123,6 @@
 
     function setView(mode) { viewMode = mode; render(); }
 
-    function updateFilterFromSelect() {
-        currentKingdom = document.getElementById('kingdomSelect').value;
-        render();
-        updateControls();
-    }
-
     function updateControls() {
         const container = document.getElementById('filterBtns');
         const kingdoms = ["الكل", "حيوانات", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
@@ -149,10 +138,7 @@
     }
 
     function setFilter(k, i) {
-        if (k !== null) { 
-            currentKingdom = k; 
-            document.getElementById('kingdomSelect').value = k; 
-        }
+        if (k !== null) { currentKingdom = k; }
         if (i !== null) imgFilter = (imgFilter === i) ? null : i;
         render(); 
         updateControls();
@@ -260,4 +246,3 @@
 </script>
 </body>
 </html>
- 

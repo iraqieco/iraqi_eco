@@ -17,7 +17,6 @@
         
         .controls-wrapper { background: var(--card-bg); border: 1px solid #ccc; border-radius: 20px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         
-        /* صندوق بحث بسيط بدون قائمة */
         .search-main-row { border: 1px solid #ccc; border-radius: 8px; overflow: hidden; background: var(--card-bg); margin-bottom: 15px; }
         #search { border: none; padding: 12px; width: 100%; outline: none; background: transparent; color: var(--text); font-size: 1em; box-sizing: border-box; }
         
@@ -33,7 +32,8 @@
         
         .cards-wrapper { display: grid; gap: 20px; }
         .grid-3 { grid-template-columns: repeat(3, 1fr); }
-        .grid-1 { grid-template-columns: 1fr; max-width: 500px; margin: auto; }
+        /* تم تعديل هذا الجزء لجعل البطاقة تملأ المساحة بشكل صحيح */
+        .grid-1 { grid-template-columns: 1fr; width: 100%; max-width: 600px; margin: auto; }
         
         .card { border: 2px solid var(--primary); padding: 15px; border-radius: 15px; background: var(--card-bg); position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
         .card-logo { color: var(--primary); font-weight: bold; text-align: center; font-size: 0.6em; margin-bottom: 10px; }
@@ -64,7 +64,7 @@
 <div class="container">
     <div class="controls-wrapper">
         <div class="search-main-row">
-            <input type="text" id="search" placeholder="ابحث بالإسم العربي أو اللاتيني (للثدييات ابحث بالعربي أو الإنجليزي)..." onkeyup="render()">
+            <input type="text" id="search" placeholder="ابحث بالإسم العربي أو اللاتيني..." onkeyup="render()">
         </div>
         <div class="btn-group" id="filterBtns"></div>
         <div class="view-controls">

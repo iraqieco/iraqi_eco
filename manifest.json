@@ -1,0 +1,20 @@
+{
+  "name": "IraqiEco",
+  "short_name": "IraqiEco",
+  "description": "قاعدة بيانات الكائنات الحية في العراق",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1b5e20",
+  "orientation": "portrait",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "assets/logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

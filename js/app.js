@@ -215,17 +215,15 @@ const result=document.getElementById("result");
 
 const obj={
 
-name_ar:document.getElementById("name_ar").value.trim(),
+const obj={
 
-scientific_name:document.getElementById("scientific_name").value.trim(),
+name_ar:document.getElementById("name_ar").value.trim().replace(/\s+/g," "),
 
-image_url:document.getElementById("image_url").value.trim(),
-
-description:document.getElementById("description").value.trim(),
-
-conservation_status:document.getElementById("conservation_status").value,
+scientific_name:document.getElementById("scientific_name").value.trim().replace(/\s+/g," "),
 
 kingdom:document.getElementById("kingdom").value,
+
+conservation_status:document.getElementById("conservation_status").value,
 
 phylum:document.getElementById("phylum").value.trim(),
 
@@ -233,7 +231,17 @@ class:document.getElementById("class").value.trim(),
 
 order_name:document.getElementById("order_name").value.trim(),
 
-family:document.getElementById("family").value.trim()
+family:document.getElementById("family").value.trim(),
+
+"1":document.getElementById("family").value.trim(),
+
+"2":document.getElementById("genus").value.trim(),
+
+"3":document.getElementById("species_type").value.trim(),
+
+description:document.getElementById("description").value.trim(),
+
+image_url:document.getElementById("image_url").value.trim()
 
 };
 
@@ -244,7 +252,20 @@ result.innerHTML="⚠️ يجب إدخال الاسم العربي والاسم 
 return;
 
 }
+const { data: exists } = await supabaseClient
+.from("species")
+.select("id")
+.or(
+`name_ar.eq.${obj.name_ar},scientific_name.eq.${obj.scientific_name}`
+);
 
+if(exists && exists.length){
+
+result.innerHTML="⚠️ يوجد كائن بنفس الاسم العربي أو اللاتيني.";
+
+return;
+
+}
 result.innerHTML="جاري الحفظ...";
 
 const { error } = await supabaseClient

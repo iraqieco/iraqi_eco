@@ -1,247 +1,175 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-    <meta name="google-site-verification" content="0jRTIrdsb7aj8SvFaH9WswrLn506cgoyudn40MhxDiE" />
-    <meta charset="UTF-8">
-    <title>عراقي إيكو | مشروع تطوعي يهدف لدراسة وحماية البيئة</title>
-    <meta name="description" content="عراقي إيكو: مشروع تطوعي يهدف لدراسة وحماية التنوع الإحيائي و البيئة في العراق، مع تطلعات عالمية بإذن اللّٰه.">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <style>
-        :root { --bg: #f4f4f4; --card-bg: white; --text: #333; --primary: #1b5e20; }
-        .dark-mode { --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --primary: #4caf50; }
-        
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; transition: 0.3s; }
-        header { background: var(--primary); color: white; padding: 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; }
-        .container { padding: 10px; }
-        
-        .controls-wrapper { background: var(--card-bg); border: 1px solid #ccc; border-radius: 20px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        
-        .search-main-row { border: 1px solid #ccc; border-radius: 8px; overflow: hidden; background: var(--card-bg); margin-bottom: 15px; }
-        #search { border: none; padding: 12px; width: 100%; outline: none; background: transparent; color: var(--text); font-size: 1em; box-sizing: border-box; }
-        
-        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; padding-top: 10px; border-top: 1px solid #eee; }
-        .action-btn { padding: 8px 12px; border-radius: 20px; border: 1px solid var(--primary); background: var(--card-bg); color: var(--primary); cursor: pointer; font-size: 0.75em; transition: 0.3s; }
-        .action-btn.active { background: var(--primary); color: white; }
 
-        .view-controls { margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; display: flex; justify-content: center; gap: 10px; }
+<meta charset="UTF-8">
 
-        .kingdom-section { margin-bottom: 30px; }
-        .kingdom-title { background: var(--primary); color: white; padding: 5px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; font-weight: bold; }
-        .count-badge { background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin-right: 10px; }
-        
-        .cards-wrapper { display: grid; gap: 20px; }
-        .grid-3 { grid-template-columns: repeat(3, 1fr); }
-        /* تم تعديل هذا الجزء لجعل البطاقة تملأ المساحة بشكل صحيح */
-        .grid-1 { grid-template-columns: 1fr; width: 100%; max-width: 600px; margin: auto; }
-        
-        .card { border: 2px solid var(--primary); padding: 15px; border-radius: 15px; background: var(--card-bg); position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
-        .card-logo { color: var(--primary); font-weight: bold; text-align: center; font-size: 0.6em; margin-bottom: 10px; }
-        .divider { height: 1px; background-color: #ddd; margin: 0 30px 15px 30px; }
-        .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; display: block; }
-        .common-name { font-size: 0.9em; font-weight: bold; text-align: center; color: var(--text); margin-top: 5px; }
-        .latin-name { font-size: 0.7em; font-style: italic; color: #888; text-align: center; display: block; margin-bottom: 5px; }
-        .kingdom-tag { font-size: 0.7em; background: #e8f5e9; color: #1b5e20; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 5px; align-self: center; }
-        .card-desc { font-size: 0.85em; color: var(--text); line-height: 1.6; margin: 10px 0; flex-grow: 1; }
-        .status-badge { display: block; padding: 6px; border-radius: 8px; color: white; text-align: center; font-weight: bold; font-size: 0.7em; margin-top: auto; }
-        
-        .menu-btn { position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 1.5em; color: var(--primary); }
-        .menu-options { display: none; position: absolute; top: 40px; right: 10px; background: var(--card-bg); border: 2px solid var(--primary); z-index: 100; padding: 15px; border-radius: 10px; min-width: 120px; }
-        .menu-options div { padding: 8px; cursor: pointer; border-bottom: 1px solid #eee; color: var(--text); }
-        
-        #modal { display: none; position: fixed; top: 5%; right: 10%; width: 80%; background: var(--card-bg); padding: 25px; border: 3px solid var(--primary); z-index: 1000; border-radius: 15px; max-height: 90vh; overflow-y: auto; color: var(--text); }
-        input, select { display: block; width: 95%; margin: 10px 0; padding: 12px; border: 1px solid #ccc; border-radius: 8px; background: var(--card-bg); color: var(--text); }
-        .admin-footer { margin-top: 50px; text-align: center; opacity: 0.3; cursor: pointer; }
-    </style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>عراقي إيكو | Iraqi Eco</title>
+
+<meta name="description" content="موسوعة الكائنات الحية في العراق">
+
+<meta name="theme-color" content="#1b5e20">
+
+<link rel="icon" href="assets/logo.svg">
+
+<link rel="manifest" href="manifest.json">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/config.js"></script>
+
+<script defer src="js/app.js"></script>
+
+<!-- Google Verification -->
+<meta name="google-site-verification" content="ضع الكود الموجود في ملفك القديم هنا">
+
 </head>
+
 <body>
 
-<header>
-    <h1>عراقي إيكو</h1>
-    <p>قاعدة بيانات الكائنات الحية في العراق</p>
-</header>
+<header class="header">
 
 <div class="container">
-    <div class="controls-wrapper">
-        <div class="search-main-row">
-            <input type="text" id="search" placeholder="ابحث بالإسم العربي أو اللاتيني (للثدييات ابحث بالعربي أو الإنجليزي)..." onkeyup="render()">
-        </div>
-        <div class="btn-group" id="filterBtns"></div>
-        <div class="view-controls">
-            <button class="action-btn" onclick="toggleTheme()" id="themeBtn">🌓 الشكل</button>
-            
-        </div>
-    </div>
-    
-    <button onclick="openModal()" style="margin:15px 0; padding:12px; width:100%; background:#1b5e20; color:white; border:none; border-radius:8px; font-size:1em; cursor:pointer;">+ إضافة مخلوق</button>
-    <div id="content"></div>
+
+<a href="index.html" class="logo">
+
+<img src="assets/logo.svg">
+
+<div>
+
+<h1>عراقي إيكو</h1>
+
+<span>Iraqi Eco</span>
+
 </div>
 
-<div id="modal">
-    <h3>إضافة/تعديل مخلوق</h3>
-    <input type="hidden" id="editId">
-    <input id="n_ar" placeholder="الاسم العربي (إجباري)" required>
-    <input id="n_sci" placeholder="الاسم العلمي (إجباري)" required>
-    <select id="kingdom">
-        <option value="حيوانات">حيوانات</option><option value="نباتات">نباتات</option>
-        <option value="فطريات">فطريات</option><option value="طلائعيات">طلائعيات</option>
-        <option value="بدائيات">بدائيات</option>
-    </select>
-    <input id="class" placeholder="الطائفة">
-    <input id="img" placeholder="رابط الصورة">
-    <input id="desc" placeholder="الوصف">
-    <select id="conservation_status">
-        <option value="NE">غير مقيم (NE)</option><option value="DD">بيانات ناقصة (DD)</option>
-        <option value="LC">غير مهدد (LC)</option><option value="NT">قريب من التهديد (NT)</option>
-        <option value="VU">معرض للخطر (VU)</option><option value="EN">مهدد (EN)</option>
-        <option value="CR">خطر أقصى (CR)</option><option value="EW">منقرض في البرية (EW)</option>
-        <option value="EX">منقرض (EX)</option>
-    </select>
-    <button id="saveBtn" onclick="saveItem()" style="background:#1b5e20; color:white; padding:12px; width:100%; border:none; border-radius:8px;">حفظ</button>
-    <button onclick="document.getElementById('modal').style.display='none'" style="margin-top:10px; width:100%; padding:10px; border:1px solid #ccc; border-radius:8px;">إغلاق</button>
+</a>
+
+<nav>
+
+<a data-lang="home">الرئيسية</a>
+
+<a data-lang="categories">التصنيفات</a>
+
+<a data-lang="about">حول</a>
+
+<a href="login.html" data-lang="login">دخول</a>
+
+<button id="langBtn">
+
+EN
+
+</button>
+
+</nav>
+
 </div>
 
-<div class="admin-footer" onclick="loginPrompt()">⚙️</div>
+</header>
 
-<script>
-    const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX');
-    let species = [];
-    let currentKingdom = "الكل";
-    let imgFilter = null;
-    let viewMode = 3;
-    let isDarkMode = false;
-    
-    const statusConfig = { 'NE': 'غير مقيم', 'DD': 'بيانات ناقصة', 'LC': 'غير مهدد', 'NT': 'قريب من التهديد', 'VU': 'معرض للخطر', 'EN': 'مهدد', 'CR': 'خطر أقصى', 'EW': 'منقرض في البرية', 'EX': 'منقرض' };
-    const statusColors = { 'NE': '#9e9e9e', 'DD': '#607d8b', 'LC': '#4caf50', 'NT': '#ffc107', 'VU': '#ff9800', 'EN': '#f44336', 'CR': '#d32f2f', 'EW': '#795548', 'EX': '#000' };
+<section class="hero">
 
-    function toggleTheme() {
-        isDarkMode = !isDarkMode;
-        document.body.classList.toggle('dark-mode');
-        document.getElementById('themeBtn').innerText = isDarkMode ? '☀️ وضع النهار' : '🌙 وضع الليل';
-    }
+<div class="container">
 
-    function setView(mode) { viewMode = mode; render(); }
+<h2 id="heroTitle">
 
-    function updateControls() {
-        const container = document.getElementById('filterBtns');
-        const kingdoms = ["الكل", "حيوانات", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
-        let html = kingdoms.map(k => {
-            const count = k === "الكل" ? species.length : species.filter(s => s.kingdom === k).length;
-            return `<button class="action-btn ${currentKingdom === k ? 'active' : ''}" onclick="setFilter('${k}', null)">${k} (${count})</button>`;
-        }).join('');
-        const withImg = species.filter(s => s.image_url && s.image_url.trim() !== "").length;
-        const noImg = species.length - withImg;
-        html += `<button class="action-btn ${imgFilter === true ? 'active' : ''}" onclick="setFilter(null, true)">مع الصور (${withImg})</button>`;
-        html += `<button class="action-btn ${imgFilter === false ? 'active' : ''}" onclick="setFilter(null, false)">بدون صور (${noImg})</button>`;
-        container.innerHTML = html;
-    }
+اكتشف الكائنات الحية في العراق
 
-    function setFilter(k, i) {
-        if (k !== null) { currentKingdom = k; }
-        if (i !== null) imgFilter = (imgFilter === i) ? null : i;
-        render(); 
-        updateControls();
-    }
+</h2>
 
-    async function init() {
-        const { data } = await client.from('species').select('*').limit(10000); 
-        species = data || [];
-        updateControls();
-        render();
-    }
+<p id="heroText">
 
-    function render() {
-        const q = document.getElementById('search').value.toLowerCase();
-        const classes = [...new Set(species.map(i => (i.class && i.class.trim() !== "") ? i.class : "غير محدد"))];
-        let htmlOutput = "";
-        
-        classes.forEach(c => {
-            const filteredItems = species.filter(i => {
-                const itemClass = (i.class && i.class.trim() !== "") ? i.class : "غير محدد";
-                const hasImg = i.image_url && i.image_url.trim() !== "";
-                const matchesSearch = (i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q);
-                const matchesKingdom = (currentKingdom === "الكل" || i.kingdom === currentKingdom);
-                const matchesImgFilter = (imgFilter === null || (imgFilter ? hasImg : !hasImg));
-                return itemClass === c && matchesSearch && matchesKingdom && matchesImgFilter;
-            });
-            
-            if (filteredItems.length > 0) {
-                htmlOutput += `<div class="kingdom-section"><div class="kingdom-title">${c} <span class="count-badge">${filteredItems.length}</span></div>`;
-                htmlOutput += `<div class="cards-wrapper ${viewMode === 3 ? 'grid-3' : 'grid-1'}">`;
-                htmlOutput += filteredItems.map(item => {
-                    const statusKey = (item.conservation_status || '').trim();
-                    const statusText = statusConfig[statusKey] || 'غير محدد';
-                    const statusColor = statusColors[statusKey] || '#757575';
-                    return `
-                    <div class="card" id="card-${item.id}">
-                        <div class="menu-btn" onclick="toggleMenu(${item.id})">⋮</div>
-                        <div class="menu-options" id="menu-${item.id}">
-                            <div onclick="toggleMenu(${item.id})">✕ إغلاق</div>
-                            <div onclick="deleteItem(${item.id})">🗑 حذف</div>
-                            <div onclick="openModal(${item.id})">✏ تعديل</div>
-                            <div onclick="downloadCard('card-${item.id}')">⬇ تنزيل</div>
-                        </div>
-                        <div class="card-logo">عراقي إيكو</div>
-                        <div class="divider"></div>
-                        ${item.image_url ? `<img src="${item.image_url}" alt="${item.name_ar}" crossorigin="anonymous">` : '<div style="height:140px; background:#eee; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">لا توجد صورة</div>'}
-                        <div class="common-name">${item.name_ar}</div>
-                        <div class="latin-name">${item.scientific_name}</div>
-                        <span class="kingdom-tag">${item.class || 'غير محدد'}</span>
-                        <div class="card-desc">${item.description || 'لا يوجد وصف'}</div>
-                        <div class="status-badge" style="background:${statusColor}">${statusText}</div>
-                    </div>`;
-                }).join('');
-                htmlOutput += `</div></div>`;
-            }
-        });
-        document.getElementById('content').innerHTML = htmlOutput;
-    }
+قاعدة بيانات متكاملة للحيوانات والنباتات والكائنات البرية.
 
-    function toggleMenu(id) { const m = document.getElementById('menu-'+id); m.style.display = (m.style.display === 'block') ? 'none' : 'block'; }
-    function loginPrompt() { const e = prompt("إيميل:"); const p = prompt("كلمة المرور:"); client.auth.signInWithPassword({ email: e, password: p }).then(r => { if(r.error) alert(r.error.message); else location.reload(); }); }
-    function openModal(id = null) {
-        const modal = document.getElementById('modal');
-        const item = species.find(i => i.id === id);
-        document.getElementById('editId').value = id || '';
-        document.getElementById('n_ar').value = item ? item.name_ar : '';
-        document.getElementById('n_sci').value = item ? item.scientific_name : '';
-        document.getElementById('img').value = item ? (item.image_url || '') : '';
-        document.getElementById('desc').value = item ? (item.description || '') : '';
-        document.getElementById('kingdom').value = item ? (item.kingdom || 'حيوانات') : 'حيوانات';
-        document.getElementById('class').value = item ? (item.class || '') : '';
-        document.getElementById('conservation_status').value = item ? (item.conservation_status || 'NE') : 'NE';
-        modal.style.display = 'block';
-    }
-    async function saveItem() {
-        const n_ar = document.getElementById('n_ar').value.trim();
-        const n_sci = document.getElementById('n_sci').value.trim();
-        if (!n_ar || !n_sci) { alert("يجب تعبئة الاسم العربي والعلمي!"); return; }
-        const id = document.getElementById('editId').value;
-        const data = { 
-            name_ar: n_ar, 
-            scientific_name: n_sci, 
-            description: document.getElementById('desc').value, 
-            image_url: document.getElementById('img').value, 
-            kingdom: document.getElementById('kingdom').value, 
-            class: document.getElementById('class').value, 
-            conservation_status: document.getElementById('conservation_status').value 
-        };
-        const res = id ? await client.from('species').update(data).eq('id', id) : await client.from('species').insert([data]);
-        if (res.error) alert("خطأ: " + res.error.message); else location.reload();
-    }
-    async function deleteItem(id) { if(confirm('تأكيد الحذف؟')) { await client.from('species').delete().eq('id', id); location.reload(); } }
-    
-    function downloadCard(id) {
-        const card = document.getElementById(id);
-        document.getElementById('menu-' + id.split('-')[1]).style.display = 'none';
-        html2canvas(card, { useCORS: true, allowTaint: true, backgroundColor: isDarkMode ? "#1e1e1e" : "#ffffff" }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = 'creature.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-        });
-    }
-    init();
-</script>
+</p>
+
+<div class="searchBox">
+
+<input
+
+id="search"
+
+placeholder="ابحث باسم الكائن..."
+
+autocomplete="off">
+
+<button id="searchBtn">
+
+بحث
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="container">
+
+<div class="card">
+
+<h3 id="speciesCount">0</h3>
+
+<p>الكائنات</p>
+
+</div>
+
+<div class="card">
+
+<h3 id="categoriesCount">0</h3>
+
+<p>التصنيفات</p>
+
+</div>
+
+<div class="card">
+
+<h3>Iraq</h3>
+
+<p>الموقع</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="container">
+
+<h2 class="title">
+
+الكائنات
+
+</h2>
+
+<div id="grid" class="grid">
+
+</div>
+
+</section>
+
+<footer>
+
+<p>
+
+© Iraqi Eco
+
+</p>
+
+</footer>
+
 </body>
-</html>
+
+</html> 

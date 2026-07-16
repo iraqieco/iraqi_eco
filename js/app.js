@@ -130,3 +130,127 @@ grid.innerHTML+=`
 });
 
 }
+/* ===========================
+   نافذة إضافة الكائن
+=========================== */
+
+const addBtn = document.getElementById("addBtn");
+const addModal = document.getElementById("addModal");
+const closeModal = document.getElementById("closeModal");
+const saveBtn = document.getElementById("saveSpecies");
+
+async function checkLogin(){
+
+try{
+
+const { data:{ user } } = await supabaseClient.auth.getUser();
+
+if(user){
+addBtn.style.display="block";
+}
+
+}catch(e){}
+
+}
+
+checkLogin();
+
+addBtn.onclick = () => {
+
+addModal.classList.add("show");
+
+};
+
+closeModal.onclick = () => {
+
+addModal.classList.remove("show");
+
+};
+
+addModal.onclick = function(e){
+
+if(e.target===addModal){
+
+addModal.classList.remove("show");
+
+}
+
+};
+
+saveBtn.onclick = async function(){
+
+const result=document.getElementById("result");
+
+const obj={
+
+name_ar:document.getElementById("name_ar").value.trim(),
+
+scientific_name:document.getElementById("scientific_name").value.trim(),
+
+image_url:document.getElementById("image_url").value.trim(),
+
+description:document.getElementById("description").value.trim(),
+
+conservation_status:document.getElementById("conservation_status").value,
+
+kingdom:document.getElementById("kingdom").value,
+
+phylum:document.getElementById("phylum").value.trim(),
+
+class:document.getElementById("class").value.trim(),
+
+order_name:document.getElementById("order_name").value.trim(),
+
+family:document.getElementById("family").value.trim()
+
+};
+
+if(!obj.name_ar || !obj.scientific_name){
+
+result.innerHTML="⚠️ يجب إدخال الاسم العربي والاسم العلمي";
+
+return;
+
+}
+
+result.innerHTML="جاري الحفظ...";
+
+const { error } = await supabaseClient
+
+.from("species")
+
+.insert([obj]);
+
+if(error){
+
+result.innerHTML="❌ "+error.message;
+
+return;
+
+}
+
+result.innerHTML="✅ تمت إضافة الكائن";
+
+addModal.classList.remove("show");
+
+/* إعادة تحميل البطاقات */
+
+loadSpecies();
+
+/* تنظيف الحقول */
+
+document.querySelectorAll("#addModal input,#addModal textarea,#addModal select").forEach(el=>{
+
+if(el.tagName==="SELECT"){
+
+el.selectedIndex=0;
+
+}else{
+
+el.value="";
+
+}
+
+});
+
+};

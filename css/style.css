@@ -138,13 +138,15 @@ font-weight:bold;
 }
 
 .hero{
-
-padding:90px 0;
+padding:40px 0 30px;
 background:linear-gradient(135deg,#1b5e20,#43a047);
 color:white;
 text-align:center;
-
+border-radius:0 0 30px 30px;
+margin-bottom:30px;
 }
+
+
 
 .hero h2{
 

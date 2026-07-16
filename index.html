@@ -168,13 +168,19 @@ autocomplete="off">
 
 </div>
 
-<input id="name_ar" placeholder="الاسم العربي">
+<input
+id="name_ar"
+placeholder="الاسم العربي *"
+maxlength="150">
 
-<input id="scientific_name" placeholder="الاسم العلمي">
+<input
+id="scientific_name"
+placeholder="الاسم اللاتيني *"
+maxlength="200">
 
 <select id="kingdom">
 
-<option value="">اختر المملكة</option>
+<option value="">اختر المملكة *</option>
 
 <option value="Animalia">الحيوانات</option>
 <option value="Plantae">النباتات</option>
@@ -186,40 +192,56 @@ autocomplete="off">
 
 <select id="conservation_status">
 
-<option value="">حالة الحفظ</option>
+<option value="">اختر حالة الحفظ *</option>
 
-<option value="LC">أقل اهتمامًا (LC)</option>
-<option value="NT">قريب من التهديد (NT)</option>
-<option value="VU">معرض للخطر (VU)</option>
-<option value="EN">مهدد بالانقراض (EN)</option>
-<option value="CR">مهدد بخطر انقراض أقصى (CR)</option>
-<option value="EW">منقرض في البرية (EW)</option>
-<option value="EX">منقرض (EX)</option>
-<option value="DD">بيانات غير كافية (DD)</option>
-<option value="NE">غير مُقيّم (NE)</option>
+<option value="LC">🟢 غير مهدد (LC)</option>
+<option value="NT">🟩 قريب من التهديد (NT)</option>
+<option value="VU">🟡 معرض للخطر (VU)</option>
+<option value="EN">🟠 مهدد بالانقراض (EN)</option>
+<option value="CR">🔴 مهدد بخطر انقراض أقصى (CR)</option>
+<option value="EW">⚫ منقرض في البرية (EW)</option>
+<option value="EX">⬛ منقرض (EX)</option>
+<option value="DD">🔵 بيانات غير كافية (DD)</option>
+<option value="NE">⚪ غير مُقيّم (NE)</option>
 
 </select>
 
-<input id="image_url" placeholder="رابط الصورة">
+<input
+id="phylum"
+placeholder="الشعبة">
 
-<textarea id="description" placeholder="الوصف"></textarea>
+<input
+id="class"
+placeholder="الطائفة">
 
-<select id="phylum">
-<option value="">اختر الشعبة</option>
-</select>
+<input
+id="order_name"
+placeholder="الرتبة">
 
-<select id="class">
-<option value="">اختر الصف</option>
-</select>
+<input
+id="family"
+placeholder="الفصيلة">
 
-<select id="order_name">
-<option value="">اختر الرتبة</option>
-</select>
+<input
+id="genus"
+placeholder="الجنس">
 
-<select id="family">
-<option value="">اختر الفصيلة</option>
-  </select>
-<button id="saveSpecies" style="margin-top:20px;width:100%;padding:14px;">
+<input
+id="species_type"
+placeholder="النوع">
+
+<input
+id="image_url"
+placeholder="رابط الصورة المباشر">
+
+<textarea
+id="description"
+placeholder="الوصف"
+rows="5"></textarea>
+
+<button
+id="saveSpecies"
+style="margin-top:20px;width:100%;padding:14px;">
 حفظ الكائن
 </button>
 
@@ -228,7 +250,6 @@ autocomplete="off">
 </div>
 
 </div>
-
 <script>
 if("serviceWorker" in navigator){
 navigator.serviceWorker.register("service-worker.js");

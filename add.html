@@ -66,7 +66,13 @@ if(!user){
 location.href="login.html";
 
 return;
-
+if(
+!document.getElementById("name_ar").value.trim() ||
+!document.getElementById("scientific_name").value.trim()
+){
+document.getElementById("result").innerHTML="⚠️ يجب إدخال الاسم العربي والاسم العلمي";
+return;
+  }
 }
 
 const obj={
@@ -95,10 +101,16 @@ family:document.getElementById("family").value.trim()
 
 const {error}=await supabase.from("species").insert(obj);
 
-document.getElementById("result").innerHTML=
+if(error){
+document.getElementById("result").innerHTML="❌ فشل الإضافة";
+return;
+}
 
-error?"❌ فشل الإضافة":"✅ تمت إضافة الكائن بنجاح";
+document.getElementById("result").innerHTML="✅ تمت إضافة الكائن بنجاح";
 
+setTimeout(()=>{
+location.href="admin.html";
+},1000);
 }
 
 </script>

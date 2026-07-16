@@ -50,8 +50,8 @@ const email = document.getElementById("email").value.trim();
 const password = document.getElementById("password").value;
 const msg = document.getElementById("msg");
 
+alert(typeof supabase);
 msg.innerHTML = "جاري تسجيل الدخول...";
-
 const { data, error } = await supabase.auth.signInWithPassword({
 email,
 password

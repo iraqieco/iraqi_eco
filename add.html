@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>إضافة كائن | عراقي إيكو</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/config.js"></script>
+
+</head>
+
+<body>
+
+<div class="container" style="max-width:800px;padding:40px 0;">
+
+<div class="card">
+
+<h2 style="margin-bottom:20px;">إضافة كائن جديد</h2>
+
+<input id="name_ar" placeholder="الاسم العربي" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="scientific_name" placeholder="الاسم العلمي" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="image_url" placeholder="رابط الصورة المباشر (ImgBB)" style="width:100%;padding:12px;margin:8px 0;">
+
+<textarea id="description" placeholder="الوصف" style="width:100%;padding:12px;margin:8px 0;height:120px;"></textarea>
+
+<input id="conservation_status" placeholder="حالة الحفظ" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="kingdom" placeholder="المملكة" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="phylum" placeholder="الشعبة" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="class" placeholder="الصف" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="order_name" placeholder="الرتبة" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="family" placeholder="الفصيلة" style="width:100%;padding:12px;margin:8px 0;">
+
+<button onclick="saveSpecies()" style="margin-top:20px;width:100%;">
+إضافة الكائن
+</button>
+
+<p id="result" style="margin-top:15px;"></p>
+
+</div>
+
+</div>
+
+<script>
+
+async function saveSpecies(){
+
+const {data:{user}}=await supabase.auth.getUser();
+
+if(!user){
+
+location.href="login.html";
+
+return;
+
+}
+
+const obj={
+
+name_ar:document.getElementById("name_ar").value.trim(),
+
+scientific_name:document.getElementById("scientific_name").value.trim(),
+
+image_url:document.getElementById("image_url").value.trim(),
+
+description:document.getElementById("description").value.trim(),
+
+conservation_status:document.getElementById("conservation_status").value.trim(),
+
+kingdom:document.getElementById("kingdom").value.trim(),
+
+phylum:document.getElementById("phylum").value.trim(),
+
+class:document.getElementById("class").value.trim(),
+
+order_name:document.getElementById("order_name").value.trim(),
+
+family:document.getElementById("family").value.trim()
+
+};
+
+const {error}=await supabase.from("species").insert(obj);
+
+document.getElementById("result").innerHTML=
+
+error?"❌ فشل الإضافة":"✅ تمت إضافة الكائن بنجاح";
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -4,9 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>إضافة كائن | عراقي إيكو</title>
+<title>إضافة كائن | Iraqi Eco</title>
 
 <link rel="stylesheet" href="css/style.css">
 
@@ -24,18 +24,26 @@
 <h2 style="margin-bottom:20px;">إضافة كائن جديد</h2>
 
 <input id="name_ar" placeholder="الاسم العربي" style="width:100%;padding:12px;margin:8px 0;">
+
 <input id="scientific_name" placeholder="الاسم العلمي" style="width:100%;padding:12px;margin:8px 0;">
+
 <input id="image_url" placeholder="رابط الصورة المباشر (ImgBB)" style="width:100%;padding:12px;margin:8px 0;">
+
 <textarea id="description" placeholder="الوصف" style="width:100%;padding:12px;margin:8px 0;height:120px;"></textarea>
 
 <input id="conservation_status" placeholder="حالة الحفظ" style="width:100%;padding:12px;margin:8px 0;">
+
 <input id="kingdom" placeholder="المملكة" style="width:100%;padding:12px;margin:8px 0;">
+
 <input id="phylum" placeholder="الشعبة" style="width:100%;padding:12px;margin:8px 0;">
+
 <input id="class" placeholder="الصف" style="width:100%;padding:12px;margin:8px 0;">
+
 <input id="order_name" placeholder="الرتبة" style="width:100%;padding:12px;margin:8px 0;">
+
 <input id="family" placeholder="الفصيلة" style="width:100%;padding:12px;margin:8px 0;">
 
-<button onclick="saveSpecies()" style="margin-top:20px;width:100%;">
+<button id="saveBtn" style="margin-top:20px;width:100%;padding:12px;">
 إضافة الكائن
 </button>
 
@@ -49,57 +57,70 @@
 
 const client = window.supabase;
 
-async function saveSpecies(){
+document.getElementById("saveBtn").onclick = async function () {
 
 const result = document.getElementById("result");
 
-const { data:{ user } } = await client.auth.getUser();
+try {
 
-if(!user){
-location.href="login.html";
-return;
+if (!client) {
+    result.innerHTML = "❌ Supabase غير متصل";
+    return;
 }
 
-if(
-!document.getElementById("name_ar").value.trim() ||
-!document.getElementById("scientific_name").value.trim()
-){
-result.innerHTML="⚠️ يجب إدخال الاسم العربي والاسم العلمي";
-return;
+const { data: { user } } = await client.auth.getUser();
+
+if (!user) {
+    location.href = "login.html";
+    return;
 }
 
-const obj={
+const obj = {
 
-name_ar:document.getElementById("name_ar").value.trim(),
-scientific_name:document.getElementById("scientific_name").value.trim(),
-image_url:document.getElementById("image_url").value.trim(),
-description:document.getElementById("description").value.trim(),
-conservation_status:document.getElementById("conservation_status").value.trim(),
-kingdom:document.getElementById("kingdom").value.trim(),
-phylum:document.getElementById("phylum").value.trim(),
-class:document.getElementById("class").value.trim(),
-order_name:document.getElementById("order_name").value.trim(),
-family:document.getElementById("family").value.trim()
+name_ar: document.getElementById("name_ar").value.trim(),
+scientific_name: document.getElementById("scientific_name").value.trim(),
+image_url: document.getElementById("image_url").value.trim(),
+description: document.getElementById("description").value.trim(),
+conservation_status: document.getElementById("conservation_status").value.trim(),
+kingdom: document.getElementById("kingdom").value.trim(),
+phylum: document.getElementById("phylum").value.trim(),
+class: document.getElementById("class").value.trim(),
+order_name: document.getElementById("order_name").value.trim(),
+family: document.getElementById("family").value.trim()
 
 };
+
+if (!obj.name_ar || !obj.scientific_name) {
+    result.innerHTML = "⚠️ يجب إدخال الاسم العربي والاسم العلمي";
+    return;
+}
+
+result.innerHTML = "جاري الحفظ...";
 
 const { error } = await client
 .from("species")
 .insert([obj]);
 
-if(error){
-alert(error.message);
-result.innerHTML="❌ " + error.message;
-return;
+if (error) {
+    alert(error.message);
+    result.innerHTML = "❌ " + error.message;
+    return;
 }
 
-result.innerHTML="✅ تمت إضافة الكائن بنجاح";
+result.innerHTML = "✅ تمت إضافة الكائن بنجاح";
 
-setTimeout(()=>{
-location.href="admin.html";
-},1000);
+setTimeout(function () {
+    location.href = "admin.html";
+}, 1000);
+
+} catch (e) {
+
+alert(e.message);
+result.innerHTML = "❌ " + e.message;
 
 }
+
+};
 
 </script>
 

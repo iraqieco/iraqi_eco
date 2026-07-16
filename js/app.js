@@ -178,7 +178,9 @@ try{
 const { data:{ user } } = await supabaseClient.auth.getUser();
 
 if(user){
-addBtn.style.display="block";
+addBtn.onclick = () => {
+    addModal.classList.add("show");
+}; 
 }
 
 }catch(e){}
@@ -207,12 +209,29 @@ addModal.classList.remove("show");
 
 };
 
-saveBtn.onclick = asynaddBtn.onclick = () => {
+addBtn.onclick = () => {
     addModal.classList.add("show");
 };
-c function(e){
-e.preventDefault();
 
+saveBtn.onclick = async function (e) {
+    e.preventDefault();
+
+    const result = document.getElementById("result");
+
+    const obj = {
+        name_ar: document.getElementById("name_ar").value.trim().replace(/\s+/g," "),
+        scientific_name: document.getElementById("scientific_name").value.trim().replace(/\s+/g," "),
+        kingdom: document.getElementById("kingdom").value,
+        conservation_status: document.getElementById("conservation_status").value,
+        phylum: document.getElementById("phylum").value.trim(),
+        class: document.getElementById("class").value.trim(),
+        order_name: document.getElementById("order_name").value.trim(),
+        family: document.getElementById("family").value.trim(),
+        genus: document.getElementById("genus").value.trim(),
+        species_type: document.getElementById("species_type").value.trim(),
+        description: document.getElementById("description").value.trim(),
+        image_url: ""
+    };
 const result=document.getElementById("result");
 
 const obj={

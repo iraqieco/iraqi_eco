@@ -172,6 +172,88 @@ navigator.serviceWorker.register("service-worker.js");
 }
 </script>
 <script src="js/translate.js"></script>
+  <button id="addBtn" class="fab" style="display:none;">
++
+  </button>
+  <div id="addModal" class="modal">
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h2>إضافة كائن جديد</h2>
+
+<button class="modal-close" id="closeModal">
+×
+</button>
+
+</div>
+
+<input id="name_ar" placeholder="الاسم العربي">
+
+<input id="scientific_name" placeholder="الاسم العلمي">
+
+<select id="kingdom">
+
+<option value="">اختر المملكة</option>
+
+<option>الحيوانات</option>
+
+<option>النباتات</option>
+
+<option>الفطريات</option>
+
+<option>الطلائعيات</option>
+
+<option>البكتيريا</option>
+
+</select>
+
+<select id="conservation_status">
+
+<option value="">حالة الحفظ</option>
+
+<option value="LC">أقل اهتمامًا (LC)</option>
+
+<option value="NT">قريب من التهديد (NT)</option>
+
+<option value="VU">معرض للخطر (VU)</option>
+
+<option value="EN">مهدد بالانقراض (EN)</option>
+
+<option value="CR">مهدد بخطر انقراض أقصى (CR)</option>
+
+<option value="EW">منقرض في البرية (EW)</option>
+
+<option value="EX">منقرض (EX)</option>
+
+<option value="DD">بيانات غير كافية (DD)</option>
+
+<option value="NE">غير مُقيّم (NE)</option>
+
+</select>
+
+<input id="image_url" placeholder="رابط الصورة">
+
+<textarea id="description" placeholder="الوصف"></textarea>
+
+<input id="phylum" placeholder="الشعبة">
+
+<input id="class" placeholder="الصف">
+
+<input id="order_name" placeholder="الرتبة">
+
+<input id="family" placeholder="الفصيلة">
+
+<button id="saveSpecies" style="margin-top:20px;width:100%;padding:14px;">
+حفظ الكائن
+</button>
+
+<p id="result"></p>
+
+</div>
+
+  </div>
 </body>
 </html>
 

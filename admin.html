@@ -45,8 +45,24 @@
 
 <div class="card">
 
+
 <h2>إدارة الكائنات</h2>
 
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin:20px 0;">
+
+<a href="add.html">
+<button>➕ إضافة كائن</button>
+</a>
+
+<a href="index.html">
+<button>🏠 الرئيسية</button>
+</a>
+
+<button onclick="logout()">
+🚪 تسجيل الخروج
+</button>
+
+</div>
 <input
 id="search"
 placeholder="ابحث..."
@@ -191,8 +207,13 @@ await supabase
 load();
 
 }
+async function logout() {
+  await supabase.auth.signOut();
+  location.href = "login.html";
+}
 
 checkLogin();
+
 
 </script>
 

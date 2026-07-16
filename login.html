@@ -7,7 +7,7 @@
 
 <link rel="stylesheet" href="css/style.css">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script src="js/config.js"></script>
 
 </head>
@@ -51,26 +51,28 @@ msg.innerHTML = "جاري تسجيل الدخول...";
 
 try {
 
-const result = await supabase.auth.signInWithPassword({
-email: email,
-password: password
-});
-
-console.log(result);
-alert(JSON.stringify(result));
-
-if (result.error) {
-msg.innerHTML = result.error.message;
-return;
+if (!supabase || !supabase.auth) {
+    alert("Supabase Auth غير موجود");
+    return;
 }
 
-msg.innerHTML = "تم تسجيل الدخول بنجاح";
+const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+});
 
+if (error) {
+    alert(error.message);
+    msg.innerHTML = error.message;
+    return;
+}
+
+alert("تم تسجيل الدخول بنجاح");
 window.location.href = "add.html";
 
 } catch (e) {
 
-alert("Exception: " + e.message);
+alert(e.message);
 msg.innerHTML = e.message;
 
 }

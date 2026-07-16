@@ -209,7 +209,8 @@ addModal.classList.remove("show");
 
 };
 
-saveBtn.onclick = async function(){
+saveBtn.onclick = async function(e){
+e.preventDefault();
 
 const result=document.getElementById("result");
 

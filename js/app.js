@@ -231,12 +231,9 @@ order_name:document.getElementById("order_name").value.trim(),
 
 family:document.getElementById("family").value.trim(),
 
-"1":document.getElementById("family").value.trim(),
+genus: document.getElementById("genus").value.trim(),
 
-"2":document.getElementById("genus").value.trim(),
-
-"3":document.getElementById("species_type").value.trim(),
-
+species_type: document.getElementById("species_type").value.trim(),
 description:document.getElementById("description").value.trim(),
 
 image_url:document.getElementById("image_url").value.trim()

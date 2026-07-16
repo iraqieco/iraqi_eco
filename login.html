@@ -1,75 +1,22 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+document.getElementById("loginBtn").onclick = async () => {
 
-<head>
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const msg = document.getElementById("msg");
 
-<meta charset="UTF-8">
+  msg.innerHTML = "جاري تسجيل الدخول...";
 
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
 
-<title>تسجيل الدخول | عراقي إيكو</title>
-
-<link rel="stylesheet" href="css/style.css">
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="js/config.js"></script>
-
-</head>
-
-<body>
-
-<div class="container" style="max-width:500px;padding:60px 0;">
-
-<div class="card">
-
-<h2 style="margin-bottom:20px;text-align:center;">تسجيل الدخول</h2>
-
-<input id="email" type="email" placeholder="البريد الإلكتروني"
-style="width:100%;padding:15px;margin-bottom:15px;">
-
-<input id="password" type="password" placeholder="كلمة المرور"
-style="width:100%;padding:15px;margin-bottom:20px;">
-
-<button id="loginBtn" style="width:100%;">
-دخول
-</button>
-
-<p id="msg" style="margin-top:15px;text-align:center;"></p>
-
-</div>
-
-</div>
-
-<script>
-
-document.getElementById("loginBtn").onclick=async()=>{
-
-const email=document.getElementById("email").value.trim();
-
-const password=document.getElementById("password").value;
-
-const {error}=await supabase.auth.signInWithPassword({
-
-email,
-
-password
-
-});
-
-const msg=document.getElementById("msg");
-
-if(error){
+  if (error) {
     msg.innerHTML = error.message;
-    console.error(error);
+    alert(error.message);
     return;
-}
-location.href="add.html";
+  }
 
+  alert("تم تسجيل الدخول");
+  location.href = "add.html";
 };
-
-</script>
-
-</body>
-
-</html>

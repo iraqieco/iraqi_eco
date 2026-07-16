@@ -215,8 +215,6 @@ const result=document.getElementById("result");
 
 const obj={
 
-const obj={
-
 name_ar:document.getElementById("name_ar").value.trim().replace(/\s+/g," "),
 
 scientific_name:document.getElementById("scientific_name").value.trim().replace(/\s+/g," "),

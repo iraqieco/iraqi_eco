@@ -4,29 +4,23 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>عراقي إيكو | Iraqi Eco</title>
 
 <meta name="description" content="موسوعة الكائنات الحية في العراق">
-
 <meta name="theme-color" content="#1b5e20">
 
 <link rel="icon" href="assets/logo.svg">
-
 <link rel="manifest" href="manifest.json">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/style.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="js/config.js"></script>
-
 <script defer src="js/app.js"></script>
 
 </head>
@@ -44,7 +38,6 @@
 <div>
 
 <h1>عراقي إيكو</h1>
-
 <span>Iraqi Eco</span>
 
 </div>
@@ -54,17 +47,12 @@
 <nav>
 
 <a data-lang="home">الرئيسية</a>
-
 <a data-lang="categories">التصنيفات</a>
-
 <a data-lang="about">حول</a>
-
 <a href="login.html" data-lang="login">دخول</a>
 
 <button id="langBtn">
-
 EN
-
 </button>
 
 </nav>
@@ -78,18 +66,12 @@ EN
 <div class="container">
 
 <h2 id="heroTitle">
-
 اكتشف الكائنات الحية في العراق
-
 </h2>
 
 <p id="heroText">
-
 قاعدة بيانات متكاملة للحيوانات والنباتات والكائنات البرية.
-
 </p>
-
-
 
 </div>
 
@@ -102,7 +84,6 @@ EN
 <div class="card">
 
 <h3 id="speciesCount">0</h3>
-
 <p>الكائنات</p>
 
 </div>
@@ -110,8 +91,24 @@ EN
 <div class="card">
 
 <h3 id="categoriesCount">0</h3>
+<p>التصنيفات</p>
 
-<p>ا<div class="searchBox">
+</div>
+
+<div class="card">
+
+<h3>Iraq</h3>
+<p>الموقع</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="container" style="margin-top:30px;">
+
+<div class="searchBox">
 
 <input
 id="search"
@@ -121,34 +118,17 @@ autocomplete="off">
 <select id="kingdomFilter">
 
 <option value="">كل الممالك</option>
-
 <option value="Animalia">الحيوانات</option>
-
 <option value="Plantae">النباتات</option>
-
 <option value="Fungi">الفطريات</option>
-
 <option value="Protista">الطلائعيات</option>
-
 <option value="Monera">البكتيريا</option>
 
 </select>
 
-<button id="addBtn" style="display:none">
+<button id="addBtn" style="display:none;">
 ➕ إضافة كائن
 </button>
-
-</div>لتصنيفات</p>
-
-</div>
-
-<div class="card">
-
-<h3>Iraq</h3>
-
-<p>الموقع</p>
-
-</div>
 
 </div>
 
@@ -157,13 +137,10 @@ autocomplete="off">
 <section class="container">
 
 <h2 class="title">
-
 الكائنات
-
 </h2>
 
 <div id="grid" class="grid">
-
 </div>
 
 </section>
@@ -171,22 +148,12 @@ autocomplete="off">
 <footer>
 
 <p>
-
 © Iraqi Eco
-
 </p>
 
 </footer>
-<script>
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("service-worker.js");
-}
-</script>
-<script src="js/translate.js"></script>
-  <button id="addBtn" class="fab" style="display:none;">
-+
-  </button>
-  <div id="addModal" class="modal">
+
+<div id="addModal" class="modal">
 
 <div class="modal-content">
 
@@ -208,15 +175,11 @@ navigator.serviceWorker.register("service-worker.js");
 
 <option value="">اختر المملكة</option>
 
-<option>الحيوانات</option>
-
-<option>النباتات</option>
-
-<option>الفطريات</option>
-
-<option>الطلائعيات</option>
-
-<option>البكتيريا</option>
+<option value="Animalia">الحيوانات</option>
+<option value="Plantae">النباتات</option>
+<option value="Fungi">الفطريات</option>
+<option value="Protista">الطلائعيات</option>
+<option value="Monera">البكتيريا</option>
 
 </select>
 
@@ -225,21 +188,13 @@ navigator.serviceWorker.register("service-worker.js");
 <option value="">حالة الحفظ</option>
 
 <option value="LC">أقل اهتمامًا (LC)</option>
-
 <option value="NT">قريب من التهديد (NT)</option>
-
 <option value="VU">معرض للخطر (VU)</option>
-
 <option value="EN">مهدد بالانقراض (EN)</option>
-
 <option value="CR">مهدد بخطر انقراض أقصى (CR)</option>
-
 <option value="EW">منقرض في البرية (EW)</option>
-
 <option value="EX">منقرض (EX)</option>
-
 <option value="DD">بيانات غير كافية (DD)</option>
-
 <option value="NE">غير مُقيّم (NE)</option>
 
 </select>
@@ -249,11 +204,8 @@ navigator.serviceWorker.register("service-worker.js");
 <textarea id="description" placeholder="الوصف"></textarea>
 
 <input id="phylum" placeholder="الشعبة">
-
 <input id="class" placeholder="الصف">
-
 <input id="order_name" placeholder="الرتبة">
-
 <input id="family" placeholder="الفصيلة">
 
 <button id="saveSpecies" style="margin-top:20px;width:100%;padding:14px;">
@@ -264,7 +216,16 @@ navigator.serviceWorker.register("service-worker.js");
 
 </div>
 
-  </div>
-</body>
-</html>
+</div>
 
+<script>
+if("serviceWorker" in navigator){
+navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+<script src="js/translate.js"></script>
+
+</body>
+
+</html>

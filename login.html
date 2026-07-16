@@ -9,8 +9,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/config.js"></script>
-</head>
 
+</head>
 <body>
 
 <div class="container" style="max-width:500px;margin:60px auto;">
@@ -31,10 +31,7 @@ placeholder="كلمة المرور"
 style="width:100%;padding:12px;margin:10px 0;"
 >
 
-<button
-id="loginBtn"
-style="width:100%;padding:12px;"
->
+<button id="loginBtn" style="width:100%;padding:12px;">
 دخول
 </button>
 
@@ -50,26 +47,37 @@ const email = document.getElementById("email").value.trim();
 const password = document.getElementById("password").value;
 const msg = document.getElementById("msg");
 
-alert(typeof supabase);
 msg.innerHTML = "جاري تسجيل الدخول...";
-const { data, error } = await supabase.auth.signInWithPassword({
-email,
-password
+
+try {
+
+const result = await supabase.auth.signInWithPassword({
+email: email,
+password: password
 });
 
-if(error){
-msg.innerHTML = error.message;
-alert(error.message);
+console.log(result);
+alert(JSON.stringify(result));
+
+if (result.error) {
+msg.innerHTML = result.error.message;
 return;
 }
 
 msg.innerHTML = "تم تسجيل الدخول بنجاح";
 
-location.href = "add.html";
+window.location.href = "add.html";
+
+} catch (e) {
+
+alert("Exception: " + e.message);
+msg.innerHTML = e.message;
+
+}
 
 };
 
 </script>
 
 </body>
-  </html>
+</html>

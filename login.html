@@ -8,9 +8,6 @@
 <link rel="stylesheet" href="css/style.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-alert("window.supabase = " + typeof window.supabase);
-    </script>
 <script src="js/config.js"></script>
 
 </head>
@@ -44,6 +41,8 @@ style="width:100%;padding:12px;margin:10px 0;"
 
 <script>
 
+const client = window.supabase;
+
 document.getElementById("loginBtn").onclick = async () => {
 
 const email = document.getElementById("email").value.trim();
@@ -54,12 +53,12 @@ msg.innerHTML = "جاري تسجيل الدخول...";
 
 try {
 
-if (!supabase || !supabase.auth) {
-    alert("Supabase Auth غير موجود");
+if (!client) {
+    alert("Supabase غير موجود");
     return;
 }
 
-const { data, error } = await supabase.auth.signInWithPassword({
+const { data, error } = await client.auth.signInWithPassword({
     email,
     password
 });

@@ -41,43 +41,44 @@ style="width:100%;padding:12px;margin:10px 0;"
 
 <script>
 
-const client = window.supabase;
+const client = window.client;
 
 document.getElementById("loginBtn").onclick = async () => {
 
-const email = document.getElementById("email").value.trim();
-const password = document.getElementById("password").value;
-const msg = document.getElementById("msg");
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const msg = document.getElementById("msg");
 
-msg.innerHTML = "جاري تسجيل الدخول...";
+    msg.innerHTML = "جاري تسجيل الدخول...";
 
-try {
+    try {
 
-if (!client) {
-    alert("Supabase غير موجود");
-    return;
-}
+        if (!client) {
+            alert("Supabase Client غير موجود");
+            return;
+        }
 
-const { data, error } = await client.auth.signInWithPassword({
-    email,
-    password
-});
+        const { data, error } = await client.auth.signInWithPassword({
+            email,
+            password
+        });
 
-if (error) {
-    alert(error.message);
-    msg.innerHTML = error.message;
-    return;
-}
+        if (error) {
+            alert(error.message);
+            msg.innerHTML = error.message;
+            return;
+        }
 
-alert("تم تسجيل الدخول بنجاح");
-window.location.href = "add.html";
+        msg.innerHTML = "تم تسجيل الدخول بنجاح";
 
-} catch (e) {
+        window.location.href = "add.html";
 
-alert(e.message);
-msg.innerHTML = e.message;
+    } catch (e) {
 
-}
+        alert(e.message);
+        msg.innerHTML = e.message;
+
+    }
 
 };
 

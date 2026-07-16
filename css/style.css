@@ -524,3 +524,33 @@ background:#1976D2;
 .status-ne{
 background:#9E9E9E;
   }
+.searchBox select{
+
+padding:16px;
+border:none;
+border-radius:12px;
+font-size:17px;
+min-width:180px;
+background:white;
+cursor:pointer;
+
+}
+
+#addBtn{
+
+background:#1b5e20;
+color:#fff;
+font-weight:bold;
+padding:16px 24px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+transition:.25s;
+
+}
+
+#addBtn:hover{
+
+background:#2e7d32;
+
+  }

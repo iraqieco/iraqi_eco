@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">
+<circle cx="256" cy="256" r="240" fill="#1b5e20"/>
+<path d="M256 110
+C330 170 360 250 280 340
+C235 300 215 240 256 110Z"
+fill="#ffffff"/>
+<path d="M256 110
+C180 170 150 250 230 340
+C277 300 297 240 256 110Z"
+fill="#81c784"/>
+<text x="256" y="430"
+font-size="48"
+text-anchor="middle"
+fill="white"
+font-family="Arial">
+IE
+</text>
+</svg>

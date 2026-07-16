@@ -232,34 +232,8 @@ saveBtn.onclick = async function (e) {
         description: document.getElementById("description").value.trim(),
         image_url: ""
     };
-const result=document.getElementById("result");
-
-const obj={
-
-name_ar:document.getElementById("name_ar").value.trim().replace(/\s+/g," "),
-
-scientific_name:document.getElementById("scientific_name").value.trim().replace(/\s+/g," "),
-
-kingdom:document.getElementById("kingdom").value,
-
-conservation_status:document.getElementById("conservation_status").value,
-
-phylum:document.getElementById("phylum").value.trim(),
-
-class:document.getElementById("class").value.trim(),
-
-order_name:document.getElementById("order_name").value.trim(),
-
-family:document.getElementById("family").value.trim(),
-
-genus: document.getElementById("genus").value.trim(),
-
-species_type: document.getElementById("species_type").value.trim(),
-description:document.getElementById("description").value.trim(),
 
 
-image_url: ""
-};
 
 if(!obj.name_ar || !obj.scientific_name){
 

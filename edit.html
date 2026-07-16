@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>تعديل كائن | عراقي إيكو</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/config.js"></script>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="container">
+
+<a href="admin.html" class="logo">
+
+<img src="assets/logo.svg">
+
+<div>
+
+<h1>تعديل الكائن</h1>
+
+<span>Iraqi Eco</span>
+
+</div>
+
+</a>
+
+</div>
+
+</header>
+
+<section class="container" style="padding:40px 0;">
+
+<div class="card">
+
+<h2>تعديل البيانات</h2>
+
+<img id="preview"
+src="assets/no-image.svg"
+style="width:100%;max-height:350px;object-fit:cover;border-radius:15px;margin-bottom:20px;">
+
+<input id="name_ar" placeholder="الاسم العربي" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="scientific_name" placeholder="الاسم العلمي" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="image_url" placeholder="رابط الصورة" style="width:100%;padding:12px;margin:8px 0;">
+
+<textarea id="description" placeholder="الوصف" style="width:100%;height:120px;padding:12px;margin:8px 0;"></textarea>
+
+<input id="conservation_status" placeholder="حالة الحفظ" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="kingdom" placeholder="المملكة" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="phylum" placeholder="الشعبة" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="class" placeholder="الصف" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="order_name" placeholder="الرتبة" style="width:100%;padding:12px;margin:8px 0;">
+
+<input id="family" placeholder="الفصيلة" style="width:100%;padding:12px;margin:8px 0;">
+
+<button onclick="save()"
+style="width:100%;margin-top:20px;">
+
+حفظ التعديلات
+
+</button>
+
+<p id="msg"></p>
+
+</div>
+
+</section>
+
+<script>
+
+const id=new URLSearchParams(location.search).get("id");
+
+async function load(){
+
+const {data}=await supabase
+
+.from("species")
+
+.select("*")
+
+.eq("id",id)
+
+.single();
+
+if(!data){
+
+location.href="admin.html";
+
+return;
+
+}
+
+for(const key in data){
+
+const el=document.getElementById(key);
+
+if(el) el.value=(data[key]||"").trim();
+
+}
+
+preview.src=data.image_url?.trim()||"assets/no-image.svg";
+
+}
+
+image_url.oninput=()=>{
+
+preview.src=image_url.value.trim()||"assets/no-image.svg";
+
+};
+
+preview.onerror=()=>{
+
+preview.src="assets/no-image.svg";
+
+};
+
+async function save(){
+
+const obj={
+
+name_ar:name_ar.value.trim(),
+
+scientific_name:scientific_name.value.trim(),
+
+image_url:image_url.value.trim(),
+
+description:description.value.trim(),
+
+conservation_status:conservation_status.value.trim(),
+
+kingdom:kingdom.value.trim(),
+
+phylum:phylum.value.trim(),
+
+class:document.getElementById("class").value.trim(),
+
+order_name:order_name.value.trim(),
+
+family:family.value.trim()
+
+};
+
+const {error}=await supabase
+
+.from("species")
+
+.update(obj)
+
+.eq("id",id);
+
+msg.innerHTML=
+
+error?
+
+"❌ فشل الحفظ"
+
+:
+
+"✅ تم حفظ التعديلات";
+
+}
+
+load();
+
+</script>
+
+</body>
+
+</html>

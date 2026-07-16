@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>لوحة الإدارة | عراقي إيكو</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/config.js"></script>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="container">
+
+<a href="index.html" class="logo">
+
+<img src="assets/logo.svg">
+
+<div>
+
+<h1>لوحة الإدارة</h1>
+
+<span>Iraqi Eco Dashboard</span>
+
+</div>
+
+</a>
+
+</div>
+
+</header>
+
+<section class="container" style="padding:40px 0;">
+
+<div class="card">
+
+<h2>إدارة الكائنات</h2>
+
+<input
+id="search"
+placeholder="ابحث..."
+style="width:100%;padding:15px;margin:20px 0;">
+
+<div id="list"></div>
+
+</div>
+
+</section>
+
+<script>
+
+let species=[];
+
+async function checkLogin(){
+
+const {data:{user}}=await supabase.auth.getUser();
+
+if(!user){
+
+location.href="login.html";
+
+return;
+
+}
+
+load();
+
+}
+
+async function load(){
+
+const {data}=await supabase
+
+.from("species")
+
+.select("*")
+
+.order("id");
+
+species=data||[];
+
+render(species);
+
+}
+
+function render(arr){
+
+const list=document.getElementById("list");
+
+list.innerHTML=arr.map(i=>`
+
+<div style="display:flex;justify-content:space-between;align-items:center;padding:15px;border-bottom:1px solid #ddd;gap:10px;">
+
+<div>
+
+<b>${(i.name_ar||"غير محدد").trim()||"غير محدد"}</b>
+
+<br>
+
+<small>${(i.scientific_name||"غير محدد").trim()||"غير محدد"}</small>
+
+</div>
+
+<div>
+
+<button onclick="editItem(${i.id})">
+
+✏️ تعديل
+
+</button>
+
+<button onclick="deleteItem(${i.id})">
+
+🗑 حذف
+
+</button>
+
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+search.oninput=function(){
+
+const q=this.value
+
+.toLowerCase()
+
+.replace(/\s+/g,"");
+
+render(
+
+species.filter(i=>
+
+(i.name_ar||"")
+
+.toLowerCase()
+
+.replace(/\s+/g,"")
+
+.includes(q)
+
+||
+
+(i.scientific_name||"")
+
+.toLowerCase()
+
+.replace(/\s+/g,"")
+
+.includes(q)
+
+)
+
+);
+
+};
+
+function editItem(id){
+
+location.href="edit.html?id="+id;
+
+}
+
+async function deleteItem(id){
+
+if(!confirm("هل تريد حذف هذا الكائن؟")) return;
+
+await supabase
+
+.from("species")
+
+.delete()
+
+.eq("id",id);
+
+load();
+
+}
+
+checkLogin();
+
+</script>
+
+</body>
+
+</html>

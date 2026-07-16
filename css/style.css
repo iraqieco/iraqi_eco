@@ -357,3 +357,170 @@ width:100%;
 }
 
   }
+/* ===========================
+   زر إضافة كائن العائم
+=========================== */
+
+.fab{
+position:fixed;
+bottom:25px;
+left:25px;
+width:65px;
+height:65px;
+border:none;
+border-radius:50%;
+background:var(--primary);
+color:#fff;
+font-size:34px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+z-index:9999;
+transition:.25s;
+}
+
+.fab:hover{
+background:var(--primary-light);
+transform:scale(1.08);
+}
+
+/* ===========================
+   النافذة المنبثقة
+=========================== */
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+z-index:9998;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.modal.show{
+display:flex;
+}
+
+.modal-content{
+
+background:#fff;
+width:min(850px,100%);
+max-height:90vh;
+overflow:auto;
+padding:30px;
+border-radius:20px;
+box-shadow:var(--shadow);
+
+}
+
+.modal-header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+
+}
+
+.modal-close{
+
+border:none;
+background:#e53935;
+color:#fff;
+width:40px;
+height:40px;
+border-radius:50%;
+cursor:pointer;
+font-size:22px;
+
+}
+
+.modal input,
+.modal textarea,
+.modal select{
+
+width:100%;
+padding:12px;
+margin:8px 0;
+border:1px solid var(--border);
+border-radius:10px;
+font-size:15px;
+
+}
+
+.modal textarea{
+
+min-height:120px;
+resize:vertical;
+
+}
+
+/* ===========================
+   شارات حالة الحفظ
+=========================== */
+
+.badge{
+display:inline-block;
+padding:7px 14px;
+border-radius:30px;
+font-size:13px;
+font-weight:bold;
+color:#fff;
+}
+
+/* LC */
+
+.status-lc{
+background:#2e7d32;
+}
+
+/* NT */
+
+.status-nt{
+background:#7CB342;
+}
+
+/* VU */
+
+.status-vu{
+background:#FBC02D;
+color:#222;
+}
+
+/* EN */
+
+.status-en{
+background:#F57C00;
+}
+
+/* CR */
+
+.status-cr{
+background:#D32F2F;
+}
+
+/* EW */
+
+.status-ew{
+background:#616161;
+}
+
+/* EX */
+
+.status-ex{
+background:#000;
+}
+
+/* DD */
+
+.status-dd{
+background:#1976D2;
+}
+
+/* NE */
+
+.status-ne{
+background:#9E9E9E;
+  }

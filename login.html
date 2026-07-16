@@ -60,13 +60,10 @@ password
 const msg=document.getElementById("msg");
 
 if(error){
-
-msg.innerHTML="فشل تسجيل الدخول";
-
-return;
-
+    msg.innerHTML = error.message;
+    console.error(error);
+    return;
 }
-
 location.href="add.html";
 
 };

@@ -5,7 +5,7 @@ if (!grid) return;
 
 grid.innerHTML = "<p>جاري التحميل...</p>";
 
-const { data, error } = await supabase
+const { data, error } = await supabaseClient
 .from("species")
 .select("*")
 .order("name_ar");
@@ -79,7 +79,7 @@ search.addEventListener("input",async function(){
 
 const value=this.value.replace(/\s+/g,"").trim();
 
-let query=supabase.from("species").select("*");
+let query=supabaseClient.from("species").select("*");
 
 if(value!==""){
 query=query.or(`name_ar.ilike.%${value}%,scientific_name.ilike.%${value}%`);

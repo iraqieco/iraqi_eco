@@ -1,66 +1,66 @@
 async function loadSpecies() {
 
 const grid = document.getElementById("grid");
-
 if (!grid) return;
 
 grid.innerHTML = "<p>جاري التحميل...</p>";
 
-let { data, error } = await supabase
+const { data, error } = await supabase
 .from("species")
 .select("*")
-.order("id");
+.order("name_ar");
 
 if (error) {
-
 grid.innerHTML = "<p>حدث خطأ أثناء تحميل البيانات</p>";
-
+console.log(error);
 return;
-
 }
 
-document.getElementById("speciesCount").textContent = data.length;
+const speciesCount = document.getElementById("speciesCount");
+if (speciesCount) speciesCount.textContent = data.length;
 
-const categories = [...new Set(data.map(i => (i.kingdom || "").trim()).filter(Boolean))];
+const categories = [...new Set(
+data.map(i => (i.kingdom || "").trim()).filter(Boolean)
+)];
 
-document.getElementById("categoriesCount").textContent = categories.length;
+const categoriesCount = document.getElementById("categoriesCount");
+if (categoriesCount) categoriesCount.textContent = categories.length;
 
 grid.innerHTML = "";
 
-data.forEach(item => {
+data.forEach(item=>{
 
-const image = item.image_url?.trim() || "assets/no-image.svg";
+const image=(item.image_url||"").trim()||"assets/no-image.svg";
 
-const name = item.name_ar?.trim() || "غير محدد";
+const name=(item.name_ar||"").trim()||"غير محدد";
 
-const scientific = item.scientific_name?.trim() || "غير محدد";
+const scientific=(item.scientific_name||"").trim()||"غير محدد";
 
-const status = item.conservation_status?.trim() || "غير محدد";
+const status=(item.conservation_status||"").trim()||"غير محدد";
 
-const card = document.createElement("div");
+const className=(item.class||"").trim()||"غير محدد";
 
-card.className = "speciesCard";
+const card=document.createElement("div");
+card.className="speciesCard";
 
-card.innerHTML = `
-
+card.innerHTML=`
 <img src="${image}" loading="lazy">
 
 <div class="speciesBody">
 
 <h3>${name}</h3>
 
-<p>${scientific}</p>
+<p><strong>${scientific}</strong></p>
+
+<p>Class : ${className}</p>
 
 <span class="badge">${status}</span>
 
 </div>
-
 `;
 
-card.onclick = () => {
-
-location.href = `species.html?id=${item.id}`;
-
+card.onclick=()=>{
+location.href=`species.html?id=${item.id}`;
 };
 
 grid.appendChild(card);
@@ -71,58 +71,58 @@ grid.appendChild(card);
 
 loadSpecies();
 
-const search = document.getElementById("search");
+const search=document.getElementById("search");
 
-if (search) {
+if(search){
 
-search.addEventListener("input", async function () {
+search.addEventListener("input",async function(){
 
-const value = this.value.replace(/\s+/g, "").trim();
+const value=this.value.replace(/\s+/g,"").trim();
 
-let query = supabase.from("species").select("*");
+let query=supabase.from("species").select("*");
 
-if (value !== "") {
-
-query = query.ilike("name_ar", `%${value}%`);
-
+if(value!==""){
+query=query.or(`name_ar.ilike.%${value}%,scientific_name.ilike.%${value}%`);
 }
 
-const { data } = await query;
+const {data,error}=await query.order("name_ar");
 
-const grid = document.getElementById("grid");
+if(error)return;
 
-grid.innerHTML = "";
+const grid=document.getElementById("grid");
 
-data.forEach(item => {
+grid.innerHTML="";
 
-const image = item.image_url?.trim() || "assets/no-image.svg";
+data.forEach(item=>{
 
-const name = item.name_ar?.trim() || "غير محدد";
+const image=(item.image_url||"").trim()||"assets/no-image.svg";
 
-const scientific = item.scientific_name?.trim() || "غير محدد";
+const name=(item.name_ar||"").trim()||"غير محدد";
 
-const status = item.conservation_status?.trim() || "غير محدد";
+const scientific=(item.scientific_name||"").trim()||"غير محدد";
 
-grid.innerHTML += `
+const status=(item.conservation_status||"").trim()||"غير محدد";
 
-<div class="speciesCard"
+const className=(item.class||"").trim()||"غير محدد";
 
-onclick="location.href='species.html?id=${item.id}'">
+grid.innerHTML+=`
+<div class="speciesCard" onclick="location.href='species.html?id=${item.id}'">
 
-<img src="${image}">
+<img src="${image}" loading="lazy">
 
 <div class="speciesBody">
 
 <h3>${name}</h3>
 
-<p>${scientific}</p>
+<p><strong>${scientific}</strong></p>
+
+<p>Class : ${className}</p>
 
 <span class="badge">${status}</span>
 
 </div>
 
 </div>
-
 `;
 
 });

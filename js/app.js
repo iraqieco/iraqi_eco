@@ -1,3 +1,28 @@
+
+const statusMap = {
+  "EX": { text: "منقرض", color: "#000000" },
+  "EW": { text: "منقرض في البرية", color: "#555555" },
+  "CR": { text: "مهدد بخطر انقراض أقصى", color: "#D32F2F" },
+  "EN": { text: "مهدد بالانقراض", color: "#F57C00" },
+  "VU": { text: "معرض للخطر", color: "#FBC02D" },
+  "NT": { text: "قريب من التهديد", color: "#7CB342" },
+  "LC": { text: "غير مهدد", color: "#2E7D32" },
+  "DD": { text: "بيانات غير كافية", color: "#1976D2" },
+  "NE": { text: "غير مقيم", color: "#9E9E9E" }
+};
+
+function getStatus(status){
+  status = (status || "").trim().toUpperCase();
+
+  if(statusMap[status]){
+    return statusMap[status];
+  }
+
+  return {
+    text: status || "غير محدد",
+    color: "#607D8B"
+  };
+} 
 async function loadSpecies() {
 
 const grid = document.getElementById("grid");

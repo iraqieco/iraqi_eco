@@ -61,7 +61,7 @@ const name=(item.name_ar||"").trim()||"غير محدد";
 
 const scientific=(item.scientific_name||"").trim()||"غير محدد";
 
-const status=(item.conservation_status||"").trim()||"غير محدد";
+const statusInfo = getStatus(item.conservation_status);
 
 const className=(item.class||"").trim()||"غير محدد";
 
@@ -79,7 +79,11 @@ card.innerHTML=`
 
 <p>Class : ${className}</p>
 
-<span class="badge">${status}</span>
+<span
+class="badge"
+style="background:${statusInfo.color};color:#fff;">
+${statusInfo.text}
+</span>
 
 </div>
 `;

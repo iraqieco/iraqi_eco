@@ -189,8 +189,11 @@ checkLogin();
 
 addBtn.onclick = () => {
 
-addModal.classList.add("show");
-
+setTimeout(() => {
+    result.innerHTML = "✅ تمت إضافة الكائن";
+    loadSpecies();
+    addModal.classList.remove("show");
+}, 1500);
 };
 
 closeModal.onclick = () => {

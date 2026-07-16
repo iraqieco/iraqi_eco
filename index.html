@@ -72,7 +72,29 @@ EN
 <p id="heroText">
 قاعدة بيانات متكاملة للحيوانات والنباتات والكائنات البرية.
 </p>
+<div class="searchBox">
 
+<input
+id="search"
+placeholder="ابحث باسم الكائن..."
+autocomplete="off">
+
+<select id="kingdomFilter">
+
+<option value="">كل الممالك</option>
+<option value="Animalia">الحيوانات</option>
+<option value="Plantae">النباتات</option>
+<option value="Fungi">الفطريات</option>
+<option value="Protista">الطلائعيات</option>
+<option value="Monera">البكتيريا</option>
+
+</select>
+
+<button id="addBtn" style="display:none;">
+➕ إضافة كائن
+</button>
+
+</div>
 </div>
 
 </section>

@@ -189,11 +189,6 @@ checkLogin();
 
 addBtn.onclick = () => {
 
-setTimeout(() => {
-    result.innerHTML = "✅ تمت إضافة الكائن";
-    loadSpecies();
-    addModal.classList.remove("show");
-}, 1500);
 };
 
 closeModal.onclick = () => {
@@ -212,7 +207,10 @@ addModal.classList.remove("show");
 
 };
 
-saveBtn.onclick = async function(e){
+saveBtn.onclick = asynaddBtn.onclick = () => {
+    addModal.classList.add("show");
+};
+c function(e){
 e.preventDefault();
 
 const result=document.getElementById("result");
@@ -281,13 +279,12 @@ return;
 
 }
 
-result.innerHTML="✅ تمت إضافة الكائن";
+result.innerHTML = "✅ تمت إضافة الكائن";
 
-addModal.classList.remove("show");
-
-/* إعادة تحميل البطاقات */
-
-loadSpecies();
+setTimeout(() => {
+    addModal.classList.remove("show");
+    loadSpecies();
+}, 1500);
 
 /* تنظيف الحقول */
 

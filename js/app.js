@@ -236,8 +236,8 @@ genus: document.getElementById("genus").value.trim(),
 species_type: document.getElementById("species_type").value.trim(),
 description:document.getElementById("description").value.trim(),
 
-image_url:document.getElementById("image_url").value.trim()
 
+image_url: ""
 };
 
 if(!obj.name_ar || !obj.scientific_name){

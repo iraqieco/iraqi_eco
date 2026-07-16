@@ -286,3 +286,41 @@ el.value="";
 });
 
 };
+const kingdom = document.getElementById("kingdom");
+const phylum = document.getElementById("phylum");
+const classSelect = document.getElementById("class");
+const order = document.getElementById("order_name");
+const family = document.getElementById("family");
+
+function resetSelect(select, text) {
+    select.innerHTML = `<option value="">${text}</option>`;
+}
+
+if (kingdom) {
+
+kingdom.addEventListener("change", function () {
+
+resetSelect(phylum, "اختر الشعبة");
+resetSelect(classSelect, "اختر الصف");
+resetSelect(order, "اختر الرتبة");
+resetSelect(family, "اختر الفصيلة");
+
+const kingdomData = taxonomy[this.value];
+
+if (!kingdomData) return;
+
+Object.keys(kingdomData.phylum).forEach(function(name){
+
+const option = document.createElement("option");
+
+option.value = name;
+
+option.textContent = name;
+
+phylum.appendChild(option);
+
+});
+
+});
+
+}

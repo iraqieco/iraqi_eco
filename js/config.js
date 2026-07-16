@@ -8,4 +8,4 @@ const supabase = window.supabase.createClient(
   SUPABASE_KEY
 );
 
-window.supabaseClient = supabase;
+window.supabase = supabase;

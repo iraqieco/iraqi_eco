@@ -576,13 +576,11 @@ function deleteSpecies(id) {
 }
 
 async function downloadCard(id) {
-
     document.querySelectorAll(".cardMenu").forEach(e => e.remove());
 
     const card = document.querySelector(`[data-id="${id}"]`);
 
     if (!card) {
-        alert("تعذر العثور على البطاقة");
         return;
     }
 
@@ -597,4 +595,3 @@ async function downloadCard(id) {
     link.href = canvas.toDataURL("image/png");
     link.click();
 }
-

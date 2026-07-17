@@ -565,3 +565,20 @@ window.addEventListener("click", () => {
     }
 
 });
+function openCardMenu(event, id) {
+    event.stopPropagation();
+
+    const loggedIn = addBtn && addBtn.style.display === "block";
+
+    if (loggedIn) {
+        alert(
+`اختر العملية:
+
+• تعديل
+• حذف
+• تنزيل البطاقة`
+        );
+    } else {
+        alert("يمكنك تنزيل البطاقة فقط.\nسجل الدخول للوصول إلى التعديل والحذف.");
+    }
+}

@@ -21,62 +21,67 @@ async function loadSpecies() {
         return;
     }
 
-    document.title = data.name_ar + " | Iraqi Eco";
+   document.title = data.name_ar + " | Iraqi Eco";
 
-    content.innerHTML = `
+   content.innerHTML = `
 
-    <div class="species-page">
+<div class="species-page">
 
-        <img class="species-image"
-        src="${data.image_url || "assets/no-image.svg"}">
+    <img class="species-image"
+         src="${data.image_url || "assets/no-image.svg"}"
+         alt="${data.name_ar}">
 
-        <div class="species-info">
+    <div class="species-info">
 
-            <h1>${data.name_ar}</h1>
+        <h1>${data.name_ar}</h1>
 
-            <h2>${data.scientific_name || "-"}</h2>
+        <div class="scientific-name">
+            ${data.scientific_name || "-"}
+        </div>
 
+        <div class="status-box">
             <span class="badge">
                 ${data.conservation_status || "غير معروف"}
             </span>
+        </div>
 
-            <p>
-                ${data.description || "لا يوجد وصف."}
-            </p>
+        <p class="species-description">
+            ${data.description || "لا يوجد وصف."}
+        </p>
 
-            <table>
+        <table class="species-table">
 
-                <tr>
-                    <td>المملكة</td>
-                    <td>${data.kingdom || "-"}</td>
-                </tr>
+            <tr>
+                <td>المملكة</td>
+                <td>${data.kingdom || "-"}</td>
+            </tr>
 
-                <tr>
-                    <td>الشعبة</td>
-                    <td>${data.phylum || "-"}</td>
-                </tr>
+            <tr>
+                <td>الشعبة</td>
+                <td>${data.phylum || "-"}</td>
+            </tr>
 
-                <tr>
-                    <td>الصف</td>
-                    <td>${data.class || "-"}</td>
-                </tr>
+            <tr>
+                <td>الصف</td>
+                <td>${data.class || "-"}</td>
+            </tr>
 
-                <tr>
-                    <td>الرتبة</td>
-                    <td>${data.order_name || "-"}</td>
-                </tr>
+            <tr>
+                <td>الرتبة</td>
+                <td>${data.order_name || "-"}</td>
+            </tr>
 
-                <tr>
-                    <td>الفصيلة</td>
-                    <td>${data.family || "-"}</td>
-                </tr>
+            <tr>
+                <td>الفصيلة</td>
+                <td>${data.family || "-"}</td>
+            </tr>
 
-            </table>
+        </table>
 
-            <br>
+        <div class="species-buttons">
 
             <button onclick="copyLink()">
-                نسخ رابط الصفحة
+                نسخ الرابط
             </button>
 
             <button onclick="sharePage()">
@@ -87,7 +92,9 @@ async function loadSpecies() {
 
     </div>
 
-    `;
+</div>
+
+`; 
 
 }
 

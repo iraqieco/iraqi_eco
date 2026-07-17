@@ -10,7 +10,7 @@ async function loadSpecies() {
         return;
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await client
         .from("species")
         .select("*")
         .eq("id", id)

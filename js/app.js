@@ -539,59 +539,34 @@ if (saveBtn) {
 }
 let currentSpeciesId = null;
 // استبدل التعريف القديم بـ async function
-async function openCardMenu(event, id) {
-    event.stopPropagation();
-    document.querySelectorAll(".cardMenu").forEach(e => e.remove());
-
-    // التحقق الفعلي من الجلسة في Supabase
-    const { data: { session } } = await db.auth.getSession();
-    const isAuthorized = !!session; 
-
-    const menu = document.createElement("div");
-    menu.className = "cardMenu";
-
-    // بناء القائمة بناءً على الصلاحية
-    menu.innerHTML = isAuthorized
-        ? `
-        <button onclick="editSpecies('${id}')">✏️ تعديل</button>
-        <button onclick="deleteSpecies('${id}')">🗑 حذف</button>
-        <button onclick="downloadCard('${id}')">📥 تنزيل البطاقة</button>
-        `
-        : `
-        <button onclick="downloadCard('${id}')">📥 تنزيل البطاقة</button>
-        `;
-
-    event.target.parentElement.appendChild(menu);
-}
-
-document.addEventListener("click", () => {
-    document.querySelectorAll(".cardMenu").forEach(e => e.remove());
-});
-function editSpecies(id) {
-    alert("تعديل: " + id);
-}
-
-function deleteSpecies(id) {
-    alert("حذف: " + id);
-}
-
 async function downloadCard(id) {
+    event.stopPropagation(); // منع انتقال الضغطة لأي عنصر آخر
     document.querySelectorAll(".cardMenu").forEach(e => e.remove());
 
     const card = document.querySelector(`[data-id="${id}"]`);
+    if (!card) return;
 
-    if (!card) {
-        return;
-    }
+    // التأكد من إخفاء القائمة قبل التصوير
+    const menu = card.querySelector(".cardMenu");
+    if (menu) menu.style.display = "none";
 
     const canvas = await html2canvas(card, {
         scale: 2,
-        backgroundColor: "#ffffff",
-        useCORS: true
+        useCORS: true,
+        backgroundColor: "#ffffff"
     });
 
+    // إنشاء رابط التنزيل بشكل إجباري
+    const dataUrl = canvas.toDataURL("image/png");
     const link = document.createElement("a");
+    link.href = dataUrl;
     link.download = `species-${id}.png`;
-    link.href = canvas.toDataURL("image/png");
+    
+    // إخفاء الرابط وإضافته للمستند ثم الضغط عليه برمجياً
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
+
+    // إعادة القائمة إذا كانت موجودة
+    if (menu) menu.style.display = "block";
 }

@@ -19,8 +19,8 @@ async function loadSpecies() {
     if (error || !data) {
         content.innerHTML = "<h2>تعذر تحميل البيانات</h2>";
         return;
-    }
 
+    }
    document.title = data.name_ar + " | Iraqi Eco";
 
    

@@ -43,6 +43,7 @@ async function loadSpecies() {
     try {
 
         grid.innerHTML = `
+        
         <div style="text-align:center;padding:40px;">
             جاري تحميل الكائنات...
         </div>
@@ -148,7 +149,11 @@ function renderSpecies() {
         card.className = "speciesCard";
 
         card.innerHTML = `
-
+<button
+class="cardMenuBtn"
+onclick="openCardMenu(event,'${item.id}')">
+⋮
+</button>
             <img
                 src="${image}"
                 loading="lazy"

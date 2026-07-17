@@ -1,403 +1,157 @@
-:root{
-
---primary:#1b5e20;
---primary-light:#2e7d32;
---secondary:#43a047;
---bg:#f4f7f3;
---card:#ffffff;
---text:#222;
---border:#e0e0e0;
---shadow:0 10px 25px rgba(0,0,0,.08);
-
-}
-
 *{
-
 margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:"Cairo",sans-serif;
-
-}
-
-html{
-
-scroll-behavior:smooth;
-
 }
 
 body{
-
-background:var(--bg);
-color:var(--text);
-line-height:1.7;
-
-}
-
-a{
-
-text-decoration:none;
-color:inherit;
-
-}
-
-img{
-
-max-width:100%;
-display:block;
-
-}
-
-.container{
-
-width:min(1200px,92%);
-margin:auto;
-
-}
-
-.header{
-
-background:white;
-box-shadow:var(--shadow);
-position:sticky;
-top:0;
-z-index:1000;
-
-}
-
-.header .container{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 0;
-
-}
-
-.logo{
-
-display:flex;
-align-items:center;
-gap:15px;
-
-}
-
-.logo img{
-
-width:55px;
-height:55px;
-border-radius:50%;
-
-}
-
-.logo h1{
-
-font-size:24px;
-color:var(--primary);
-
-}
-
-.logo span{
-
-font-size:13px;
-color:#666;
-
-}
-
-nav{
-
-display:flex;
-gap:18px;
-align-items:center;
-
-}
-
-nav a{
-
-font-weight:700;
-transition:.3s;
-
-}
-
-nav a:hover{
-
-color:var(--primary);
-
-}
-
-nav button{
-
-background:var(--primary);
-color:white;
-border:none;
-padding:10px 18px;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
-
+background:#f4f7f4;
+color:#222;
 }
 
 .hero{
-padding:40px 0 30px;
-background:linear-gradient(135deg,#1b5e20,#43a047);
-color:white;
+background:linear-gradient(135deg,#1b5e20,#2e7d32);
+color:#fff;
+padding:70px 20px;
 text-align:center;
-border-radius:0 0 30px 30px;
-margin-bottom:30px;
+border-radius:0 0 25px 25px;
 }
 
-
-
-.hero h2{
-
-font-size:38px;
+.hero h1{
+font-size:42px;
 margin-bottom:15px;
-
 }
 
 .hero p{
-
 font-size:18px;
 opacity:.9;
-margin-bottom:30px;
-
 }
 
-.searchBox{
-
-display:flex;
-justify-content:center;
-gap:10px;
-flex-wrap:wrap;
-
+.searchSection{
+max-width:1100px;
+margin:-30px auto 25px;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:15px;
+padding:0 15px;
 }
 
-.searchBox input{
-
-width:500px;
-max-width:100%;
-padding:16px;
+.searchSection input,
+.searchSection select{
+padding:14px;
 border:none;
 border-radius:12px;
-font-size:18px;
-
-}
-
-.searchBox button{
-
-background:white;
-color:var(--primary);
-padding:16px 24px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-font-weight:bold;
-
+background:#fff;
+font-size:16px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
 }
 
 .stats{
-
-margin-top:-40px;
-padding-bottom:40px;
-
-}
-
-.stats .container{
-
+max-width:1100px;
+margin:auto;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+padding:15px;
 }
 
-.card{
-
-background:white;
-padding:30px;
-border-radius:18px;
-box-shadow:var(--shadow);
+.statBox{
+background:#fff;
+padding:25px;
+border-radius:16px;
 text-align:center;
-
+box-shadow:0 5px 15px rgba(0,0,0,.08);
 }
 
-.card h3{
-
+.statBox h2{
+color:#2e7d32;
 font-size:34px;
-color:var(--primary);
-
+margin-bottom:8px;
 }
 
-.title{
+.toolbar{
+max-width:1100px;
+margin:20px auto;
+padding:0 15px;
+}
 
-margin:40px 0 25px;
-font-size:34px;
-color:var(--primary);
-
+#addBtn{
+background:#2e7d32;
+color:#fff;
+border:none;
+padding:14px;
+border-radius:12px;
+width:100%;
+font-size:18px;
+cursor:pointer;
 }
 
 .grid{
-
+max-width:1100px;
+margin:auto;
+padding:15px;
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-gap:25px;
-padding-bottom:60px;
-
+gap:20px;
 }
 
 .speciesCard{
-
-background:white;
+background:#fff;
 border-radius:18px;
 overflow:hidden;
-box-shadow:var(--shadow);
-transition:.3s;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
 cursor:pointer;
-
-}
-
-.speciesCard:hover{
-
-transform:translateY(-6px);
-
-}
-
-.speciesCard img{
-
-width:100%;
-height:220px;
-object-fit:cover;
-
-}
-
-.speciesBody{
-
-padding:18px;
-
-}
-
-.speciesBody h3{
-
-color:var(--primary);
-margin-bottom:10px;
-
-}
-
-.speciesBody p{
-
-color:#666;
-font-size:15px;
-margin-bottom:8px;
-
-}
-
-.badge{
-
-display:inline-block;
-padding:6px 12px;
-background:#e8f5e9;
-color:var(--primary);
-border-radius:20px;
-font-size:13px;
-font-weight:bold;
-
-}
-
-footer{
-
-background:var(--primary);
-color:white;
-text-align:center;
-padding:25px;
-margin-top:40px;
-
-}
-
-@media(max-width:768px){
-
-.header .container{
-
-flex-direction:column;
-gap:15px;
-
-}
-
-nav{
-
-flex-wrap:wrap;
-justify-content:center;
-
-}
-
-.hero h2{
-
-font-size:32px;
-
-}
-
-.hero p{
-
-font-size:17px;
-
-}
-
-.searchBox{
-
-flex-direction:column;
-
-}
-
-.searchBox input{
-
-width:100%;
-
-}
-
-.searchBox button{
-
-width:100%;
-
-}
-
-  }
-/* ===========================
-   زر إضافة كائن العائم
-=========================== */
-
-.fab{
-position:fixed;
-bottom:25px;
-left:25px;
-width:65px;
-height:65px;
-border:none;
-border-radius:50%;
-background:var(--primary);
-color:#fff;
-font-size:34px;
-font-weight:bold;
-cursor:pointer;
-box-shadow:0 10px 25px rgba(0,0,0,.25);
-z-index:9999;
 transition:.25s;
 }
 
-.fab:hover{
-background:var(--primary-light);
-transform:scale(1.08);
+.speciesCard:hover{
+transform:translateY(-6px);
 }
 
-/* ===========================
-   النافذة المنبثقة
-=========================== */
+.speciesCard img{
+width:100%;
+height:220px;
+object-fit:cover;
+background:#eee;
+}
+
+.speciesBody{
+padding:18px;
+}
+
+.speciesBody h3{
+margin-bottom:8px;
+font-size:22px;
+color:#1b5e20;
+}
+
+.speciesBody p{
+margin:6px 0;
+color:#555;
+line-height:1.6;
+}
+
+.badge{
+display:inline-block;
+margin-top:12px;
+padding:7px 14px;
+border-radius:30px;
+font-size:14px;
+font-weight:bold;
+}
 
 .modal{
-display:none;
 position:fixed;
-inset:0;
-background:rgba(0,0,0,.55);
-z-index:9998;
-align-items:center;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.5);
+display:none;
 justify-content:center;
+align-items:center;
+z-index:999;
 padding:20px;
 }
 
@@ -405,154 +159,82 @@ padding:20px;
 display:flex;
 }
 
-.modal-content{
-
+.modalContent{
 background:#fff;
-width:min(850px,100%);
+width:100%;
+max-width:700px;
+padding:25px;
+border-radius:18px;
 max-height:90vh;
 overflow:auto;
-padding:30px;
-border-radius:20px;
-box-shadow:var(--shadow);
-
 }
 
-.modal-header{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:25px;
-
+.modalContent h2{
+margin-bottom:20px;
+color:#2e7d32;
 }
 
-.modal-close{
-
-border:none;
-background:#e53935;
-color:#fff;
-width:40px;
-height:40px;
-border-radius:50%;
-cursor:pointer;
-font-size:22px;
-
-}
-
-.modal input,
-.modal textarea,
-.modal select{
-
+.modalContent input,
+.modalContent select,
+.modalContent textarea{
 width:100%;
 padding:12px;
-margin:8px 0;
-border:1px solid var(--border);
+margin-bottom:12px;
+border:1px solid #ddd;
 border-radius:10px;
 font-size:15px;
-
 }
 
-.modal textarea{
-
-min-height:120px;
+.modalContent textarea{
 resize:vertical;
-
 }
 
-/* ===========================
-   شارات حالة الحفظ
-=========================== */
-
-.badge{
-display:inline-block;
-padding:7px 14px;
-border-radius:30px;
-font-size:13px;
-font-weight:bold;
-color:#fff;
-}
-
-/* LC */
-
-.status-lc{
+#saveSpecies{
+width:100%;
+padding:14px;
 background:#2e7d32;
-}
-
-/* NT */
-
-.status-nt{
-background:#7CB342;
-}
-
-/* VU */
-
-.status-vu{
-background:#FBC02D;
-color:#222;
-}
-
-/* EN */
-
-.status-en{
-background:#F57C00;
-}
-
-/* CR */
-
-.status-cr{
-background:#D32F2F;
-}
-
-/* EW */
-
-.status-ew{
-background:#616161;
-}
-
-/* EX */
-
-.status-ex{
-background:#000;
-}
-
-/* DD */
-
-.status-dd{
-background:#1976D2;
-}
-
-/* NE */
-
-.status-ne{
-background:#9E9E9E;
-  }
-.searchBox select{
-
-padding:16px;
+color:#fff;
 border:none;
-border-radius:12px;
+border-radius:10px;
 font-size:17px;
-min-width:180px;
-background:white;
 cursor:pointer;
-
 }
 
-#addBtn{
+.close{
+float:left;
+font-size:28px;
+cursor:pointer;
+margin-bottom:15px;
+color:#888;
+}
 
-background:#1b5e20;
-color:#fff;
+#result{
+margin-top:15px;
+text-align:center;
 font-weight:bold;
-padding:16px 24px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-transition:.25s;
-
 }
 
-#addBtn:hover{
+@media(max-width:768px){
 
-background:#2e7d32;
+.hero{
+padding:50px 15px;
+}
 
-  }
+.hero h1{
+font-size:30px;
+}
+
+.searchSection{
+grid-template-columns:1fr;
+margin-top:15px;
+}
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}

@@ -572,6 +572,73 @@ function deleteSpecies(id) {
     alert("حذف: " + id);
 }
 
-function downloadCard(id) {
-    alert("تنزيل البطاقة: " + id);
+async function downloadCard(id) {
+
+    const { data, error } = await db
+        .from("species")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (error || !data) {
+        alert("تعذر تحميل البيانات");
+        return;
+    }
+
+    const w = window.open("", "_blank");
+
+    w.document.write(`
+    <html dir="rtl">
+    <head>
+        <title>${data.name_ar}</title>
+        <style>
+            body{
+                font-family:Arial;
+                padding:30px;
+                text-align:center;
+            }
+            img{
+                max-width:300px;
+                border-radius:12px;
+            }
+            table{
+                margin:auto;
+                border-collapse:collapse;
+                margin-top:20px;
+            }
+            td{
+                border:1px solid #ccc;
+                padding:8px 15px;
+            }
+        </style>
+    </head>
+    <body>
+
+    <h1>${data.name_ar}</h1>
+
+    <img src="${data.image_url || DEFAULT_IMAGE}">
+
+    <h3>${data.scientific_name || ""}</h3>
+
+    <p>${data.description || ""}</p>
+
+    <table>
+        <tr><td>المملكة</td><td>${data.kingdom || "-"}</td></tr>
+        <tr><td>الشعبة</td><td>${data.phylum || "-"}</td></tr>
+        <tr><td>الصف</td><td>${data.class || "-"}</td></tr>
+        <tr><td>الرتبة</td><td>${data.order_name || "-"}</td></tr>
+        <tr><td>الفصيلة</td><td>${data.family || "-"}</td></tr>
+    </table>
+
+    <script>
+        window.onload=function(){
+            window.print();
+        }
+    </script>
+
+    </body>
+    </html>
+    `);
+
+    w.document.close();
 }

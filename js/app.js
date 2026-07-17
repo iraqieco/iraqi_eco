@@ -145,7 +145,7 @@ function renderSpecies() {
             : DEFAULT_IMAGE;
 
         const card = document.createElement("div");
-
+card.dataset.id = item.id;
         card.className = "speciesCard";
 
         card.innerHTML = `
@@ -574,10 +574,14 @@ function deleteSpecies(id) {
 
 async function downloadCard(id) {
 
- const card = document.querySelector(`[data-id="${id}"]`);   
-    }
-
     document.querySelectorAll(".cardMenu").forEach(e => e.remove());
+
+    const card = document.querySelector(`[data-id="${id}"]`);
+
+    if (!card) {
+        alert("تعذر العثور على البطاقة");
+        return;
+    }
 
     const canvas = await html2canvas(card, {
         scale: 2,
@@ -589,5 +593,5 @@ async function downloadCard(id) {
     link.download = `species-${id}.png`;
     link.href = canvas.toDataURL("image/png");
     link.click();
-
 }
+

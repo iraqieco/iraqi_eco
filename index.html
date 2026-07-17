@@ -2,246 +2,180 @@
 <html lang="ar" dir="rtl">
 
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>عراقي إيكو | Iraqi Eco</title>
+<title>عراقي إيكو</title>
 
-<meta name="description" content="موسوعة الكائنات الحية في العراق">
-<meta name="theme-color" content="#1b5e20">
-
-<link rel="icon" href="assets/logo.svg">
 <link rel="manifest" href="manifest.json">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="css/style.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js"></script>
-  <script src="js/taxonomy.js"></script>
-<script defer src="js/app.js"></script>
-
+<script src="js/supabase.js"></script>
 </head>
 
 <body>
 
-<header class="header">
+<header class="hero">
 
-<div class="container">
-
-<a href="index.html" class="logo">
-
-<img src="assets/logo.svg">
-
-<div>
+<div class="overlay">
 
 <h1>عراقي إيكو</h1>
-<span>Iraqi Eco</span>
 
-</div>
-
-</a>
-
-<nav>
-
-<a data-lang="home">الرئيسية</a>
-<a data-lang="categories">التصنيفات</a>
-<a data-lang="about">حول</a>
-<a href="login.html" data-lang="login">دخول</a>
-
-<button id="langBtn">
-EN
-</button>
-
-</nav>
+<p>
+اكتشف الحيوانات والنباتات والفطريات والكائنات الحية في العراق
+</p>
 
 </div>
 
 </header>
 
-<section class="hero">
-
-<div class="container">
-
-<h2 id="heroTitle">
-اكتشف الكائنات الحية في العراق
-</h2>
-
-<p id="heroText">
-قاعدة بيانات متكاملة للحيوانات والنباتات والكائنات البرية.
-</p>
-<div class="searchBox">
+<section class="searchSection">
 
 <input
+type="text"
 id="search"
-placeholder="ابحث باسم الكائن..."
-autocomplete="off">
+placeholder="ابحث باسم الكائن...">
 
 <select id="kingdomFilter">
 
 <option value="">كل الممالك</option>
-<option value="Animalia">الحيوانات</option>
-<option value="Plantae">النباتات</option>
-<option value="Fungi">الفطريات</option>
-<option value="Protista">الطلائعيات</option>
-<option value="Monera">البكتيريا</option>
+
+<option value="الحيوانات">الحيوانات</option>
+
+<option value="النباتات">النباتات</option>
+
+<option value="الفطريات">الفطريات</option>
+
+<option value="الطلائعيات">الطلائعيات</option>
+
+<option value="البدائيات">البدائيات</option>
 
 </select>
-
-<button id="addBtn" style="display:none;">
-➕ إضافة كائن
-</button>
-
-</div>
-</div>
 
 </section>
 
 <section class="stats">
 
-<div class="container">
+<div class="statBox">
 
-<div class="card">
+<h2 id="speciesCount">0</h2>
 
-<h3 id="speciesCount">0</h3>
 <p>الكائنات</p>
 
 </div>
 
-<div class="card">
+<div class="statBox">
 
-<h3 id="categoriesCount">0</h3>
+<h2 id="categoriesCount">0</h2>
+
 <p>التصنيفات</p>
 
 </div>
 
-<div class="card">
+<div class="statBox">
 
-<h3>Iraq</h3>
+<h2>Iraq</h2>
+
 <p>الموقع</p>
 
 </div>
 
-</div>
+</section>
+
+<section class="toolbar">
+
+<button
+id="addBtn"
+style="display:none">
+
++ إضافة كائن
+
+</button>
 
 </section>
 
-<section class="container" style="margin-top:30px;">
+<main>
 
+<div id="grid" class="grid"></div>
 
+</main>
 
-</section>
-
-<section class="container">
-
-<h2 class="title">
-الكائنات
-</h2>
-
-<div id="grid" class="grid">
-</div>
-
-</section>
-
-<footer>
-
-<p>
-© Iraqi Eco
-</p>
-
-</footer>
+<!-- نافذة الإضافة -->
 
 <div id="addModal" class="modal">
 
-<div class="modal-content">
+<div class="modalContent">
 
-<div class="modal-header">
+<span id="closeModal" class="close">&times;</span>
 
 <h2>إضافة كائن جديد</h2>
 
-<button class="modal-close" id="closeModal">
-×
-</button>
+<input id="name_ar" placeholder="الاسم العربي">
 
-</div>
-
-<input
-id="name_ar"
-placeholder="الاسم العربي *"
-maxlength="150">
-
-<input
-id="scientific_name"
-placeholder="الاسم اللاتيني *"
-maxlength="200">
+<input id="scientific_name" placeholder="الاسم العلمي">
 
 <select id="kingdom">
-<option value="">اختر المملكة *</option>
 
-<option value="Animalia">الحيوانات</option>
-<option value="Plantae">النباتات</option>
-<option value="Fungi">الفطريات</option>
-<option value="Protista">الطلائعيات</option>
-<option value="Monera">البكتيريا</option>
+<option value="">المملكة</option>
+
+<option>الحيوانات</option>
+
+<option>النباتات</option>
+
+<option>الفطريات</option>
+
+<option>الطلائعيات</option>
+
+<option>البدائيات</option>
 
 </select>
+
+<input id="phylum" placeholder="الشعبة">
+
+<input id="class" placeholder="الصف">
+
+<input id="order_name" placeholder="الرتبة">
+
+<input id="family" placeholder="الفصيلة">
+
+<input id="genus" placeholder="الجنس">
+
+<input id="species_type" placeholder="النوع">
 
 <select id="conservation_status">
 
-<option value="">اختر حالة الحفظ *</option>
+<option value="">حالة الحفظ</option>
 
-<option value="LC">🟢 غير مهدد (LC)</option>
-<option value="NT">🟩 قريب من التهديد (NT)</option>
-<option value="VU">🟡 معرض للخطر (VU)</option>
-<option value="EN">🟠 مهدد بالانقراض (EN)</option>
-<option value="CR">🔴 مهدد بخطر انقراض أقصى (CR)</option>
-<option value="EW">⚫ منقرض في البرية (EW)</option>
-<option value="EX">⬛ منقرض (EX)</option>
-<option value="DD">🔵 بيانات غير كافية (DD)</option>
-<option value="NE">⚪ غير مُقيّم (NE)</option>
+<option value="LC">LC</option>
+
+<option value="NT">NT</option>
+
+<option value="VU">VU</option>
+
+<option value="EN">EN</option>
+
+<option value="CR">CR</option>
+
+<option value="EW">EW</option>
+
+<option value="EX">EX</option>
+
+<option value="DD">DD</option>
+
+<option value="NE">NE</option>
 
 </select>
 
-<input
-id="phylum"
-placeholder="الشعبة">
-
-<input
-id="class"
-placeholder="الطائفة">
-
-<input
-id="order_name"
-placeholder="الرتبة">
-
-<input
-id="family"
-placeholder="الفصيلة">
-
-<input
-id="genus"
-placeholder="الجنس">
-
-<input
-id="species_type"
-placeholder="النوع">
-
-<input
-type="file"
-id="image_file"
-accept="image/*">
 <textarea
 id="description"
-placeholder="الوصف"
-rows="5"></textarea>
+rows="5"
+placeholder="الوصف"></textarea>
 
-<button
-id="saveSpecies"
-style="margin-top:20px;width:100%;padding:14px;">
+<button id="saveSpecies">
+
 حفظ الكائن
+
 </button>
 
 <p id="result"></p>
@@ -249,23 +183,8 @@ style="margin-top:20px;width:100%;padding:14px;">
 </div>
 
 </div>
-<script>
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("service-worker.js");
-}
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
-<script src="js/config.js"></script>
-
-<script src="js/taxonomy.js"></script>
-
-<script src="js/species.js"></script>
 
 <script src="js/app.js"></script>
-
-<script src="js/translate.js"></script>
 
 </body>
 

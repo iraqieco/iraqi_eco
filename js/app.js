@@ -570,3 +570,26 @@ async function downloadCard(id) {
     // إعادة القائمة إذا كانت موجودة
     if (menu) menu.style.display = "block";
 }
+// دالة فتح القائمة عند الضغط على الثلاث نقاط
+function openCardMenu(event, id) {
+    event.stopPropagation(); // يمنع فتح صفحة الكائن
+    
+    // إزالة أي قائمة قديمة
+    document.querySelectorAll(".cardMenu").forEach(e => e.remove());
+
+    // إنشاء القائمة برمجياً
+    const menu = document.createElement("div");
+    menu.className = "cardMenu";
+    menu.style.cssText = "position:absolute;z-index:9999;background:#fff;border:1px solid #ddd;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.2);overflow:hidden;min-width:170px;top:40px;right:0;padding:10px;";
+
+    // إضافة زر التنزيل داخل القائمة
+    const downloadBtn = document.createElement("button");
+    downloadBtn.innerText = "⬇ تنزيل البطاقة";
+    downloadBtn.style.cssText = "width:100%;padding:10px;border:none;background:none;cursor:pointer;text-align:right;";
+    downloadBtn.onclick = () => downloadCard(id);
+
+    menu.appendChild(downloadBtn);
+    
+    // إضافة القائمة إلى زر الثلاث نقاط نفسه
+    event.target.parentElement.appendChild(menu);
+}

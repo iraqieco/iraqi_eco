@@ -1,6 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
-alert(id);
+
 const content = document.getElementById("speciesContent");
 
 async function loadSpecies() {

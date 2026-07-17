@@ -555,7 +555,7 @@ function openCardMenu(event, id) {
         <button onclick="downloadCard('${id}')">📥 تنزيل البطاقة</button>
         `
         : `
-        <button onclick="downloadCard('${id}', event)">👜 تنزيل البطاقة</button>
+        <button onclick="downloadCard('${id}')">👜 تنزيل البطاقة</button>
         `;
 
     event.target.parentElement.appendChild(menu);

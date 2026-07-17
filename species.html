@@ -19,97 +19,78 @@
 
 <body>
 
-<header class="header">
-
-<div class="container">
-
-<a href="index.html" class="logo">
-
-<img src="assets/logo.svg">
-
-<div>
-
-<h1>عراقي إيكو</h1>
-
-<span>IraqiEco</span>
-
-</div>
-
-</a>
-
-</div>
-
+<header class="topBar">
+    <a href="index.html" class="backBtn">← رجوع</a>
 </header>
 
-<section class="container" style="padding:40px 0;">
+<main id="speciesPage">
 
-<div id="details"></div>
+    <div class="imageBox">
+        <img id="speciesImage" src="assets/no-image.svg" alt="">
+    </div>
 
-</section>
+    <div class="infoCard">
 
-<script>
+        <h1 id="nameAr"></h1>
 
-const id=new URLSearchParams(location.search).get("id");
+        <h2 id="nameScientific"></h2>
 
-async function load(){
+        <span id="statusBadge" class="statusBadge"></span>
 
-const {data, error}=await supabaseClient
+    </div>
 
-.from("species")
+    <div class="descriptionCard">
 
-.select("*")
+        <h3>الوصف</h3>
 
-.eq("id",id)
+        <p id="description"></p>
 
-.single();
+    </div>
 
-const d=document.getElementById("details");
+    <div class="taxonomyCard">
 
-if(!data){
+        <h3>التصنيف العلمي</h3>
 
-d.innerHTML="<h2>الكائن غير موجود</h2>";
+        <table>
 
-return;
+            <tr>
+                <td>المملكة</td>
+                <td id="kingdom"></td>
+            </tr>
 
-}
+            <tr>
+                <td>الشعبة</td>
+                <td id="phylum"></td>
+            </tr>
 
-const val=v=>(v&&String(v).trim()!=="")?v.trim():"غير محدد";
+            <tr>
+                <td>الصف</td>
+                <td id="class"></td>
+            </tr>
 
-const img=val(data.image_url)==="غير محدد"?"assets/no-image.svg":data.image_url.trim();
+            <tr>
+                <td>الرتبة</td>
+                <td id="order"></td>
+            </tr>
 
-d.innerHTML=`
+            <tr>
+                <td>الفصيلة</td>
+                <td id="family"></td>
+            </tr>
 
-<div class="card">
+            <tr>
+                <td>الجنس</td>
+                <td id="genus"></td>
+            </tr>
 
-<img src="${img}" style="width:100%;max-height:450px;object-fit:cover;border-radius:15px;">
+        </table>
 
-<h2 style="margin-top:20px;">${val(data.name_ar)}</h2>
+    </div>
 
-<p><b>الاسم العلمي:</b> ${val(data.scientific_name)}</p>
+</main>
 
-<p><b>الوصف:</b> ${val(data.description)}</p>
-
-<p><b>حالة الحفظ:</b> ${val(data.conservation_status)}</p>
-
-<p><b>المملكة:</b> ${val(data.kingdom)}</p>
-
-<p><b>الشعبة:</b> ${val(data.phylum)}</p>
-
-<p><b>الصف:</b> ${val(data.class)}</p>
-
-<p><b>الرتبة:</b> ${val(data.order_name)}</p>
-
-<p><b>الفصيلة:</b> ${val(data.family)}</p>
-
-</div>
-
-`;
-
-}
-
-load();
-
-</script>
+<script src="js/config.js"></script>
+<script src="js/species.js"></script>
 
 </body>
 

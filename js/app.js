@@ -159,23 +159,24 @@ function renderSpecies() {
                 <h3>${item.name_ar || "غير معروف"}</h3>
 
                 <p>
-                    <strong>
-                        ${item.scientific_name || ""}
-                    </strong>
-                </p>
+                <p class="scientificName">
+    ${item.scientific_name || ""}
+</p>
 
-                <p>
-                    ${item.description || ""}
-                </p>
+<p class="description">
+    ${item.description || "لا يوجد وصف"}
+</p>
 
-                <span
-                    class="badge"
-                    style="
-                        background:${status.color};
-                        color:#fff;
-                    ">
-                    ${status.text}
-                </span>
+<div class="statusBox">
+    <span
+        class="badge"
+        style="
+            background:${status.color};
+            color:#fff;
+        ">
+        ${status.text}
+    </span>
+
 
             </div>
 

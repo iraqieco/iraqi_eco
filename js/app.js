@@ -574,13 +574,7 @@ function deleteSpecies(id) {
 
 async function downloadCard(id) {
 
-    const card = document.querySelector(
-        `.cardMenuBtn[onclick*="'${id}'"]`
-    ).closest(".speciesCard");
-
-    if (!card) {
-        alert("تعذر العثور على البطاقة");
-        return;
+ const card = document.querySelector(`[data-id="${id}"]`);   
     }
 
     document.querySelectorAll(".cardMenu").forEach(e => e.remove());

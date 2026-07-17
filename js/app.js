@@ -152,7 +152,7 @@ function renderSpecies() {
 <button
 class="cardMenuBtn"
 onclick="openCardMenu(event,'${item.id}')">
-⋮
+&#8942;
 </button>
             <img
                 src="${image}"

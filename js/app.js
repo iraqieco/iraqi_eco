@@ -538,24 +538,27 @@ if (saveBtn) {
 
 }
 let currentSpeciesId = null;
-function openCardMenu(event, id) {
+// استبدل التعريف القديم بـ async function
+async function openCardMenu(event, id) {
     event.stopPropagation();
-
     document.querySelectorAll(".cardMenu").forEach(e => e.remove());
+
+    // التحقق الفعلي من الجلسة في Supabase
+    const { data: { session } } = await db.auth.getSession();
+    const isAuthorized = !!session; 
 
     const menu = document.createElement("div");
     menu.className = "cardMenu";
 
-    const loggedIn = addBtn && addBtn.style.display === "block";
-
-    menu.innerHTML = loggedIn
+    // بناء القائمة بناءً على الصلاحية
+    menu.innerHTML = isAuthorized
         ? `
         <button onclick="editSpecies('${id}')">✏️ تعديل</button>
         <button onclick="deleteSpecies('${id}')">🗑 حذف</button>
         <button onclick="downloadCard('${id}')">📥 تنزيل البطاقة</button>
         `
         : `
-        <button onclick="downloadCard('${id}')">👜 تنزيل البطاقة</button>
+        <button onclick="downloadCard('${id}')">📥 تنزيل البطاقة</button>
         `;
 
     event.target.parentElement.appendChild(menu);

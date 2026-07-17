@@ -145,8 +145,8 @@ function renderSpecies() {
             : DEFAULT_IMAGE;
 
         const card = document.createElement("div");
+card.className = "speciesCard";
 card.dataset.id = item.id;
-        card.className = "speciesCard";
 
         card.innerHTML = `
 <button

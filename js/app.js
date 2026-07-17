@@ -1,336 +1,481 @@
-
 const statusMap = {
-  "EX": { text: "منقرض", color: "#000000" },
-  "EW": { text: "منقرض في البرية", color: "#555555" },
-  "CR": { text: "مهدد بخطر انقراض أقصى", color: "#D32F2F" },
-  "EN": { text: "مهدد بالانقراض", color: "#F57C00" },
-  "VU": { text: "معرض للخطر", color: "#FBC02D" },
-  "NT": { text: "قريب من التهديد", color: "#7CB342" },
-  "LC": { text: "غير مهدد", color: "#2E7D32" },
-  "DD": { text: "بيانات غير كافية", color: "#1976D2" },
-  "NE": { text: "غير مقيم", color: "#9E9E9E" }
+  EX: { text: "منقرض", color: "#000000" },
+  EW: { text: "منقرض في البرية", color: "#555555" },
+  CR: { text: "مهدد بخطر انقراض أقصى", color: "#D32F2F" },
+  EN: { text: "مهدد بالانقراض", color: "#F57C00" },
+  VU: { text: "معرض للخطر", color: "#FBC02D" },
+  NT: { text: "قريب من التهديد", color: "#7CB342" },
+  LC: { text: "غير مهدد", color: "#2E7D32" },
+  DD: { text: "بيانات غير كافية", color: "#1976D2" },
+  NE: { text: "غير مقيم", color: "#9E9E9E" }
 };
 
-function getStatus(status){
-  status = (status || "").trim().toUpperCase();
+function getStatus(code) {
 
-  if(statusMap[status]){
-    return statusMap[status];
-  }
+    code = (code || "").trim().toUpperCase();
 
-  return {
-    text: status || "غير محدد",
-    color: "#607D8B"
-  };
-} 
-async function loadSpecies() {
+    return statusMap[code] || {
+        text: "غير محدد",
+        color: "#607D8B"
+    };
 
-const grid = document.getElementById("grid");
-if (!grid) return;
-
-grid.innerHTML = "<p>جاري التحميل...</p>";
-
-const { data, error } = await supabaseClient
-.from("species")
-.select("*")
-.order("name_ar");
-
-if (error) {
-grid.innerHTML = "<p>حدث خطأ أثناء تحميل البيانات</p>";
-console.log(error);
-return;
 }
 
+const grid = document.getElementById("grid");
 const speciesCount = document.getElementById("speciesCount");
-if (speciesCount) speciesCount.textContent = data.length;
-
-const categories = [...new Set(
-data.map(i => (i.kingdom || "").trim()).filter(Boolean)
-)];
-
 const categoriesCount = document.getElementById("categoriesCount");
-if (categoriesCount) categoriesCount.textContent = categories.length;
 
-grid.innerHTML = "";
+let allSpecies = [];
 
-data.forEach(item=>{
+async function loadSpecies() {
 
-const image=(item.image_url||"").trim()||"assets/no-image.svg";
+    grid.innerHTML = "<h3 style='text-align:center'>جاري التحميل...</h3>";
 
-const name=(item.name_ar||"").trim()||"غير محدد";
+    const { data, error } = await supabaseClient
+        .from("species")
+        .select("*")
+        .order("name_ar");
 
-const scientific=(item.scientific_name||"").trim()||"غير محدد";
+    if (error) {
 
-const statusInfo = getStatus(item.conservation_status);
+        console.log(error);
 
-const className=(item.class||"").trim()||"غير محدد";
+        grid.innerHTML = "<h3>حدث خطأ أثناء تحميل البيانات</h3>";
 
-const card=document.createElement("div");
-card.className="speciesCard";
+        return;
 
-card.innerHTML=`
-<img src="${image}" loading="lazy">
+    }
+
+    allSpecies = data;
+
+    renderSpecies(allSpecies);
+
+    speciesCount.textContent = data.length;
+
+    categoriesCount.textContent =
+        [...new Set(data.map(i => i.kingdom))].length;
+
+}
+
+function renderSpecies(list) {
+
+    grid.innerHTML = "";
+
+    if (!list.length) {
+
+        grid.innerHTML = "<h3 style='text-align:center'>لا توجد نتائج</h3>";
+
+        return;
+
+    }
+
+    list.forEach(item => {
+
+        const status = getStatus(item.conservation_status);
+
+        const image =
+            item.image_url ||
+            "assets/no-image.svg";
+
+        grid.innerHTML += `
+
+<div class="speciesCard"
+onclick="location.href='species.html?id=${item.id}'">
+
+<img
+src="${image}"
+loading="lazy">
 
 <div class="speciesBody">
 
-<h3>${name}</h3>
+<h3>${item.name_ar || "غير معروف"}</h3>
 
-<p><strong>${scientific}</strong></p>
+<p>
 
-<p>Class : ${className}</p>
+<b>${item.scientific_name || ""}</b>
+
+</p>
+
+<p>
+
+${item.description || ""}
+
+</p>
 
 <span
 class="badge"
-style="background:${statusInfo.color};color:#fff;">
-${statusInfo.text}
+style="background:${status.color};color:#fff">
+
+${status.text}
+
 </span>
 
 </div>
+
+</div>
+
 `;
 
-card.onclick=()=>{
-location.href=`species.html?id=${item.id}`;
-};
-
-grid.appendChild(card);
-
-});
+    });
 
 }
 
 loadSpecies();
-
-const search=document.getElementById("search");
-
-if(search){
-
-search.addEventListener("input",async function(){
-
-const value=this.value.replace(/\s+/g,"").trim();
-
-let query=supabaseClient.from("species").select("*");
-
-if(value!==""){
-query=query.or(`name_ar.ilike.%${value}%,scientific_name.ilike.%${value}%`);
-}
-
-const {data,error}=await query.order("name_ar");
-
-if(error)return;
-
-const grid=document.getElementById("grid");
-
-grid.innerHTML="";
-
-data.forEach(item=>{
-
-const image=(item.image_url||"").trim()||"assets/no-image.svg";
-
-const name=(item.name_ar||"").trim()||"غير محدد";
-
-const scientific=(item.scientific_name||"").trim()||"غير محدد";
-
-const statusInfo = getStatus(item.conservation_status);
-const className=(item.class||"").trim()||"غير محدد";
-
-grid.innerHTML+=`
-<div class="speciesCard" onclick="location.href='species.html?id=${item.id}'">
-
-<img src="${image}" loading="lazy">
-
-<div class="speciesBody">
-
-<h3>${name}</h3>
-
-<p><strong>${scientific}</strong></p>
-
-<p>Class : ${className}</p>
-
-<span
-class="badge"
-style="background:${statusInfo.color};color:#fff;">
-${statusInfo.text}
-</span>
-
-</div>
-
-</div>
-`;
-
-});
-
-});
-
-}
 /* ===========================
-   نافذة إضافة الكائن
+   البحث
 =========================== */
 
-const addBtn = document.getElementById("addBtn");
-const addModal = document.getElementById("addModal");
-const closeModal = document.getElementById("closeModal");
-const saveBtn = document.getElementById("saveSpecies");
+const search = document.getElementById("search");
 
-async function checkLogin(){
+if (search) {
 
-try{
+    search.addEventListener("input", function () {
 
-const { data:{ user } } = await supabaseClient.auth.getUser();
+        const value = this.value
+            .trim()
+            .toLowerCase();
 
-if(user){
-addBtn.onclick = () => {
-    addModal.classList.add("show");
-}; 
+        const filtered = allSpecies.filter(item => {
+
+            return (
+
+                (item.name_ar || "")
+                .toLowerCase()
+                .includes(value)
+
+                ||
+
+                (item.scientific_name || "")
+                .toLowerCase()
+                .includes(value)
+
+            );
+
+        });
+
+        renderSpecies(filtered);
+
+    });
+
 }
 
-}catch(e){}
+/* ===========================
+   فلتر المملكة
+=========================== */
+
+const kingdomFilter =
+document.getElementById("kingdomFilter");
+
+if (kingdomFilter) {
+
+    kingdomFilter.addEventListener("change", function () {
+
+        const value = this.value;
+
+        if (!value) {
+
+            renderSpecies(allSpecies);
+
+            return;
+
+        }
+
+        const filtered = allSpecies.filter(item =>
+
+            item.kingdom === value
+
+        );
+
+        renderSpecies(filtered);
+
+    });
+
+}
+
+/* ===========================
+   التحقق من تسجيل الدخول
+=========================== */
+
+const addBtn =
+document.getElementById("addBtn");
+
+async function checkLogin() {
+
+    try {
+
+        const {
+            data: { user }
+        } = await supabaseClient.auth.getUser();
+
+        if (user) {
+
+            addBtn.style.display = "block";
+
+        }
+
+    } catch (e) {
+
+        console.log(e);
+
+    }
 
 }
 
 checkLogin();
 
+/* ===========================
+   فتح وإغلاق النافذة
+=========================== */
+
+const addModal =
+document.getElementById("addModal");
+
+const closeModal =
+document.getElementById("closeModal");
+
 addBtn.onclick = () => {
+
+    addModal.classList.add("show");
 
 };
 
 closeModal.onclick = () => {
 
-addModal.classList.remove("show");
+    addModal.classList.remove("show");
 
 };
 
-addModal.onclick = function(e){
+addModal.onclick = function (e) {
 
-if(e.target===addModal){
+    if (e.target === addModal) {
 
-addModal.classList.remove("show");
+        addModal.classList.remove("show");
 
-}
+    }
 
 };
+/* ===========================
+   حفظ الكائن
+=========================== */
 
-addBtn.onclick = () => {
-    addModal.classList.add("show");
-};
+const saveBtn =
+document.getElementById("saveSpecies");
 
 saveBtn.onclick = async function (e) {
+
     e.preventDefault();
 
-    const result = document.getElementById("result");
+    const result =
+    document.getElementById("result");
 
     const obj = {
-        name_ar: document.getElementById("name_ar").value.trim().replace(/\s+/g," "),
-        scientific_name: document.getElementById("scientific_name").value.trim().replace(/\s+/g," "),
-        kingdom: document.getElementById("kingdom").value,
-        conservation_status: document.getElementById("conservation_status").value,
-        phylum: document.getElementById("phylum").value.trim(),
-        class: document.getElementById("class").value.trim(),
-        order_name: document.getElementById("order_name").value.trim(),
-        family: document.getElementById("family").value.trim(),
-        genus: document.getElementById("genus").value.trim(),
-        species_type: document.getElementById("species_type").value.trim(),
-        description: document.getElementById("description").value.trim(),
+
+        name_ar:
+        document.getElementById("name_ar")
+        .value.trim().replace(/\s+/g," "),
+
+        scientific_name:
+        document.getElementById("scientific_name")
+        .value.trim().replace(/\s+/g," "),
+
+        kingdom:
+        document.getElementById("kingdom").value,
+
+        conservation_status:
+        document.getElementById("conservation_status").value,
+
+        phylum:
+        document.getElementById("phylum").value,
+
+        class:
+        document.getElementById("class").value,
+
+        order_name:
+        document.getElementById("order_name").value,
+
+        family:
+        document.getElementById("family").value,
+
+        genus:
+        document.getElementById("genus").value,
+
+        species_type:
+        document.getElementById("species_type").value,
+
+        description:
+        document.getElementById("description")
+        .value.trim(),
+
         image_url: ""
+
     };
 
+    if (!obj.name_ar || !obj.scientific_name) {
 
+        result.innerHTML =
+        "⚠️ الاسم العربي والعلمي إجباريان";
 
-if(!obj.name_ar || !obj.scientific_name){
+        return;
 
-result.innerHTML="⚠️ يجب إدخال الاسم العربي والاسم العلمي";
+    }
 
-return;
+    result.innerHTML = "جاري التحقق...";
 
-}
-const { data: exists } = await supabaseClient
-.from("species")
-.select("id")
-.or(
+    const { data: exists } =
+    await supabaseClient
+
+    .from("species")
+
+    .select("id")
+
+    .or(
+
 `name_ar.eq.${obj.name_ar},scientific_name.eq.${obj.scientific_name}`
-);
 
-if(exists && exists.length){
+    );
 
-result.innerHTML="⚠️ يوجد كائن بنفس الاسم العربي أو اللاتيني.";
+    if (exists && exists.length) {
 
-return;
+        result.innerHTML =
+        "⚠️ الاسم موجود مسبقاً";
 
-}
-result.innerHTML="جاري الحفظ...";
+        return;
 
-const { error } = await supabaseClient
+    }
 
-.from("species")
+    result.innerHTML =
+    "جاري الحفظ...";
 
-.insert([obj]);
+    const { error } =
+    await supabaseClient
 
-if(error){
+    .from("species")
 
-result.innerHTML="❌ "+error.message;
+    .insert([obj]);
 
-return;
+    if (error) {
 
-}
+        result.innerHTML =
+        "❌ " + error.message;
 
-result.innerHTML = "✅ تمت إضافة الكائن";
+        return;
 
-setTimeout(() => {
-    addModal.classList.remove("show");
-    loadSpecies();
-}, 1500);
+    }
 
-/* تنظيف الحقول */
+    result.innerHTML =
+    "✅ تمت إضافة الكائن";
 
-document.querySelectorAll("#addModal input,#addModal textarea,#addModal select").forEach(el=>{
+    setTimeout(() => {
 
-if(el.tagName==="SELECT"){
+        addModal.classList.remove("show");
 
-el.selectedIndex=0;
+        document.querySelectorAll(
+            "#addModal input,#addModal textarea,#addModal select"
+        ).forEach(el => {
 
-}else{
+            if (el.tagName === "SELECT") {
 
-el.value="";
+                el.selectedIndex = 0;
 
-}
+            } else {
 
-});
+                el.value = "";
+
+            }
+
+        });
+
+        loadSpecies();
+
+    }, 1500);
 
 };
-const kingdom = document.getElementById("kingdom");
-const phylum = document.getElementById("phylum");
-const classSelect = document.getElementById("class");
-const order = document.getElementById("order_name");
-const family = document.getElementById("family");
+/* ===========================
+   التصنيفات (Taxonomy)
+=========================== */
+
+const kingdom =
+document.getElementById("kingdom");
+
+const phylum =
+document.getElementById("phylum");
+
+const classSelect =
+document.getElementById("class");
+
+const orderSelect =
+document.getElementById("order_name");
+
+const familySelect =
+document.getElementById("family");
 
 function resetSelect(select, text) {
-    select.innerHTML = `<option value="">${text}</option>`;
+
+    if (!select) return;
+
+    select.innerHTML =
+    `<option value="">${text}</option>`;
+
 }
 
 if (kingdom) {
 
-kingdom.addEventListener("change", function () {
+    kingdom.addEventListener("change", function () {
 
-resetSelect(phylum, "اختر الشعبة");
-resetSelect(classSelect, "اختر الصف");
-resetSelect(order, "اختر الرتبة");
-resetSelect(family, "اختر الفصيلة");
+        resetSelect(phylum, "اختر الشعبة");
+        resetSelect(classSelect, "اختر الصف");
+        resetSelect(orderSelect, "اختر الرتبة");
+        resetSelect(familySelect, "اختر الفصيلة");
 
-const kingdomData = taxonomy[this.value];
+        if (
+            typeof taxonomy === "undefined" ||
+            !taxonomy[this.value]
+        ) return;
 
-if (!kingdomData) return;
+        const kingdomData =
+        taxonomy[this.value];
 
-Object.keys(kingdomData.phylum).forEach(function(name){
+        Object.keys(
+            kingdomData.phylum
+        ).forEach(name => {
 
-const option = document.createElement("option");
+            phylum.innerHTML +=
+            `<option value="${name}">
+            ${name}
+            </option>`;
 
-option.value = name;
+        });
 
-option.textContent = name;
+    });
 
-phylum.appendChild(option);
+}
 
-});
+/* ===========================
+   رفع الصورة
+=========================== */
 
-});
+const imageInput =
+document.getElementById("image_file");
+
+if (imageInput) {
+
+    imageInput.addEventListener(
+        "change",
+        function () {
+
+            if (
+                this.files &&
+                this.files.length
+            ) {
+
+                console.log(
+                    "تم اختيار صورة:",
+                    this.files[0].name
+                );
+
+            }
+
+        }
+    );
 
 }

@@ -198,7 +198,25 @@ overflow:auto;
 margin-bottom:20px;
 color:#2e7d32;
 }
+.scientificName{
+text-align:center;
+font-style:italic;
+color:#666;
+margin:8px 0;
+}
 
+.description{
+text-align:center;
+line-height:1.8;
+min-height:60px;
+margin:12px 0;
+}
+
+.statusBox{
+display:flex;
+justify-content:center;
+margin-top:15px;
+  }
 .modalContent input,
 .modalContent select,
 .modalContent textarea{

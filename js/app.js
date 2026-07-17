@@ -538,47 +538,40 @@ if (saveBtn) {
 
 }
 let currentSpeciesId = null;
-
-function openCardMenu(event, id) {
-
-    event.stopPropagation();
-
-    currentSpeciesId = id;
-
-    const menu = document.getElementById("cardMenu");
-
-    menu.style.display = "block";
-
-    menu.style.left = event.pageX + "px";
-
-    menu.style.top = event.pageY + "px";
-}
-
-window.addEventListener("click", () => {
-
-    const menu = document.getElementById("cardMenu");
-
-    if (menu) {
-
-        menu.style.display = "none";
-
-    }
-
-});
 function openCardMenu(event, id) {
     event.stopPropagation();
+
+    document.querySelectorAll(".cardMenu").forEach(e => e.remove());
+
+    const menu = document.createElement("div");
+    menu.className = "cardMenu";
 
     const loggedIn = addBtn && addBtn.style.display === "block";
 
-    if (loggedIn) {
-        alert(
-`اختر العملية:
+    menu.innerHTML = loggedIn
+        ? `
+        <button onclick="editSpecies('${id}')">✏️ تعديل</button>
+        <button onclick="deleteSpecies('${id}')">🗑 حذف</button>
+        <button onclick="downloadCard('${id}')">📥 تنزيل البطاقة</button>
+        `
+        : `
+        <button onclick="downloadCard('${id}')">📥 تنزيل البطاقة</button>
+        `;
 
-• تعديل
-• حذف
-• تنزيل البطاقة`
-        );
-    } else {
-        alert("يمكنك تنزيل البطاقة فقط.\nسجل الدخول للوصول إلى التعديل والحذف.");
-    }
+    event.target.parentElement.appendChild(menu);
+}
+
+document.addEventListener("click", () => {
+    document.querySelectorAll(".cardMenu").forEach(e => e.remove());
+});
+function editSpecies(id) {
+    alert("تعديل: " + id);
+}
+
+function deleteSpecies(id) {
+    alert("حذف: " + id);
+}
+
+function downloadCard(id) {
+    alert("تنزيل البطاقة: " + id);
 }

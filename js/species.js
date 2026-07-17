@@ -22,7 +22,7 @@ async function loadSpecies() {
 
     }
    document.title = data.name_ar + " | Iraqi Eco";
-
+content.innerHTML = `
    
 
 <div class="species-page">
@@ -94,7 +94,7 @@ async function loadSpecies() {
 
 </div>
 
-`; 
+;`
 
 }
 

@@ -532,3 +532,31 @@ if (saveBtn) {
     });
 
 }
+let currentSpeciesId = null;
+
+function openCardMenu(event, id) {
+
+    event.stopPropagation();
+
+    currentSpeciesId = id;
+
+    const menu = document.getElementById("cardMenu");
+
+    menu.style.display = "block";
+
+    menu.style.left = event.pageX + "px";
+
+    menu.style.top = event.pageY + "px";
+}
+
+window.addEventListener("click", () => {
+
+    const menu = document.getElementById("cardMenu");
+
+    if (menu) {
+
+        menu.style.display = "none";
+
+    }
+
+});

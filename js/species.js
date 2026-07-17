@@ -94,7 +94,7 @@ content.innerHTML = `
 
 </div>
 
-;`
+`;
 
 }
 

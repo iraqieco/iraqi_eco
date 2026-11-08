@@ -171,7 +171,7 @@
             const count = k === "الكل" ? species.length : species.filter(s => s.kingdom === k).length;
             return `<button class="action-btn ${currentKingdom === k ? 'active' : ''}" onclick="setFilter('${k}', null)">${k} (${count})</button>`;
         }).join('');
-        const withImg = species.filter(s => s.image_url && s.image_url.trim() !== "").length;
+        const withImg = species.filter(s => s.image && s.image.trim() !== "").length;
         const noImg = species.length - withImg;
         html += `<button class="action-btn ${imgFilter === true ? 'active' : ''}" onclick="setFilter(null, true)">مع الصور (${withImg})</button>`;
         html += `<button class="action-btn ${imgFilter === false ? 'active' : ''}" onclick="setFilter(null, false)">بدون صور (${noImg})</button>`;
@@ -230,7 +230,7 @@
         classes.forEach(c => {
             const filteredItems = species.filter(i => {
                 const itemClass = (i.class && i.class.trim() !== "") ? i.class : "غير محدد";
-                const hasImg = i.image_url && i.image_url.trim() !== "";
+                const hasImg = i.image && i.image.trim() !== "";
                 const matchesSearch = (i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q);
                 const matchesKingdom = (currentKingdom === "الكل" || i.kingdom === currentKingdom);
                 const matchesImgFilter = (imgFilter === null || (imgFilter ? hasImg : !hasImg));
@@ -255,7 +255,7 @@
                         </div>
                         <div class="card-logo">عراقي إيكو</div>
                         <div class="divider"></div>
-                        ${item.image_url ? `<img src="${item.image_url}" alt="${item.name_ar}" crossorigin="anonymous">` : '<div style="height:140px; background:#eee; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">لا توجد صورة</div>'}
+                        ${item.image ? `<img src="${item.image}" alt="${item.name_ar}" crossorigin="anonymous">` : '<div style="height:140px; background:#eee; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">لا توجد صورة</div>'}
                         <div class="common-name">${item.name_ar}</div>
                         <div class="latin-name">${item.scientific_name}</div>
                         <span class="kingdom-tag">${item.class || 'غير محدد'}</span>
@@ -277,7 +277,7 @@
         document.getElementById('editId').value = id || '';
         document.getElementById('n_ar').value = item ? item.name_ar : '';
         document.getElementById('n_sci').value = item ? item.scientific_name : '';
-        document.getElementById('img').value = item ? (item.image_url || '') : '';
+        document.getElementById('img').value = item ? (item.image || '') : '';
         document.getElementById('desc').value = item ? (item.description || '') : '';
         document.getElementById('kingdom').value = item ? (item.kingdom || 'حيوانات') : 'حيوانات';
         document.getElementById('class').value = item ? (item.class || '') : '';
@@ -293,7 +293,7 @@
             name_ar: n_ar, 
             scientific_name: n_sci, 
             description: document.getElementById('desc').value, 
-            image_url: document.getElementById('img').value, 
+            image: document.getElementById('img').value, 
             kingdom: document.getElementById('kingdom').value, 
             class: document.getElementById('class').value, 
             conservation_status: document.getElementById('conservation_status').value 

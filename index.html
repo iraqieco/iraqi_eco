@@ -107,16 +107,23 @@
 
     <div class="controls-wrapper">
         <div class="search-main-row">
-            <input type="text" id="search" placeholder="ابحث بالإسم العربي أو اللاتيني (للثدييات ابحث بالعربي أو الإنجليزي)..." onkeyup="render()">
+            <input type="text" id="search" placeholder="ابحث بالإسم العربي أو اللاتيني (للثدييات ابحث بالعربي أو الإنجليزي)..." onkeyup="debounceRender()">
         </div>
-        <div class="btn-group" id="filterBtns"></div>
+        <div class="btn-group" id="filterBtns">
+            <button class="action-btn active" onclick="setFilter('الكل', null)">الكل</button>
+            <button class="action-btn" onclick="setFilter('حيوانات', null)">حيوانات</button>
+            <button class="action-btn" onclick="setFilter('نباتات', null)">نباتات</button>
+            <button class="action-btn" onclick="setFilter('فطريات', null)">فطريات</button>
+            <button class="action-btn" onclick="setFilter('طلائعيات', null)">طلائعيات</button>
+            <button class="action-btn" onclick="setFilter('بدائيات', null)">بدائيات</button>
+        </div>
         <div class="view-controls">
             <button class="action-btn" onclick="toggleTheme()" id="themeBtn">🌓 الشكل</button>
         </div>
     </div>
     
     <button onclick="openModal()" style="margin:15px 0; padding:12px; width:100%; background:#1b5e20; color:white; border:none; border-radius:8px; font-size:1em; cursor:pointer;">+ إضافة مخلوق</button>
-    <div id="content"></div>
+    <div id="content">جاري التحميل...</div>
 </div>
 
 <div id="modal">
@@ -152,6 +159,7 @@
     let imgFilter = null;
     let viewMode = 3;
     let isDarkMode = false;
+    let searchTimeout = null;
     
     const statusConfig = { 'NE': 'غير مقيم', 'DD': 'بيانات ناقصة', 'LC': 'غير مهدد', 'NT': 'قريب من التهديد', 'VU': 'معرض للخطر', 'EN': 'مهدد', 'CR': 'خطر أقصى', 'EW': 'منقرض في البرية', 'EX': 'منقرض' };
     const statusColors = { 'NE': '#9e9e9e', 'DD': '#607d8b', 'LC': '#4caf50', 'NT': '#ffc107', 'VU': '#ff9800', 'EN': '#f44336', 'CR': '#d32f2f', 'EW': '#795548', 'EX': '#000' };
@@ -168,74 +176,72 @@
         const container = document.getElementById('filterBtns');
         const kingdoms = ["الكل", "حيوانات", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
         let html = kingdoms.map(k => {
-            const count = k === "الكل" ? species.length : species.filter(s => s.kingdom === k).length;
-            return `<button class="action-btn ${currentKingdom === k ? 'active' : ''}" onclick="setFilter('${k}', null)">${k} (${count})</button>`;
+            return `<button class="action-btn ${currentKingdom === k ? 'active' : ''}" onclick="setFilter('${k}', null)">${k}</button>`;
         }).join('');
-        const withImg = species.filter(s => s.image && s.image.trim() !== "").length;
-        const noImg = species.length - withImg;
-        html += `<button class="action-btn ${imgFilter === true ? 'active' : ''}" onclick="setFilter(null, true)">مع الصور (${withImg})</button>`;
-        html += `<button class="action-btn ${imgFilter === false ? 'active' : ''}" onclick="setFilter(null, false)">بدون صور (${noImg})</button>`;
+        
+        html += `<button class="action-btn ${imgFilter === true ? 'active' : ''}" onclick="setFilter(null, true)">مع الصور</button>`;
+        html += `<button class="action-btn ${imgFilter === false ? 'active' : ''}" onclick="setFilter(null, false)">بدون صور</button>`;
         container.innerHTML = html;
     }
 
     function setFilter(k, i) {
         if (k !== null) { currentKingdom = k; }
         if (i !== null) imgFilter = (imgFilter === i) ? null : i;
-        render(); 
         updateControls();
+        fetchData(); 
     }
 
-    // دالة الجلب المحدثة لجلب جميع السجلات متجاوزة حد الـ 1000 نتيجة
-    async function init() {
-        let allData = [];
-        let rangeSize = 1000;
-        let from = 0;
-        let to = rangeSize - 1;
-        let fetching = true;
+    // تأخير البحث بضع أجزاء من الثانية لعدم تنفيذ الاستعلام مع كل حرف يكتبه المستخدم مباشرة
+    function debounceRender() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            fetchData();
+        }, 300);
+    }
 
-        while (fetching) {
-            const { data, error } = await client
-                .from('organisms')
-                .select('*')
-                .range(from, to);
+    // جلب البيانات بذكاء من قاعدة البيانات مباشرة بناءً على فلتر البحث والنوع
+    async function fetchData() {
+        const q = document.getElementById('search').value.trim();
+        
+        let query = client.from('organisms').select('*');
 
-            if (error) {
-                console.error("خطأ في جلب البيانات:", error.message);
-                break;
-            }
-
-            if (data && data.length > 0) {
-                allData = allData.concat(data);
-                if (data.length < rangeSize) {
-                    fetching = false; 
-                } else {
-                    from += rangeSize;
-                    to += rangeSize;
-                }
-            } else {
-                fetching = false;
-            }
+        if (currentKingdom !== "الكل") {
+            query = query.eq('kingdom', currentKingdom);
         }
 
-        species = allData;
-        updateControls();
+        if (imgFilter === true) {
+            query = query.not('image', 'is', null).neq('image', '');
+        } else if (imgFilter === false) {
+            query = query.or('image.is.null,image.eq.""');
+        }
+
+        if (q !== "") {
+            query = query.or(`name_ar.ilike.%${q}%,scientific_name.ilike.%${q}%`);
+        }
+
+        // جلب البيانات بحد أقصى معقول لكل عملية بحث لتجنب الثقل
+        const { data, error } = await query.limit(500);
+
+        if (error) {
+            console.error("خطأ في جلب البيانات:", error.message);
+            return;
+        }
+
+        species = data || [];
         render();
     }
 
     function render() {
-        const q = document.getElementById('search').value.toLowerCase();
         const classes = [...new Set(species.map(i => (i.class && i.class.trim() !== "") ? i.class : "غير محدد"))];
         let htmlOutput = "";
         
+        if (species.length === 0) {
+            document.getElementById('content').innerHTML = '<div style="text-align:center; padding:30px; opacity:0.6;">لا توجد نتائج مطابقة</div>';
+            return;
+        }
+
         classes.forEach(c => {
-            const filteredItems = species.filter(i => {
-                const itemClass = (i.class && i.class.trim() !== "") ? i.class : "غير محدد";
-                const hasImg = i.image && i.image.trim() !== "";
-                const matchesSearch = (i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q);
-                const matchesKingdom = (currentKingdom === "الكل" || i.kingdom === currentKingdom);
-                const matchesImgFilter = (imgFilter === null || (imgFilter ? hasImg : !hasImg));
-                return itemClass === c && matchesSearch && matchesKingdom && matchesImgFilter;
-            });
+            const filteredItems = species.filter(i => ((i.class && i.class.trim() !== "") ? i.class : "غير محدد") === c);
             
             if (filteredItems.length > 0) {
                 htmlOutput += `<div class="kingdom-section"><div class="kingdom-title">${c} <span class="count-badge">${filteredItems.length}</span></div>`;
@@ -269,8 +275,17 @@
         document.getElementById('content').innerHTML = htmlOutput;
     }
 
-    function toggleMenu(id) { const m = document.getElementById('menu-'+id); m.style.display = (m.style.display === 'block') ? 'none' : 'block'; }
-    function loginPrompt() { const e = prompt("إيميل:"); const p = prompt("كلمة المرور:"); client.auth.signInWithPassword({ email: e, password: p }).then(r => { if(r.error) alert(r.error.message); else location.reload(); }); }
+    function toggleMenu(id) { 
+        const m = document.getElementById('menu-'+id); 
+        m.style.display = (m.style.display === 'block') ? 'none' : 'block'; 
+    }
+
+    function loginPrompt() { 
+        const e = prompt("إيميل:"); 
+        const p = prompt("كلمة المرور:"); 
+        client.auth.signInWithPassword({ email: e, password: p }).then(r => { if(r.error) alert(r.error.message); else location.reload(); }); 
+    }
+
     function openModal(id = null) {
         const modal = document.getElementById('modal');
         const item = species.find(i => i.id === id);
@@ -284,35 +299,34 @@
         document.getElementById('conservation_status').value = item ? (item.conservation_status || 'NE') : 'NE';
         modal.style.display = 'block';
     }
-    async function saveItem() {
-    const n_ar = document.getElementById('n_ar').value.trim();
-    const n_sci = document.getElementById('n_sci').value.trim();
-    if (!n_ar || !n_sci) { alert("يجب تعبئة الاسم العربي والعلمي!"); return; }
-    const id = document.getElementById('editId').value;
-    const imgVal = document.getElementById('img').value.trim();
-    
-    const data = { 
-        name_ar: n_ar, 
-        scientific_name: n_sci, 
-        description: document.getElementById('desc').value, 
-        image: imgVal, 
-        kingdom: document.getElementById('kingdom').value, 
-        class: document.getElementById('class').value, 
-        conservation_status: document.getElementById('conservation_status').value 
-    };
-    
-    // تم تغيير 'species' إلى 'organisms' ليتطابق مع جدول قاعدة البيانات
-    const res = id ? await client.from('organisms').update(data).eq('id', id) : await client.from('organisms').insert([data]);
-    if (res.error) alert("خطأ: " + res.error.message); else location.reload();
-}
 
-async function deleteItem(id) { 
-    if(confirm('تأكيد الحذف؟')) { 
-        // تم تغيير 'species' إلى 'organisms' هنا أيضاً
-        await client.from('organisms').delete().eq('id', id); 
-        location.reload(); 
-    } 
-}
+    async function saveItem() {
+        const n_ar = document.getElementById('n_ar').value.trim();
+        const n_sci = document.getElementById('n_sci').value.trim();
+        if (!n_ar || !n_sci) { alert("يجب تعبئة الاسم العربي والعلمي!"); return; }
+        const id = document.getElementById('editId').value;
+        const imgVal = document.getElementById('img').value.trim();
+        
+        const data = { 
+            name_ar: n_ar, 
+            scientific_name: n_sci, 
+            description: document.getElementById('desc').value, 
+            image: imgVal, 
+            kingdom: document.getElementById('kingdom').value, 
+            class: document.getElementById('class').value, 
+            conservation_status: document.getElementById('conservation_status').value 
+        };
+        
+        const res = id ? await client.from('organisms').update(data).eq('id', id) : await client.from('organisms').insert([data]);
+        if (res.error) alert("خطأ: " + res.error.message); else location.reload();
+    }
+
+    async function deleteItem(id) { 
+        if(confirm('تأكيد الحذف؟')) { 
+            await client.from('organisms').delete().eq('id', id); 
+            location.reload(); 
+        } 
+    }
 
     function downloadCard(id) {
         const card = document.getElementById(id);
@@ -324,7 +338,9 @@ async function deleteItem(id) {
             link.click();
         });
     }
-    init();
+
+    // التشغيل الأولي لجلب البيانات بسلاسة
+    fetchData();
 </script>
 </body>
 </html>

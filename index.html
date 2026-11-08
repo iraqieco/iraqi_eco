@@ -107,23 +107,16 @@
 
     <div class="controls-wrapper">
         <div class="search-main-row">
-            <input type="text" id="search" placeholder="ابحث بالإسم العربي أو اللاتيني (للثدييات ابحث بالعربي أو الإنجليزي)..." onkeyup="debounceRender()">
+            <input type="text" id="search" placeholder="ابحث بالإسم العربي أو اللاتيني (للثدييات ابحث بالعربي أو الإنجليزي)..." onkeyup="filterAndRender()">
         </div>
-        <div class="btn-group" id="filterBtns">
-            <button class="action-btn active" onclick="setFilter('الكل', null)">الكل</button>
-            <button class="action-btn" onclick="setFilter('حيوانات', null)">حيوانات</button>
-            <button class="action-btn" onclick="setFilter('نباتات', null)">نباتات</button>
-            <button class="action-btn" onclick="setFilter('فطريات', null)">فطريات</button>
-            <button class="action-btn" onclick="setFilter('طلائعيات', null)">طلائعيات</button>
-            <button class="action-btn" onclick="setFilter('بدائيات', null)">بدائيات</button>
-        </div>
+        <div class="btn-group" id="filterBtns"></div>
         <div class="view-controls">
             <button class="action-btn" onclick="toggleTheme()" id="themeBtn">🌓 الشكل</button>
         </div>
     </div>
     
     <button onclick="openModal()" style="margin:15px 0; padding:12px; width:100%; background:#1b5e20; color:white; border:none; border-radius:8px; font-size:1em; cursor:pointer;">+ إضافة مخلوق</button>
-    <div id="content">جاري التحميل...</div>
+    <div id="content">جاري جلب كافة الكائنات الحية...</div>
 </div>
 
 <div id="modal">
@@ -154,12 +147,11 @@
 
 <script>
     const client = supabase.createClient('https://rmqtopxawrrgntcqqnpa.supabase.co', 'sb_publishable_M1Adw5Xf9Sq-aCSREHP6uQ_5Geps_QX');
-    let species = [];
+    let allSpecies = []; // تخزين كافة البيانات محلياً للبحث الفوري
     let currentKingdom = "الكل";
     let imgFilter = null;
     let viewMode = 3;
     let isDarkMode = false;
-    let searchTimeout = null;
     
     const statusConfig = { 'NE': 'غير مقيم', 'DD': 'بيانات ناقصة', 'LC': 'غير مهدد', 'NT': 'قريب من التهديد', 'VU': 'معرض للخطر', 'EN': 'مهدد', 'CR': 'خطر أقصى', 'EW': 'منقرض في البرية', 'EX': 'منقرض' };
     const statusColors = { 'NE': '#9e9e9e', 'DD': '#607d8b', 'LC': '#4caf50', 'NT': '#ffc107', 'VU': '#ff9800', 'EN': '#f44336', 'CR': '#d32f2f', 'EW': '#795548', 'EX': '#000' };
@@ -170,17 +162,21 @@
         document.getElementById('themeBtn').innerText = isDarkMode ? '☀️ وضع النهار' : '🌙 وضع الليل';
     }
 
-    function setView(mode) { viewMode = mode; render(); }
+    function setView(mode) { viewMode = mode; filterAndRender(); }
 
     function updateControls() {
         const container = document.getElementById('filterBtns');
         const kingdoms = ["الكل", "حيوانات", "نباتات", "فطريات", "طلائعيات", "بدائيات"];
         let html = kingdoms.map(k => {
-            return `<button class="action-btn ${currentKingdom === k ? 'active' : ''}" onclick="setFilter('${k}', null)">${k}</button>`;
+            const count = k === "الكل" ? allSpecies.length : allSpecies.filter(s => s.kingdom === k).length;
+            return `<button class="action-btn ${currentKingdom === k ? 'active' : ''}" onclick="setFilter('${k}', null)">${k} (${count})</button>`;
         }).join('');
         
-        html += `<button class="action-btn ${imgFilter === true ? 'active' : ''}" onclick="setFilter(null, true)">مع الصور</button>`;
-        html += `<button class="action-btn ${imgFilter === false ? 'active' : ''}" onclick="setFilter(null, false)">بدون صور</button>`;
+        const withImg = allSpecies.filter(s => s.image && s.image.trim() !== "").length;
+        const noImg = allSpecies.length - withImg;
+
+        html += `<button class="action-btn ${imgFilter === true ? 'active' : ''}" onclick="setFilter(null, true)">مع الصور (${withImg})</button>`;
+        html += `<button class="action-btn ${imgFilter === false ? 'active' : ''}" onclick="setFilter(null, false)">بدون صور (${noImg})</button>`;
         container.innerHTML = html;
     }
 
@@ -188,60 +184,74 @@
         if (k !== null) { currentKingdom = k; }
         if (i !== null) imgFilter = (imgFilter === i) ? null : i;
         updateControls();
-        fetchData(); 
+        filterAndRender(); 
     }
 
-    // تأخير البحث بضع أجزاء من الثانية لعدم تنفيذ الاستعلام مع كل حرف يكتبه المستخدم مباشرة
-    function debounceRender() {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-            fetchData();
-        }, 300);
+    // جلب كافة النتائج دفعة تلو الأخرى لتخطي حدود الـ 1000 ولعرضها كاملة
+    async function init() {
+        let allData = [];
+        let rangeSize = 1000;
+        let from = 0;
+        let to = rangeSize - 1;
+        let fetching = true;
+
+        while (fetching) {
+            const { data, error } = await client
+                .from('organisms')
+                .select('*')
+                .range(from, to);
+
+            if (error) {
+                console.error("خطأ في جلب البيانات:", error.message);
+                break;
+            }
+
+            if (data && data.length > 0) {
+                allData = allData.concat(data);
+                if (data.length < rangeSize) {
+                    fetching = false; 
+                } else {
+                    from += rangeSize;
+                    to += rangeSize;
+                }
+            } else {
+                fetching = false;
+            }
+        }
+
+        allSpecies = allData;
+        updateControls();
+        filterAndRender();
     }
 
-    // جلب البيانات بذكاء من قاعدة البيانات مباشرة بناءً على فلتر البحث والنوع
-    async function fetchData() {
-        const q = document.getElementById('search').value.trim();
+    // الفلترة والبحث محلياً بشكل فوري وصاروخي بدون إعادة تحميل من الخادم
+    function filterAndRender() {
+        const q = document.getElementById('search').value.toLowerCase().trim();
         
-        let query = client.from('organisms').select('*');
+        const filtered = allSpecies.filter(i => {
+            const itemClass = (i.class && i.class.trim() !== "") ? i.class : "غير محدد";
+            const hasImg = i.image && i.image.trim() !== "";
+            const matchesSearch = (i.name_ar || '').toLowerCase().includes(q) || (i.scientific_name || '').toLowerCase().includes(q);
+            const matchesKingdom = (currentKingdom === "الكل" || i.kingdom === currentKingdom);
+            const matchesImgFilter = (imgFilter === null || (imgFilter ? hasImg : !hasImg));
+            
+            return matchesSearch && matchesKingdom && matchesImgFilter;
+        });
 
-        if (currentKingdom !== "الكل") {
-            query = query.eq('kingdom', currentKingdom);
-        }
-
-        if (imgFilter === true) {
-            query = query.not('image', 'is', null).neq('image', '');
-        } else if (imgFilter === false) {
-            query = query.or('image.is.null,image.eq.""');
-        }
-
-        if (q !== "") {
-            query = query.or(`name_ar.ilike.%${q}%,scientific_name.ilike.%${q}%`);
-        }
-
-        // جلب البيانات بحد أقصى معقول لكل عملية بحث لتجنب الثقل
-        const { data, error } = await query.limit(500);
-
-        if (error) {
-            console.error("خطأ في جلب البيانات:", error.message);
-            return;
-        }
-
-        species = data || [];
-        render();
+        render(filtered);
     }
 
-    function render() {
-        const classes = [...new Set(species.map(i => (i.class && i.class.trim() !== "") ? i.class : "غير محدد"))];
+    function render(speciesList) {
+        const classes = [...new Set(speciesList.map(i => (i.class && i.class.trim() !== "") ? i.class : "غير محدد"))];
         let htmlOutput = "";
         
-        if (species.length === 0) {
+        if (speciesList.length === 0) {
             document.getElementById('content').innerHTML = '<div style="text-align:center; padding:30px; opacity:0.6;">لا توجد نتائج مطابقة</div>';
             return;
         }
 
         classes.forEach(c => {
-            const filteredItems = species.filter(i => ((i.class && i.class.trim() !== "") ? i.class : "غير محدد") === c);
+            const filteredItems = speciesList.filter(i => ((i.class && i.class.trim() !== "") ? i.class : "غير محدد") === c);
             
             if (filteredItems.length > 0) {
                 htmlOutput += `<div class="kingdom-section"><div class="kingdom-title">${c} <span class="count-badge">${filteredItems.length}</span></div>`;
@@ -288,7 +298,7 @@
 
     function openModal(id = null) {
         const modal = document.getElementById('modal');
-        const item = species.find(i => i.id === id);
+        const item = allSpecies.find(i => i.id === id);
         document.getElementById('editId').value = id || '';
         document.getElementById('n_ar').value = item ? item.name_ar : '';
         document.getElementById('n_sci').value = item ? item.scientific_name : '';
@@ -339,8 +349,8 @@
         });
     }
 
-    // التشغيل الأولي لجلب البيانات بسلاسة
-    fetchData();
+    // جلب كافة البيانات عند فتح الموقع
+    init();
 </script>
 </body>
 </html>

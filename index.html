@@ -285,24 +285,35 @@
         modal.style.display = 'block';
     }
     async function saveItem() {
-        const n_ar = document.getElementById('n_ar').value.trim();
-        const n_sci = document.getElementById('n_sci').value.trim();
-        if (!n_ar || !n_sci) { alert("يجب تعبئة الاسم العربي والعلمي!"); return; }
-        const id = document.getElementById('editId').value;
-        const data = { 
-            name_ar: n_ar, 
-            scientific_name: n_sci, 
-            description: document.getElementById('desc').value, 
-            image: document.getElementById('img').value, 
-            kingdom: document.getElementById('kingdom').value, 
-            class: document.getElementById('class').value, 
-            conservation_status: document.getElementById('conservation_status').value 
-        };
-        const res = id ? await client.from('species').update(data).eq('id', id) : await client.from('species').insert([data]);
-        if (res.error) alert("خطأ: " + res.error.message); else location.reload();
-    }
-    async function deleteItem(id) { if(confirm('تأكيد الحذف؟')) { await client.from('species').delete().eq('id', id); location.reload(); } }
+    const n_ar = document.getElementById('n_ar').value.trim();
+    const n_sci = document.getElementById('n_sci').value.trim();
+    if (!n_ar || !n_sci) { alert("يجب تعبئة الاسم العربي والعلمي!"); return; }
+    const id = document.getElementById('editId').value;
+    const imgVal = document.getElementById('img').value.trim();
     
+    const data = { 
+        name_ar: n_ar, 
+        scientific_name: n_sci, 
+        description: document.getElementById('desc').value, 
+        image: imgVal, 
+        kingdom: document.getElementById('kingdom').value, 
+        class: document.getElementById('class').value, 
+        conservation_status: document.getElementById('conservation_status').value 
+    };
+    
+    // تم تغيير 'species' إلى 'organisms' ليتطابق مع جدول قاعدة البيانات
+    const res = id ? await client.from('organisms').update(data).eq('id', id) : await client.from('organisms').insert([data]);
+    if (res.error) alert("خطأ: " + res.error.message); else location.reload();
+}
+
+async function deleteItem(id) { 
+    if(confirm('تأكيد الحذف؟')) { 
+        // تم تغيير 'species' إلى 'organisms' هنا أيضاً
+        await client.from('organisms').delete().eq('id', id); 
+        location.reload(); 
+    } 
+}
+
     function downloadCard(id) {
         const card = document.getElementById(id);
         document.getElementById('menu-' + id.split('-')[1]).style.display = 'none';

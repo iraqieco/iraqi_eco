@@ -185,9 +185,39 @@
         updateControls();
     }
 
+    // دالة الجلب المحدثة لجلب جميع السجلات متجاوزة حد الـ 1000 نتيجة
     async function init() {
-        const { data } = await client.from('organisms').select('*').limit(10000); 
-        species = data || [];
+        let allData = [];
+        let rangeSize = 1000;
+        let from = 0;
+        let to = rangeSize - 1;
+        let fetching = true;
+
+        while (fetching) {
+            const { data, error } = await client
+                .from('organisms')
+                .select('*')
+                .range(from, to);
+
+            if (error) {
+                console.error("خطأ في جلب البيانات:", error.message);
+                break;
+            }
+
+            if (data && data.length > 0) {
+                allData = allData.concat(data);
+                if (data.length < rangeSize) {
+                    fetching = false; 
+                } else {
+                    from += rangeSize;
+                    to += rangeSize;
+                }
+            } else {
+                fetching = false;
+            }
+        }
+
+        species = allData;
         updateControls();
         render();
     }
